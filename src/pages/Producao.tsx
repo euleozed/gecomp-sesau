@@ -641,6 +641,7 @@ const Producao = () => {
         </Card>
       </div>
 
+
       {/* Botão para mostrar/ocultar ranking */}
       <div className="flex justify-center mb-8">
         <button
