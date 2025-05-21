@@ -33,6 +33,7 @@ const Producao = () => {
   const [filteredData, setFilteredData] = useState<ProducaoItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [showRanking, setShowRanking] = useState(false);
   
   // Estados para filtros
   const [selectedSetor, setSelectedSetor] = useState<string>('todos');
@@ -639,6 +640,80 @@ const Producao = () => {
           </CardContent>
         </Card>
       </div>
+
+      {/* Botão para mostrar/ocultar ranking */}
+      <div className="flex justify-center mb-8">
+        <button
+          onClick={() => setShowRanking(!showRanking)}
+          className="px-6 py-2 bg-sei-600 text-white rounded-md hover:bg-sei-700 transition-colors flex items-center gap-2"
+        >
+          {showRanking ? 'Ocultar' : 'Ver'} Ranking Geral
+          {showRanking ? (
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clipRule="evenodd" />
+            </svg>
+          ) : (
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+            </svg>
+          )}
+        </button>
+      </div>
+
+      {/* Ranking Geral */}
+      {showRanking && (
+        <Card className="mb-8">
+          <CardHeader>
+            <CardTitle>Ranking Geral de Produção</CardTitle>
+            <CardDescription>
+              Classificação dos servidores por quantidade de documentos produzidos
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="max-h-[500px] overflow-y-auto">
+              <Table>
+                <TableHeader className="sticky top-0 bg-white z-10">
+                  <TableRow>
+                    <TableHead className="w-16">Posição</TableHead>
+                    <TableHead>Nome</TableHead>
+                    <TableHead>Setor</TableHead>
+                    <TableHead className="text-right">Documentos</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {(() => {
+                    // Create ranking data
+                    const rankingData = filteredData.reduce((acc, item) => {
+                      const key = `${item.Nome}-${item.Setor || item.id_unidade}`;
+                      if (!acc[key]) {
+                        acc[key] = {
+                          nome: item.Nome,
+                          setor: item.Setor || item.id_unidade,
+                          count: 0
+                        };
+                      }
+                      acc[key].count++;
+                      return acc;
+                    }, {} as Record<string, { nome: string; setor: string; count: number }>);
+
+                    // Convert to array and sort
+                    return Object.values(rankingData)
+                      .sort((a, b) => b.count - a.count)
+                      .map((item, index) => (
+                        <TableRow key={`${item.nome}-${item.setor}`}>
+                          <TableCell className="font-medium">{index + 1}º</TableCell>
+                          <TableCell>{item.nome}</TableCell>
+                          <TableCell>{item.setor}</TableCell>
+                          <TableCell className="text-right">{item.count}</TableCell>
+                        </TableRow>
+                      ));
+                  })()}
+                </TableBody>
+              </Table>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Gráfico de documentos por mês */}
       <Card className="mb-8">
