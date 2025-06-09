@@ -273,8 +273,8 @@ const Dashboard = () => {
                 processosPorTipo.get(item.tipo_tr)?.add(item.Processo);
               }
             });
-            
             console.log('Processos por tipo_tr encontrados:', processosPorTipo);
+          
             
             // Define as contagens para cada tipo
             setDispensaCount(processosPorTipo.get('Dispensa')?.size || 0);
