@@ -2,14 +2,16 @@ import React, { useEffect, useState } from 'react';
 import Layout from '@/components/Layout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, PieChart, Pie, Cell, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, LineChart, Line } from 'recharts';
-import { FileCheck, Clock, AlertTriangle, CheckCircle } from 'lucide-react';
+import { FileCheck, Clock, AlertTriangle, CheckCircle, Landmark, LandmarkIcon, Palette, Hospital } from 'lucide-react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select';
 import { useParams } from 'react-router-dom';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import * as XLSX from 'xlsx';
 
-// Importação do CSV com caminho correto para a pasta pública
+// Caminhos para os arquivos de dados
+const excelPath = '/backend/objetos.xlsx';
 const csvPath = '/backend/df.csv';
 
 const COLORS = ['#0c93e4', '#064f83', '#36adf6', '#005d9e'];
@@ -57,6 +59,7 @@ interface CsvHistoricoItem {
   Protocolo: string;
   Documento: string;
   Objeto: string;
+  Descrição: string;
 }
 
 const Dashboard = () => {
@@ -73,11 +76,22 @@ const Dashboard = () => {
   const [overdueDocumentsCount, setOverdueDocumentsCount] = useState<number>(0);
   const [searchTerm, setSearchTerm] = useState('');
   const [documentMetrics, setDocumentMetrics] = useState<{ documento: string; maxDias: number }[]>([]);
+  
+  // Estados para contagem por tipo_tr
+  const [dispensaCount, setDispensaCount] = useState<number>(0);
+  const [emergencialCount, setEmergencialCount] = useState<number>(0);
+  const [inexigibilidadeCount, setInexigibilidadeCount] = useState<number>(0);
+  const [licitatorioCount, setLicitatorioCount] = useState<number>(0);
+  const [licitatorioSrpCount, setLicitatorioSrpCount] = useState<number>(0);
+  const [organizacaoSocialCount, setOrganizacaoSocialCount] = useState<number>(0);
+
+
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Convertemos os dados do CSV para um array de objetos
+        // Carrega dados do CSV (principal)
+        console.log('Carregando dados do CSV:', csvPath);
         const response = await fetch(csvPath);
         
         if (!response.ok) {
@@ -138,11 +152,19 @@ const Dashboard = () => {
           }
           
           console.log('Dados CSV processados:', parsedData);
+          console.log('Headers encontrados:', headers);
+          console.log('Primeiro item dos dados:', parsedData[0]);
           setHistoricoData(parsedData);
 
           // Contagem de processos únicos
           const uniqueProcessCount = new Set(parsedData.map(item => item.Processo)).size;
           setTotalProcesses(uniqueProcessCount);
+
+
+
+
+      
+
 
           // Calcula Processos Concluídos
           const concluidosSet = new Set<string>();
@@ -217,7 +239,82 @@ const Dashboard = () => {
       }
     };
 
+    // Função separada para carregar dados de tipos do Excel
+    const loadExcelTypesData = async () => {
+      try {
+        console.log('Carregando tipos do Excel:', excelPath);
+        const excelResponse = await fetch(excelPath);
+        
+        if (excelResponse.ok) {
+          const excelBlob = await excelResponse.blob();
+          const excelBuffer = await excelBlob.arrayBuffer();
+          
+          const workbook = XLSX.read(excelBuffer);
+          const sheetName = workbook.SheetNames[0];
+          const worksheet = workbook.Sheets[sheetName];
+          const excelData = XLSX.utils.sheet_to_json(worksheet) as any[];
+          
+          console.log('Dados Excel carregados para tipos:', excelData.length, 'registros');
+          console.log('Primeira linha Excel:', excelData[0]);
+          console.log('Colunas disponíveis no Excel:', Object.keys(excelData[0] || {}));
+          
+          // Verifica se tem campo tipo_tr
+          if (excelData[0] && 'tipo_tr' in excelData[0]) {
+            console.log('Campo tipo_tr encontrado no Excel');
+            
+            // Contagem direta por tipo_tr
+            const processosPorTipo = new Map<string, Set<string>>();
+            
+            excelData.forEach(item => {
+              if (item.tipo_tr && item.Processo) {
+                if (!processosPorTipo.has(item.tipo_tr)) {
+                  processosPorTipo.set(item.tipo_tr, new Set());
+                }
+                processosPorTipo.get(item.tipo_tr)?.add(item.Processo);
+              }
+            });
+            
+            console.log('Processos por tipo_tr encontrados:', processosPorTipo);
+            
+            // Define as contagens para cada tipo
+            setDispensaCount(processosPorTipo.get('Dispensa')?.size || 0);
+            setEmergencialCount(processosPorTipo.get('Emergencial')?.size || 0);
+            setInexigibilidadeCount(processosPorTipo.get('Inexigibilidade')?.size || 0);
+            setLicitatorioCount(processosPorTipo.get('Licitatório')?.size || 0);
+            setLicitatorioSrpCount(processosPorTipo.get('Licitatório SRP')?.size || 0);
+            setOrganizacaoSocialCount(processosPorTipo.get('Organização Social')?.size || 0);
+          } else {
+            console.log('Campo tipo_tr não encontrado no Excel, setando valores zerados');
+            setDispensaCount(0);
+            setEmergencialCount(0);
+            setInexigibilidadeCount(0);
+            setLicitatorioCount(0);
+            setLicitatorioSrpCount(0);
+            setOrganizacaoSocialCount(0);
+          }
+        } else {
+          console.log('Excel não encontrado, setando contagens de tipo como zero');
+          setDispensaCount(0);
+          setEmergencialCount(0);
+          setInexigibilidadeCount(0);
+          setLicitatorioCount(0);
+          setLicitatorioSrpCount(0);
+          setOrganizacaoSocialCount(0);
+        }
+      } catch (error) {
+        console.error('Erro ao carregar dados do Excel:', error);
+        // Se der erro, define todos como zero
+        setDispensaCount(0);
+        setEmergencialCount(0);
+        setInexigibilidadeCount(0);
+        setLicitatorioCount(0);
+        setLicitatorioSrpCount(0);
+        setOrganizacaoSocialCount(0);
+      }
+    };
+
     fetchData();
+    loadExcelTypesData();
   }, []);
 
   const calculateMaxResponseTimes = (data: HistoricoItem[]) => {
@@ -470,7 +567,7 @@ const Dashboard = () => {
         <Card className="border-sei-100">
           <CardContent className="p-6 flex items-center gap-4">
             <div className="bg-sei-100 p-3 rounded-full">
-              <AlertTriangle className="h-6 w-6 text-sei-600" />
+              <AlertTriangle className="h-6 w-6 text-orange-600" />
             </div>
             <div>
               <p className="text-sm font-medium text-muted-foreground">
@@ -480,6 +577,95 @@ const Dashboard = () => {
             </div>
           </CardContent>
         </Card>
+      </div>
+
+      <div className="mb-8">
+        <h2 className="text-2xl font-bold text-sei-800 mb-4">Processos por Tipo</h2>
+        <div className="grid gap-4 grid-cols-6">
+          <Card className="border-sei-100">
+            <CardContent className="p-6 flex items-center gap-4">
+              <div className="bg-blue-100 p-3 rounded-full">
+                <FileCheck className="h-6 w-6 text-blue-600" />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-muted-foreground">
+                  Dispensa
+                </p>
+                <h3 className="text-2xl font-bold">{dispensaCount}</h3>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-sei-100">
+            <CardContent className="p-6 flex items-center gap-4">
+              <div className="bg-red-100 p-3 rounded-full">
+                <AlertTriangle className="h-6 w-6 text-red-600" />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-muted-foreground">
+                  Emergencial
+                </p>
+                <h3 className="text-2xl font-bold">{emergencialCount}</h3>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-sei-100">
+            <CardContent className="p-6 flex items-center gap-4">
+              <div className="bg-yellow-100 p-3 rounded-full">
+                <Palette className="h-6 w-6 text-yellow-600" />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-muted-foreground">
+                  Inexigibilidade
+                </p>
+                <h3 className="text-2xl font-bold">{inexigibilidadeCount}</h3>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-sei-100">
+            <CardContent className="p-6 flex items-center gap-4">
+              <div className="bg-green-100 p-3 rounded-full">
+                <LandmarkIcon className="h-6 w-6 text-green-600" />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-muted-foreground">
+                  Licitatório
+                </p>
+                <h3 className="text-2xl font-bold">{licitatorioCount}</h3>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-sei-100">
+            <CardContent className="p-6 flex items-center gap-4">
+              <div className="bg-purple-100 p-3 rounded-full">
+                <FileCheck className="h-6 w-6 text-purple-600" />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-muted-foreground">
+                  Licitatório SRP
+                </p>
+                <h3 className="text-2xl font-bold">{licitatorioSrpCount}</h3>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-sei-100">
+            <CardContent className="p-6 flex items-center gap-4">
+              <div className="bg-indigo-100 p-3 rounded-full">
+                <Hospital className="h-6 w-6 text-indigo-600" />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-muted-foreground">
+                  Organização Social
+                </p>
+                <h3 className="text-2xl font-bold">{organizacaoSocialCount}</h3>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </div>
 
       <div className="mb-8">
@@ -574,7 +760,7 @@ const Dashboard = () => {
               <CardContent>
                 <div className="h-[400px]">
                   <ResponsiveContainer width="100%" height="100%">
-                    <RadarChart data={maxResponseTimes} cx="50%" cy="50%" outerRadius="80%">
+                    <RadarChart data={maxResponseTimes.slice(0,7)} cx="50%" cy="50%" outerRadius="80%">
                       <PolarGrid />
                       <PolarAngleAxis dataKey="unidade" />
                       <PolarRadiusAxis />
