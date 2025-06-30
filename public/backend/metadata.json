@@ -1,0 +1,12 @@
+{
+  "tipos_processo": {
+    "Dispensa": 42,
+    "Emergencial": 16,
+    "Inexigibilidade": 14,
+    "Licitatório": 109,
+    "Licitatório SRP": 63,
+    "Organização Social": 2
+  },
+  "total_processos": 238,
+  "total_registros": 57742
+}

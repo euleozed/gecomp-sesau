@@ -1,0 +1,24 @@
+{
+  "functions": {
+    "src/app/api/**/*.ts": {
+      "maxDuration": 30
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/backend/(.*)",
+      "destination": "/backend/$1"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/backend/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    }
+  ]
+} 

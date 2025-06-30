@@ -60,6 +60,7 @@ interface CsvHistoricoItem {
   Documento: string;
   Objeto: string;
   Descrição: string;
+  tipo_tr: string;
 }
 
 const Dashboard = () => {
@@ -90,8 +91,31 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Carrega dados do CSV (principal)
-        console.log('Carregando dados do CSV:', csvPath);
+        // Primeiro, tenta carregar metadados (para produção/Vercel)
+        console.log('Tentando carregar metadados...');
+        const metadataResponse = await fetch('/backend/metadata.json');
+        
+        if (metadataResponse.ok) {
+          console.log('Carregando dados via metadados (modo produção)');
+          const metadata = await metadataResponse.json();
+          
+          // Define as contagens dos tipos diretamente dos metadatos
+          setDispensaCount(metadata.tipos_processo.Dispensa || 0);
+          setEmergencialCount(metadata.tipos_processo.Emergencial || 0);
+          setInexigibilidadeCount(metadata.tipos_processo.Inexigibilidade || 0);
+          setLicitatorioCount(metadata.tipos_processo.Licitatório || 0);
+          setLicitatorioSrpCount(metadata.tipos_processo['Licitatório SRP'] || 0);
+          setOrganizacaoSocialCount(metadata.tipos_processo['Organização Social'] || 0);
+          
+          // Define outras métricas dos metadados
+          setTotalProcesses(metadata.total_processos || 0);
+          
+          console.log('Dados carregados via metadados:', metadata);
+          return; // Se metadados funcionaram, não precisa carregar o CSV completo
+        }
+        
+        // Fallback: carrega dados do CSV (para desenvolvimento local)
+        console.log('Metadados não disponíveis, carregando dados do CSV:', csvPath);
         const response = await fetch(csvPath);
         
         if (!response.ok) {
@@ -159,6 +183,38 @@ const Dashboard = () => {
           // Contagem de processos únicos
           const uniqueProcessCount = new Set(parsedData.map(item => item.Processo)).size;
           setTotalProcesses(uniqueProcessCount);
+
+          // Contagem por tipo_tr usando os dados do CSV
+          const processosPorTipo = new Map<string, Set<string>>();
+          
+          parsedData.forEach(item => {
+            if (item.tipo_tr && item.Processo) {
+              if (!processosPorTipo.has(item.tipo_tr)) {
+                processosPorTipo.set(item.tipo_tr, new Set());
+              }
+              processosPorTipo.get(item.tipo_tr)?.add(item.Processo);
+            }
+          });
+          
+          console.log('Processos por tipo_tr encontrados no CSV:', processosPorTipo);
+          console.log('Tipos encontrados:', Array.from(processosPorTipo.keys()));
+          
+          // Define as contagens para cada tipo
+          setDispensaCount(processosPorTipo.get('Dispensa')?.size || 0);
+          setEmergencialCount(processosPorTipo.get('Emergencial')?.size || 0);
+          setInexigibilidadeCount(processosPorTipo.get('Inexigibilidade')?.size || 0);
+          setLicitatorioCount(processosPorTipo.get('Licitatório')?.size || 0);
+          setLicitatorioSrpCount(processosPorTipo.get('Licitatório SRP')?.size || 0);
+          setOrganizacaoSocialCount(processosPorTipo.get('Organização Social')?.size || 0);
+
+          console.log('Contagens calculadas:', {
+            Dispensa: processosPorTipo.get('Dispensa')?.size || 0,
+            Emergencial: processosPorTipo.get('Emergencial')?.size || 0,
+            Inexigibilidade: processosPorTipo.get('Inexigibilidade')?.size || 0,
+            Licitatório: processosPorTipo.get('Licitatório')?.size || 0,
+            'Licitatório SRP': processosPorTipo.get('Licitatório SRP')?.size || 0,
+            'Organização Social': processosPorTipo.get('Organização Social')?.size || 0
+          });
 
 
 
@@ -239,82 +295,7 @@ const Dashboard = () => {
       }
     };
 
-    // Função separada para carregar dados de tipos do Excel
-    const loadExcelTypesData = async () => {
-      try {
-        console.log('Carregando tipos do Excel:', excelPath);
-        const excelResponse = await fetch(excelPath);
-        
-        if (excelResponse.ok) {
-          const excelBlob = await excelResponse.blob();
-          const excelBuffer = await excelBlob.arrayBuffer();
-          
-          const workbook = XLSX.read(excelBuffer);
-          const sheetName = workbook.SheetNames[0];
-          const worksheet = workbook.Sheets[sheetName];
-          const excelData = XLSX.utils.sheet_to_json(worksheet) as any[];
-          
-          console.log('Dados Excel carregados para tipos:', excelData.length, 'registros');
-          console.log('Primeira linha Excel:', excelData[0]);
-          console.log('Colunas disponíveis no Excel:', Object.keys(excelData[0] || {}));
-          
-          // Verifica se tem campo tipo_tr
-          if (excelData[0] && 'tipo_tr' in excelData[0]) {
-            console.log('Campo tipo_tr encontrado no Excel');
-            
-            // Contagem direta por tipo_tr
-            const processosPorTipo = new Map<string, Set<string>>();
-            
-            excelData.forEach(item => {
-              if (item.tipo_tr && item.Processo) {
-                if (!processosPorTipo.has(item.tipo_tr)) {
-                  processosPorTipo.set(item.tipo_tr, new Set());
-                }
-                processosPorTipo.get(item.tipo_tr)?.add(item.Processo);
-              }
-            });
-            console.log('Processos por tipo_tr encontrados:', processosPorTipo);
-          
-            
-            // Define as contagens para cada tipo
-            setDispensaCount(processosPorTipo.get('Dispensa')?.size || 0);
-            setEmergencialCount(processosPorTipo.get('Emergencial')?.size || 0);
-            setInexigibilidadeCount(processosPorTipo.get('Inexigibilidade')?.size || 0);
-            setLicitatorioCount(processosPorTipo.get('Licitatório')?.size || 0);
-            setLicitatorioSrpCount(processosPorTipo.get('Licitatório SRP')?.size || 0);
-            setOrganizacaoSocialCount(processosPorTipo.get('Organização Social')?.size || 0);
-          } else {
-            console.log('Campo tipo_tr não encontrado no Excel, setando valores zerados');
-            setDispensaCount(0);
-            setEmergencialCount(0);
-            setInexigibilidadeCount(0);
-            setLicitatorioCount(0);
-            setLicitatorioSrpCount(0);
-            setOrganizacaoSocialCount(0);
-          }
-        } else {
-          console.log('Excel não encontrado, setando contagens de tipo como zero');
-          setDispensaCount(0);
-          setEmergencialCount(0);
-          setInexigibilidadeCount(0);
-          setLicitatorioCount(0);
-          setLicitatorioSrpCount(0);
-          setOrganizacaoSocialCount(0);
-        }
-      } catch (error) {
-        console.error('Erro ao carregar dados do Excel:', error);
-        // Se der erro, define todos como zero
-        setDispensaCount(0);
-        setEmergencialCount(0);
-        setInexigibilidadeCount(0);
-        setLicitatorioCount(0);
-        setLicitatorioSrpCount(0);
-        setOrganizacaoSocialCount(0);
-      }
-    };
-
     fetchData();
-    loadExcelTypesData();
   }, []);
 
   const calculateMaxResponseTimes = (data: HistoricoItem[]) => {
