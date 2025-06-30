@@ -30,8 +30,8 @@ edge_options.add_experimental_option('prefs', {
 })
 
 
-# driver = webdriver.Chrome(service=service, options=chrome_options)
-# driver.maximize_window()
+driver = webdriver.Chrome(service=service, options=edge_options)
+driver.maximize_window()
 
 # Inicializando o WebDriver do Edge
 driver = webdriver.Edge(service=service, options=edge_options)

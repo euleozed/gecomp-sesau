@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 interface User {
@@ -36,12 +35,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const login = async (email: string, password: string): Promise<boolean> => {
-    // This is a mock login function - in a real app, this would call an API
-    if (email && password) {
-      // For demo purposes, any non-empty credentials work
+    // Only accept specific credentials
+    const validEmail = 'fenix.gadsesau@gmail.com';
+    const validPassword = '123456';
+    
+    if (email === validEmail && password === validPassword) {
       const newUser = {
         id: '1',
-        name: email.split('@')[0],
+        name: 'Fenix GAD SESAU',
         email: email
       };
       
