@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Layout from '@/components/Layout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, PieChart, Pie, Cell, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, LineChart, Line } from 'recharts';
@@ -64,6 +65,7 @@ interface CsvHistoricoItem {
 }
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const [totalProcesses, setTotalProcesses] = useState(0);
   const [historicoData, setHistoricoData] = useState<CsvHistoricoItem[]>([]);
   const [concludedCount, setConcludedCount] = useState<number>(0);
@@ -482,6 +484,10 @@ const Dashboard = () => {
     processo.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const handleTipoClick = (tipo: string) => {
+    navigate(`/processos-por-tipo/${encodeURIComponent(tipo)}`);
+  };
+
   const downloadPDF = () => {
     const element = document.getElementById('history-table-container');
     if (element) {
@@ -593,7 +599,10 @@ const Dashboard = () => {
       <div className="mb-8">
         <h2 className="text-2xl font-bold text-sei-800 mb-4">Processos por Tipo</h2>
         <div className="grid gap-4 grid-cols-6">
-          <Card className="border-sei-100">
+          <Card 
+            className="border-sei-100 cursor-pointer hover:shadow-lg transition-shadow" 
+            onClick={() => handleTipoClick('Dispensa')}
+          >
             <CardContent className="p-6 flex items-center gap-4">
               <div className="bg-blue-100 p-3 rounded-full">
                 <FileCheck className="h-6 w-6 text-blue-600" />
@@ -607,7 +616,10 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="border-sei-100">
+          <Card 
+            className="border-sei-100 cursor-pointer hover:shadow-lg transition-shadow" 
+            onClick={() => handleTipoClick('Emergencial')}
+          >
             <CardContent className="p-6 flex items-center gap-4">
               <div className="bg-red-100 p-3 rounded-full">
                 <AlertTriangle className="h-6 w-6 text-red-600" />
@@ -621,7 +633,10 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="border-sei-100">
+          <Card 
+            className="border-sei-100 cursor-pointer hover:shadow-lg transition-shadow" 
+            onClick={() => handleTipoClick('Inexigibilidade')}
+          >
             <CardContent className="p-6 flex items-center gap-4">
               <div className="bg-yellow-100 p-3 rounded-full">
                 <Palette className="h-6 w-6 text-yellow-600" />
@@ -636,7 +651,10 @@ const Dashboard = () => {
           </Card>
 
 
-          <Card className="border-sei-100">
+          <Card 
+            className="border-sei-100 cursor-pointer hover:shadow-lg transition-shadow" 
+            onClick={() => handleTipoClick('Licitatório')}
+          >
             <CardContent className="p-6 flex items-center gap-4">
               <div className="bg-green-100 p-3 rounded-full">
                 <LandmarkIcon className="h-6 w-6 text-green-600" />
@@ -650,7 +668,10 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="border-sei-100">
+          <Card 
+            className="border-sei-100 cursor-pointer hover:shadow-lg transition-shadow" 
+            onClick={() => handleTipoClick('Licitatório SRP')}
+          >
             <CardContent className="p-6 flex items-center gap-4">
               <div className="bg-purple-100 p-3 rounded-full">
                 <FileCheck className="h-6 w-6 text-purple-600" />
@@ -664,7 +685,10 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="border-sei-100">
+          <Card 
+            className="border-sei-100 cursor-pointer hover:shadow-lg transition-shadow" 
+            onClick={() => handleTipoClick('Organização Social')}
+          >
             <CardContent className="p-6 flex items-center gap-4">
               <div className="bg-indigo-100 p-3 rounded-full">
                 <Hospital className="h-6 w-6 text-indigo-600" />

@@ -11,6 +11,7 @@ import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Producao from "./pages/Producao";
 import Processos from "./pages/Processos";
+import ProcessosPorTipo from "./pages/ProcessosPorTipo";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ const App = () => (
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/producao" element={<Producao />} />
             <Route path="/processos" element={<Processos />} />
+            <Route path="/processos-por-tipo/:tipo" element={<ProcessosPorTipo />} />
             {/* <Route path="/credentials" element={<Credentials />} />
             <Route path="/processes" element={<Processes />} /> */}
             <Route path="*" element={<NotFound />} />
