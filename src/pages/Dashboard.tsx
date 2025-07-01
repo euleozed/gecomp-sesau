@@ -141,7 +141,7 @@ const Dashboard = () => {
           setOverdueProcessesCount(238); // Valor da imagem
           
           console.log('Dados carregados via metadados com sucesso');
-          return; // Se metadados funcionaram, não precisa carregar o CSV completo
+          // Continua para carregar o CSV para obter a lista de processos únicos
         }
         
         // Fallback: carrega dados do CSV (para desenvolvimento local)
