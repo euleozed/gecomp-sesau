@@ -12,6 +12,10 @@ export default defineConfig(({ mode }) => ({
       allow: ['..'],
     },
   },
+  build: {
+    outDir: 'dist',
+    assetsDir: 'assets',
+  },
   plugins: [
     react(),
     mode === 'development' &&

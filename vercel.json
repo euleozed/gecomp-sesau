@@ -3,6 +3,10 @@
     {
       "source": "/backend/(.*)",
       "destination": "/backend/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ],
   "headers": [
