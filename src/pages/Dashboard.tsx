@@ -488,6 +488,10 @@ const Dashboard = () => {
     navigate(`/processos-por-tipo/${encodeURIComponent(tipo)}`);
   };
 
+  const handleCardSuperiorClick = (filtro: string) => {
+    navigate(`/processos-filtrados/${encodeURIComponent(filtro)}`);
+  };
+
   const downloadPDF = () => {
     const element = document.getElementById('history-table-container');
     if (element) {
@@ -539,7 +543,10 @@ const Dashboard = () => {
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8">
-        <Card className="border-sei-100">
+        <Card 
+          className="border-sei-100 cursor-pointer hover:shadow-lg transition-shadow"
+          onClick={() => handleCardSuperiorClick('todos')}
+        >
           <CardContent className="p-6 flex items-center gap-4">
             <div className="bg-sei-100 p-3 rounded-full">
               <FileCheck className="h-6 w-6 text-sei-600" />
@@ -553,7 +560,10 @@ const Dashboard = () => {
           </CardContent>
         </Card>
 
-        <Card className="border-sei-100">
+        <Card 
+          className="border-sei-100 cursor-pointer hover:shadow-lg transition-shadow"
+          onClick={() => handleCardSuperiorClick('homologados')}
+        >
           <CardContent className="p-6 flex items-center gap-4">
             <div className="bg-sei-100 p-3 rounded-full">
               <CheckCircle className="h-6 w-6 text-sei-600" />
@@ -567,7 +577,10 @@ const Dashboard = () => {
           </CardContent>
         </Card>
 
-        <Card className="border-sei-100">
+        <Card 
+          className="border-sei-100 cursor-pointer hover:shadow-lg transition-shadow"
+          onClick={() => handleCardSuperiorClick('em-andamento')}
+        >
           <CardContent className="p-6 flex items-center gap-4">
             <div className="bg-sei-100 p-3 rounded-full">
               <Clock className="h-6 w-6 text-sei-600" />
@@ -581,7 +594,10 @@ const Dashboard = () => {
           </CardContent>
         </Card>
 
-        <Card className="border-sei-100">
+        <Card 
+          className="border-sei-100 cursor-pointer hover:shadow-lg transition-shadow"
+          onClick={() => handleCardSuperiorClick('atrasados')}
+        >
           <CardContent className="p-6 flex items-center gap-4">
             <div className="bg-sei-100 p-3 rounded-full">
               <AlertTriangle className="h-6 w-6 text-orange-600" />
