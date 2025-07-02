@@ -1,4 +1,16 @@
 Data/Hora,Unidade,Usuário,Descrição,Processo
+01/07/2025 15:58,HRSF-DG,88798224204,Bloco 1058973 retornado para a unidade HRSF-ASTEC,0036.044720/2024-55
+01/07/2025 15:54,HRSF-ASTEC,95095187272,Bloco 1058973 disponibilizado para unidade HRSF-DG,0036.044720/2024-55
+01/07/2025 15:20,HRSF-ASTEC,95095187272,Cancelada disponibilização do bloco 1058973 para a unidade HRSF-DG,0036.044720/2024-55
+01/07/2025 15:19,HRSF-ASTEC,95095187272,Bloco 1058973 disponibilizado para unidade HRSF-DG,0036.044720/2024-55
+01/07/2025 12:23,HRSF-DG,88798224204,Bloco 1058973 retornado para a unidade HRSF-ASTEC,0036.044720/2024-55
+01/07/2025 12:08,HRSF-ASTEC,95095187272,Bloco 1058973 disponibilizado para unidade HRSF-DG,0036.044720/2024-55
+01/07/2025 11:59,HRSF-DG,88798224204,Bloco 1058973 retornado para a unidade HRSF-ASTEC,0036.044720/2024-55
+01/07/2025 11:51,HRSF-ASTEC,95095187272,Bloco 1058973 disponibilizado para unidade HRSF-DG,0036.044720/2024-55
+01/07/2025 11:46,HRSF-DG,88798224204,Bloco 1058973 retornado para a unidade HRSF-ASTEC,0036.044720/2024-55
+01/07/2025 11:14,HRSF-ASTEC,95095187272,Bloco 1058973 disponibilizado para unidade HRSF-DG,0036.044720/2024-55
+01/07/2025 11:14,HRSF-ASTEC,95095187272,Cancelada disponibilização do bloco 1058973 para a unidade HRSF-DG,0036.044720/2024-55
+01/07/2025 10:38,HRSF-ASTEC,95095187272,Bloco 1058973 disponibilizado para unidade HRSF-DG,0036.044720/2024-55
 30/06/2025 13:10,HRSF-DG,88798224204,Bloco 1058973 retornado para a unidade HRSF-ASTEC,0036.044720/2024-55
 30/06/2025 12:58,HRSF-ASTEC,95095187272,Bloco 1058973 disponibilizado para unidade HRSF-DG,0036.044720/2024-55
 24/06/2025 11:30,HRSF-DG,88798224204,Bloco 1058973 retornado para a unidade HRSF-ASTEC,0036.044720/2024-55
@@ -87,13 +99,13 @@ Data/Hora,Unidade,Usuário,Descrição,Processo
 15/01/2025 11:02,SESAU-GECOMP,glpi-automacao,"Cancelado documento 0055807747 (Despacho). Substituição de documento, de acordo com o Chamado de num: 2025014156 da plataforma GLPI",0036.044720/2024-55
 15/01/2025 11:00,SESAU-GECOMP,glpi-automacao,"Cancelado documento 0055609958 (Despacho). Substituição de documento, de acordo com o Chamado de num: 2025014153 da plataforma GLPI",0036.044720/2024-55
 15/01/2025 10:24,SESAU-GECOMP,02371856282,Alterada ordem dos protocolos,0036.044720/2024-55
-15/01/2025 10:16,SESAU-GECOMP,02371856282,Reabertura do processo na unidade,0036.044720/2024-55
-13/01/2025 09:54,SESAU-CO,02415332283,Processo atribuído para 03754108212,0036.044720/2024-55
+15/01/2025 10:16,SESAU-GECOMP,2371856282,Reabertura do processo na unidade,0036.044720/2024-55
+13/01/2025 09:54,SESAU-CO,2415332283,Processo atribuído para 03754108212,0036.044720/2024-55
 10/01/2025 16:37,JPII-SAMD,59146273204,Processo remetido pela unidade SAMD-ASS,0036.044720/2024-55
-09/01/2025 13:12,SESAU-GECOMP,02371856282,Conclusão do processo na unidade,0036.044720/2024-55
-09/01/2025 13:11,SESAU-GECOMP,02371856282,"Alterado tipo do processo de ""Compras: Licitação Concorrência-Registro de Preço"" para ""Compras: Licitação Pregão Eletrônico-Registro de Preço""",0036.044720/2024-55
-09/01/2025 13:10,SESAU-GECOMP,02371856282,"Alterado tipo do processo de ""Compras: Dispensa"" para ""Compras: Licitação Concorrência-Registro de Preço""",0036.044720/2024-55
-09/01/2025 13:10,SESAU-GECOMP,02371856282,Reabertura do processo na unidade,0036.044720/2024-55
+09/01/2025 13:12,SESAU-GECOMP,2371856282,Conclusão do processo na unidade,0036.044720/2024-55
+09/01/2025 13:11,SESAU-GECOMP,2371856282,"Alterado tipo do processo de ""Compras: Licitação Concorrência-Registro de Preço"" para ""Compras: Licitação Pregão Eletrônico-Registro de Preço""",0036.044720/2024-55
+09/01/2025 13:10,SESAU-GECOMP,2371856282,"Alterado tipo do processo de ""Compras: Dispensa"" para ""Compras: Licitação Concorrência-Registro de Preço""",0036.044720/2024-55
+09/01/2025 13:10,SESAU-GECOMP,2371856282,Reabertura do processo na unidade,0036.044720/2024-55
 06/01/2025 13:46,SESAU-GECOMP,64452204287,Conclusão do processo na unidade,0036.044720/2024-55
 06/01/2025 13:46,SESAU-GECOMP,64452204287,Reabertura do processo na unidade,0036.044720/2024-55
 06/01/2025 12:09,SESAU-CO,28588304287,Processo atribuído para 02415332283,0036.044720/2024-55
