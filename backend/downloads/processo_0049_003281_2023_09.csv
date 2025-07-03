@@ -1,4 +1,7 @@
 Data/Hora,Unidade,Usuário,Descrição,Processo
+02/07/2025 11:18,SESAU-GECOMP,88904288215,Cancelada disponibilização do bloco 324137 para a unidade SESAU-CO,0049.003281/2023-09
+02/07/2025 09:26,SESAU-GECOMP,88904288215,Bloco 324137 disponibilizado para unidade SESAU-CO,0049.003281/2023-09
+02/07/2025 09:26,SESAU-GECOMP,88904288215,Cancelada disponibilização do bloco 324137 para a unidade SESAU-CO,0049.003281/2023-09
 01/07/2025 16:46,SESAU-GECOMP,1331762235,Bloco 324137 disponibilizado para unidade SESAU-CO,0049.003281/2023-09
 01/07/2025 16:46,SESAU-GECOMP,1331762235,Cancelada disponibilização do bloco 324137 para a unidade SESAU-CO,0049.003281/2023-09
 30/06/2025 15:23,SESAU-GECOMP,88904288215,Bloco 324137 disponibilizado para unidade SESAU-CO,0049.003281/2023-09
@@ -2196,7 +2199,7 @@ Data/Hora,Unidade,Usuário,Descrição,Processo
 19/02/2024 22:55,HB-DUROL,00044271220,Alterado nível de acesso do documento 0045912446 (Despacho) para público,0049.003281/2023-09
 19/02/2024 22:55,HB-DUROL,00044271220,Assinado Documento 0045912446 (Despacho) por 00044271220,0049.003281/2023-09
 14/02/2024 15:56,HB-DUROL,00044271220,"Gerado documento restrito 0045912446 (Despacho), Documento Preparatório (Art. 7º, § 3º, da Lei nº 12.527/2011)",0049.003281/2023-09
-14/02/2024 15:56,HB-DUROL,00044271220,Alterado nível de acesso geral para restrito,0049.003281/2023-09
+14/02/2024 15:56,HB-DUROL,44271220,Alterado nível de acesso geral para restrito,0049.003281/2023-09
 09/02/2024 11:36,HB-DUROL,77146107272,Processo recebido na unidade,0049.003281/2023-09
 09/02/2024 09:41,HB-DUROL,39785459349,Processo remetido pela unidade HB-DG,0049.003281/2023-09
 08/02/2024 23:05,HB-DG,67821227234,Processo recebido na unidade,0049.003281/2023-09
