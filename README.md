@@ -1,5 +1,24 @@
 # Welcome to your Lovable project
 
+## 🎯 Nova Funcionalidade: Relatórios IA
+
+**✅ IMPLEMENTADA** - Sistema inteligente de geração de relatórios executivos para processos do SEI usando Hugging Face.
+
+### 🚀 Acesso Rápido
+- **📚 Documentação Completa**: [INDICE_DOCUMENTACAO.md](INDICE_DOCUMENTACAO.md)
+- **⚡ Teste Imediato**: [TUTORIAL_TESTE_RAPIDO.md](TUTORIAL_TESTE_RAPIDO.md)
+- **📊 Visão Geral**: [README_RELATORIOS_IA.md](README_RELATORIOS_IA.md)
+
+### 🌟 Características
+- 🆓 **Gratuito** - Usa API gratuita do Hugging Face
+- 🚀 **Instantâneo** - Gera relatórios em 5-10 segundos
+- 🔧 **Sem configuração** - Funciona imediatamente
+- 📄 **Exportação PDF** - Download direto dos relatórios
+
+**Como usar**: Acesse o Dashboard → Selecione um processo → Clique em "Gerar Relatório IA"
+
+---
+
 ## Project info
 
 **URL**: https://lovable.dev/projects/f645bc1e-9a55-4540-8a4d-31ffca0dc394

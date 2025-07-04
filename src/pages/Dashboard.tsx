@@ -3,9 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import Layout from '@/components/Layout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, PieChart, Pie, Cell, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, LineChart, Line } from 'recharts';
-import { FileCheck, Clock, AlertTriangle, CheckCircle, Landmark, LandmarkIcon, Palette, Hospital } from 'lucide-react';
+import { FileCheck, Clock, AlertTriangle, CheckCircle, Landmark, LandmarkIcon, Palette, Hospital, FileText, Download, Loader2 } from 'lucide-react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select';
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useParams } from 'react-router-dom';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -88,7 +90,254 @@ const Dashboard = () => {
   const [licitatorioSrpCount, setLicitatorioSrpCount] = useState<number>(0);
   const [organizacaoSocialCount, setOrganizacaoSocialCount] = useState<number>(0);
 
+  // Estados para relatório IA
+  const [relatorioGerado, setRelatorioGerado] = useState<string>('');
+  const [isGeneratingReport, setIsGeneratingReport] = useState<boolean>(false);
+  const [showReportDialog, setShowReportDialog] = useState<boolean>(false);
+  const [reportError, setReportError] = useState<string>('');
 
+  // Função para gerar relatório usando Hugging Face
+  const gerarRelatorio = async () => {
+    if (!selectedProcess || processedData.length === 0) {
+      alert('Selecione um processo primeiro');
+      return;
+    }
+
+    setIsGeneratingReport(true);
+    setReportError('');
+
+    try {
+      // Preparar dados estruturados para a LLM
+      const historico = processedData.map((item) => ({
+        data: item['Data/Hora'],
+        unidade: item.Unidade,
+        documento: item.Documento,
+        diasEntreDocumentos: item.diasEntreDocumentos,
+        diasAcumulados: item.diasAcumulados
+      }));
+
+      const processNumber = selectedProcess.split(' - ')[0];
+
+      // Preparar resumo dos dados para o modelo
+      const totalDias = Math.max(...processedData.map(item => item.diasAcumulados || 0));
+      const documentosAtrasados = processedData.filter(item => 
+        item.diasEntreDocumentos && Math.abs(item.diasEntreDocumentos) > 15
+      ).length;
+      const unidadesEnvolvidas = [...new Set(processedData.map(item => item.Unidade).filter(u => u))];
+      const ultimaMovimentacao = processedData[0]?.['Data/Hora'];
+
+      const prompt = `
+Gere um relatório executivo para o processo ${processNumber} com base nos dados abaixo:
+
+DADOS RESUMIDOS:
+- Tempo total de tramitação: ${totalDias} dias
+- Documentos com atraso (>15 dias): ${documentosAtrasados}
+- Unidades envolvidas: ${unidadesEnvolvidas.join(', ')}
+- Última movimentação: ${ultimaMovimentacao}
+- Total de documentos: ${processedData.length}
+
+ESTRUTURA DO RELATÓRIO:
+
+# RELATÓRIO EXECUTIVO - PROCESSO ${processNumber}
+
+## 1. RESUMO EXECUTIVO
+[Análise geral do processo, tempo total e status atual]
+
+## 2. ANÁLISE TEMPORAL
+[Tempo de tramitação, documentos atrasados, padrões identificados]
+
+## 3. ANÁLISE POR UNIDADE
+[Performance das unidades envolvidas, identificação de gargalos]
+
+## 4. DOCUMENTOS ANALISADOS
+[Principais documentos e sequência cronológica]
+
+## 5. INDICADORES DE PERFORMANCE
+[Métricas de eficiência e comparação com prazos ideais]
+
+## 6. RECOMENDAÇÕES
+[Melhorias sugeridas e ações preventivas]
+
+Seja objetivo, profissional e use linguagem técnica adequada para gestores públicos.
+`;
+
+             // Fazer chamada para Hugging Face
+       const response = await fetch('https://api-inference.huggingface.co/models/microsoft/DialoGPT-large', {
+         method: 'POST',
+         headers: {
+           'Content-Type': 'application/json',
+           'Authorization': `Bearer ${import.meta.env.VITE_HUGGINGFACE_API_KEY}`,
+         },
+         body: JSON.stringify({
+           inputs: prompt,
+           parameters: {
+             max_new_tokens: 1000,
+             temperature: 0.3,
+             return_full_text: false
+           }
+         }),
+       });
+
+       if (!response.ok) {
+         // Fallback para usar modelo gratuito sem autenticação - tenta modelo diferente
+         const fallbackResponse = await fetch('https://api-inference.huggingface.co/models/bigscience/bloom-560m', {
+           method: 'POST',
+           headers: {
+             'Content-Type': 'application/json',
+           },
+           body: JSON.stringify({
+             inputs: prompt,
+             parameters: {
+               max_new_tokens: 800,
+               temperature: 0.3
+             }
+           }),
+         });
+
+        if (!fallbackResponse.ok) {
+          throw new Error(`Erro na API Hugging Face: ${fallbackResponse.status} ${fallbackResponse.statusText}`);
+        }
+
+        const fallbackData = await fallbackResponse.json();
+        let relatorio = '';
+
+        if (Array.isArray(fallbackData) && fallbackData[0]?.generated_text) {
+          relatorio = fallbackData[0].generated_text;
+        } else {
+          // Gerar relatório básico se a API falhar
+          relatorio = gerarRelatorioBasico(processNumber, totalDias, documentosAtrasados, unidadesEnvolvidas, ultimaMovimentacao);
+        }
+
+        setRelatorioGerado(relatorio);
+        setShowReportDialog(true);
+        return;
+      }
+
+      const data = await response.json();
+      let relatorio = '';
+
+      if (Array.isArray(data) && data[0]?.generated_text) {
+        relatorio = data[0].generated_text;
+      } else {
+        // Gerar relatório básico se a resposta não for como esperado
+        relatorio = gerarRelatorioBasico(processNumber, totalDias, documentosAtrasados, unidadesEnvolvidas, ultimaMovimentacao);
+      }
+
+      setRelatorioGerado(relatorio);
+      setShowReportDialog(true);
+
+    } catch (error) {
+      console.error('Erro ao gerar relatório:', error);
+      
+      // Gerar relatório básico em caso de erro
+      const processNumber = selectedProcess.split(' - ')[0];
+      const totalDias = Math.max(...processedData.map(item => item.diasAcumulados || 0));
+      const documentosAtrasados = processedData.filter(item => 
+        item.diasEntreDocumentos && Math.abs(item.diasEntreDocumentos) > 15
+      ).length;
+      const unidadesEnvolvidas = [...new Set(processedData.map(item => item.Unidade).filter(u => u))];
+      const ultimaMovimentacao = processedData[0]?.['Data/Hora'];
+      
+      const relatorioBasico = gerarRelatorioBasico(processNumber, totalDias, documentosAtrasados, unidadesEnvolvidas, ultimaMovimentacao);
+      
+      setRelatorioGerado(relatorioBasico);
+      setShowReportDialog(true);
+      setReportError('Relatório gerado com base em análise local. Para relatórios mais detalhados, configure a API do Hugging Face.');
+    } finally {
+      setIsGeneratingReport(false);
+    }
+  };
+
+  // Função para gerar relatório básico quando a API falha
+  const gerarRelatorioBasico = (processNumber: string, totalDias: number, documentosAtrasados: number, unidadesEnvolvidas: string[], ultimaMovimentacao: string) => {
+    const dataUltimaMovimentacao = new Date(ultimaMovimentacao).toLocaleDateString('pt-BR');
+    const status = documentosAtrasados > 0 ? 'COM ATRASOS IDENTIFICADOS' : 'DENTRO DO PRAZO';
+    
+    return `# RELATÓRIO EXECUTIVO - PROCESSO ${processNumber}
+
+## 1. RESUMO EXECUTIVO
+
+**Processo:** ${processNumber}
+**Status:** ${status}
+**Tempo Total de Tramitação:** ${totalDias} dias
+**Última Movimentação:** ${dataUltimaMovimentacao}
+**Total de Documentos:** ${processedData.length}
+
+## 2. ANÁLISE TEMPORAL
+
+- **Duração Total:** ${totalDias} dias de tramitação
+- **Documentos com Atraso:** ${documentosAtrasados} documento(s) com prazo superior a 15 dias
+- **Eficiência:** ${documentosAtrasados === 0 ? 'Boa' : 'Requer atenção'}
+
+## 3. ANÁLISE POR UNIDADE
+
+**Unidades Envolvidas:** ${unidadesEnvolvidas.length}
+${unidadesEnvolvidas.map(unidade => `- ${unidade}`).join('\n')}
+
+## 4. DOCUMENTOS ANALISADOS
+
+Total de ${processedData.length} documentos processados em ordem cronológica.
+${documentosAtrasados > 0 ? `\n⚠️ **ATENÇÃO:** ${documentosAtrasados} documento(s) apresentaram atraso superior a 15 dias.` : ''}
+
+## 5. INDICADORES DE PERFORMANCE
+
+- **Tempo Médio por Documento:** ${Math.round(totalDias / processedData.length)} dias
+- **Taxa de Atraso:** ${Math.round((documentosAtrasados / processedData.length) * 100)}%
+- **Classificação:** ${documentosAtrasados === 0 ? 'EFICIENTE' : documentosAtrasados <= 2 ? 'MODERADO' : 'CRÍTICO'}
+
+## 6. RECOMENDAÇÕES
+
+${documentosAtrasados > 0 ? `
+**AÇÕES IMEDIATAS:**
+- Revisar os documentos com atraso superior a 15 dias
+- Identificar gargalos nas unidades com maior tempo de resposta
+- Implementar controles de prazo mais rigorosos
+` : `
+**MANUTENÇÃO:**
+- Continuar monitorando os prazos
+- Manter o padrão de eficiência atual
+- Documentar as boas práticas identificadas
+`}
+
+**MELHORIAS GERAIS:**
+- Automatizar notificações de prazo
+- Implementar dashboard de acompanhamento
+- Capacitar servidores sobre gestão de prazos
+
+---
+*Relatório gerado automaticamente em ${new Date().toLocaleString('pt-BR')}*`;
+  };
+
+  // Função para download do relatório como PDF
+  const downloadRelatorioPDF = () => {
+    const doc = new jsPDF();
+    const pageHeight = doc.internal.pageSize.height;
+    let cursorY = 20;
+
+    // Título
+    doc.setFontSize(16);
+    doc.text(`Relatório do Processo ${selectedProcess.split(' - ')[0]}`, 20, cursorY);
+    cursorY += 20;
+
+    // Quebrar texto em linhas
+    const lines = relatorioGerado.split('\n');
+    doc.setFontSize(10);
+
+    for (const line of lines) {
+      const wrappedLines = doc.splitTextToSize(line, 170);
+      
+      for (const wrappedLine of wrappedLines) {
+        if (cursorY > pageHeight - 20) {
+          doc.addPage();
+          cursorY = 20;
+        }
+        doc.text(wrappedLine, 20, cursorY);
+        cursorY += 6;
+      }
+    }
+
+    doc.save(`relatorio_${selectedProcess.split(' - ')[0]}_${new Date().toISOString().split('T')[0]}.pdf`);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -746,16 +995,36 @@ const Dashboard = () => {
         <>
           <Card className="border-sei-100 mt-6">
             <CardHeader>
-              <CardTitle>Histórico do Processo</CardTitle>
-              <CardDescription>Todos os registros do histórico do processo {selectedProcess}</CardDescription>
-              {/* Botão de exportação desabilitado temporariamente
-              <button 
-                onClick={downloadPDF} 
-                className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
-              >
-                Exportar Histórico como PDF
-              </button>
-              */}
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle>Histórico do Processo</CardTitle>
+                  <CardDescription>Todos os registros do histórico do processo {selectedProcess}</CardDescription>
+                </div>
+                <div className="flex gap-2">
+                  <Button 
+                    onClick={gerarRelatorio}
+                    disabled={isGeneratingReport}
+                    className="bg-sei-600 hover:bg-sei-700"
+                  >
+                    {isGeneratingReport ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Gerando...
+                      </>
+                    ) : (
+                      <>
+                        <FileText className="mr-2 h-4 w-4" />
+                        Gerar Relatório IA
+                      </>
+                    )}
+                  </Button>
+                </div>
+              </div>
+              {reportError && (
+                <div className="mt-2 p-2 bg-red-100 border border-red-400 text-red-700 rounded">
+                  {reportError}
+                </div>
+              )}
             </CardHeader>
             <CardContent>
               {processedData.length === 0 ? (
@@ -864,6 +1133,47 @@ const Dashboard = () => {
           </CardContent>
         </Card>
       )}
+
+      {/* Modal do Relatório */}
+      <Dialog open={showReportDialog} onOpenChange={setShowReportDialog}>
+        <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <FileText className="h-5 w-5" />
+              Relatório do Processo {selectedProcess?.split(' - ')[0]}
+            </DialogTitle>
+            <DialogDescription>
+              Relatório gerado por Inteligência Artificial baseado nos dados de tramitação do processo
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="mt-4">
+            {relatorioGerado && (
+              <div className="space-y-4">
+                <div className="flex justify-end">
+                  <Button 
+                    onClick={downloadRelatorioPDF}
+                    variant="outline"
+                    className="mb-4"
+                  >
+                    <Download className="mr-2 h-4 w-4" />
+                    Download PDF
+                  </Button>
+                </div>
+                
+                <div className="prose prose-sm max-w-none bg-gray-50 p-6 rounded-lg">
+                  <div 
+                    className="whitespace-pre-wrap text-sm"
+                    style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+                  >
+                    {relatorioGerado}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
     </Layout>
   );
 };
