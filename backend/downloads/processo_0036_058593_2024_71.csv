@@ -1,4 +1,8 @@
 Data/Hora,Unidade,Usuário,Descrição,Processo
+09/07/2025 10:04,HRC-SEMED,97158356272,Conclusão do processo na unidade,0036.058593/2024-71
+08/07/2025 16:37,HRC-SEMED,97158356272,Processo recebido na unidade,0036.058593/2024-71
+08/07/2025 16:32,HRC-SEMED,92193188149,Processo remetido pela unidade SESAU-NUAC,0036.058593/2024-71
+08/07/2025 16:32,SESAU-NUAC,92193188149,Reabertura do processo na unidade,0036.058593/2024-71
 17/06/2025 15:59,SESAU-GECOMP,95637508291,Conclusão do processo na unidade,0036.058593/2024-71
 17/06/2025 15:58,SESAU-GECOMP,95637508291,Disponibilizado acesso externo para Alcione Pantoja de Lima (inao@inao.pvh.br) até 17/07/2025 (30 dias). Com visualização integral do processo. Conforme solicitado na Petição 178 (SEI n.º 0061285665).,0036.058593/2024-71
 17/06/2025 15:56,SESAU-GECOMP,95637508291,Reabertura do processo na unidade,0036.058593/2024-71
@@ -95,8 +99,8 @@ Data/Hora,Unidade,Usuário,Descrição,Processo
 03/06/2025 12:09,PGE-SESAU,00282311203,Processo remetido pela unidade SESAU-SC,0036.058593/2024-71
 03/06/2025 12:09,SESAU-SESAU,04646877481,Bloco 1138949 retornado para a unidade SESAU-SC,0036.058593/2024-71
 03/06/2025 11:49,SESAU-SC,04445115207,Bloco 1138949 disponibilizado para unidade SESAU-SE,0036.058593/2024-71
-03/06/2025 11:49,SESAU-SC,04445115207,Bloco 1138949 disponibilizado para unidade SESAU-SESAU,0036.058593/2024-71
-03/06/2025 11:48,SESAU-SC,04445115207,Cancelada disponibilização do bloco 1138949 para a unidade SESAU-SESAU,0036.058593/2024-71
+03/06/2025 11:49,SESAU-SC,4445115207,Bloco 1138949 disponibilizado para unidade SESAU-SESAU,0036.058593/2024-71
+03/06/2025 11:48,SESAU-SC,4445115207,Cancelada disponibilização do bloco 1138949 para a unidade SESAU-SESAU,0036.058593/2024-71
 03/06/2025 11:47,SESAU-SE,83997628220,Bloco 1138949 retornado para a unidade SESAU-SC,0036.058593/2024-71
 03/06/2025 11:46,SESAU-SE,74648055268,Assinado Documento 0060814694 (Despacho) por 74648055268,0036.058593/2024-71
 03/06/2025 11:39,SESAU-SC,4445115207,Bloco 1138949 disponibilizado para unidade SESAU-SE,0036.058593/2024-71

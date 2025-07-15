@@ -1,4 +1,15 @@
 Data/Hora,Unidade,Usuário,Descrição,Processo
+09/07/2025 15:09,SESAU-GECOMP,91895162220,Processo recebido na unidade,0036.051327/2024-18
+09/07/2025 15:05,SESAU-GECOMP,3122149958,Processo remetido pela unidade SESAU-NP,0036.051327/2024-18
+09/07/2025 14:08,SESAU-CGAF,84360330278,Assinado Documento 0061921169 (Documento de Oficialização de Demanda 50) por 84360330278,0036.051327/2024-18
+09/07/2025 14:08,SESAU-CGAF,84360330278,Assinado Documento 0062067832 (Despacho) por 84360330278,0036.051327/2024-18
+09/07/2025 13:24,SESAU-NP,3122149958,Bloco 1486433 disponibilizado para unidade SESAU-CGAF,0036.051327/2024-18
+09/07/2025 13:24,SESAU-NP,3122149958,Documento 0062067832 (Despacho) inserido no bloco 1486433,0036.051327/2024-18
+09/07/2025 13:24,SESAU-NP,3122149958,Documento 0061921169 (Documento de Oficialização de Demanda 50) inserido no bloco 1486433,0036.051327/2024-18
+09/07/2025 12:58,SESAU-NP,3122149958,Gerado documento público 0062067832 (Despacho),0036.051327/2024-18
+09/07/2025 12:45,SESAU-NP,3122149958,"Registro de documento externo público 0062066487 (Portaria), conferido com documento original",0036.051327/2024-18
+09/07/2025 12:44,SESAU-NP,3122149958,"Registro de documento externo público 0062066379 (Portaria), conferido com documento original",0036.051327/2024-18
+04/07/2025 14:27,SESAU-NP,96303042287,Gerado documento público 0061921169 (Documento de Oficialização de Demanda 50),0036.051327/2024-18
 04/07/2025 09:27,SESAU-CGAF,5309594965,Processo recebido na unidade,0036.051327/2024-18
 04/07/2025 08:49,SESAU-CGAF,1384421262,Processo remetido pela unidade SESAU-GECOMP,0036.051327/2024-18
 04/07/2025 08:48,SESAU-GECOMP,1384421262,Assinado Documento 0061873547 (Despacho) por 01384421262,0036.051327/2024-18
