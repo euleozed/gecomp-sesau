@@ -1,12 +1,12 @@
 import pandas as pd
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.edge.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.edge.service import Service
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
-from webdriver_manager.microsoft import EdgeChromiumDriverManager
 import os
 import time
 from io import StringIO
@@ -16,22 +16,19 @@ from dotenv import load_dotenv
 
 load_dotenv()  # Carrega variáveis do arquivo .env
 
-# Configuração do WebDriver para o Edge
-service = Service(EdgeChromiumDriverManager().install())
-edge_options = webdriver.EdgeOptions()
+# Caminho fixo do driver
+caminho_driver = "backend/edgedriver_win64/msedgedriver.exe"  # <== Ajuste conforme seu caso
+service = Service(executable_path=caminho_driver)
 
 # Diretório de downloads
 download_dir = r"./backend/downloads"
+edge_options = webdriver.EdgeOptions()
 edge_options.add_experimental_option('prefs', {
     'download.default_directory': download_dir,
     'download.prompt_for_download': False,
     'download.directory_upgrade': True,
     'safebrowsing.enabled': True
 })
-
-
-driver = webdriver.Chrome(service=service, options=edge_options)
-driver.maximize_window()
 
 # Inicializando o WebDriver do Edge
 driver = webdriver.Edge(service=service, options=edge_options)

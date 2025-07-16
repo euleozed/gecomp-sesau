@@ -59,6 +59,14 @@ if %errorlevel% neq 0 (
     goto error
 )
 
+:: Executa o script de commit e push
+echo Executando git_commit_push.py...
+python backend\git_commit_push.py
+if %errorlevel% neq 0 (
+    echo Erro ao executar git_commit_push.py
+    goto error
+)
+
 echo Processo concluído com sucesso!
 goto end
 
