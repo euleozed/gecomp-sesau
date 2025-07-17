@@ -120,18 +120,19 @@ const Dashboard = () => {
 
       // Preparar resumo dos dados para o modelo
       const totalDias = Math.max(...processedData.map(item => item.diasAcumulados || 0));
-      const documentosAtrasados = processedData.filter(item => 
+      const documentosAtrasadosData = processedData.filter(item => 
         item.diasEntreDocumentos && Math.abs(item.diasEntreDocumentos) > 15
-      ).length;
+      );
       const unidadesEnvolvidas = [...new Set(processedData.map(item => item.Unidade).filter(u => u))];
-      const ultimaMovimentacao = processedData[0]?.['Data/Hora'];
+      // Ajustar para pegar a segunda linha (primeira movimentação real, não o documento fake)
+      const ultimaMovimentacao = processedData[1]?.['Data/Hora'] || processedData[0]?.['Data/Hora'];
 
       const prompt = `
 Gere um relatório executivo para o processo ${processNumber} com base nos dados abaixo:
 
 DADOS RESUMIDOS:
 - Tempo total de tramitação: ${totalDias} dias
-- Documentos com atraso (>15 dias): ${documentosAtrasados}
+- Documentos com atraso (>15 dias): ${documentosAtrasadosData.length}
 - Unidades envolvidas: ${unidadesEnvolvidas.join(', ')}
 - Última movimentação: ${ultimaMovimentacao}
 - Total de documentos: ${processedData.length}
@@ -205,7 +206,7 @@ Seja objetivo, profissional e use linguagem técnica adequada para gestores púb
           relatorio = fallbackData[0].generated_text;
         } else {
           // Gerar relatório básico se a API falhar
-          relatorio = gerarRelatorioBasico(processNumber, totalDias, documentosAtrasados, unidadesEnvolvidas, ultimaMovimentacao);
+          relatorio = gerarRelatorioBasico(processNumber, totalDias, documentosAtrasadosData, unidadesEnvolvidas, ultimaMovimentacao);
         }
 
         setRelatorioGerado(relatorio);
@@ -220,7 +221,7 @@ Seja objetivo, profissional e use linguagem técnica adequada para gestores púb
         relatorio = data[0].generated_text;
       } else {
         // Gerar relatório básico se a resposta não for como esperado
-        relatorio = gerarRelatorioBasico(processNumber, totalDias, documentosAtrasados, unidadesEnvolvidas, ultimaMovimentacao);
+        relatorio = gerarRelatorioBasico(processNumber, totalDias, documentosAtrasadosData, unidadesEnvolvidas, ultimaMovimentacao);
       }
 
       setRelatorioGerado(relatorio);
@@ -232,25 +233,27 @@ Seja objetivo, profissional e use linguagem técnica adequada para gestores púb
       // Gerar relatório básico em caso de erro
       const processNumber = selectedProcess.split(' - ')[0];
       const totalDias = Math.max(...processedData.map(item => item.diasAcumulados || 0));
-      const documentosAtrasados = processedData.filter(item => 
+      const documentosAtrasadosDataError = processedData.filter(item => 
         item.diasEntreDocumentos && Math.abs(item.diasEntreDocumentos) > 15
-      ).length;
+      );
       const unidadesEnvolvidas = [...new Set(processedData.map(item => item.Unidade).filter(u => u))];
-      const ultimaMovimentacao = processedData[0]?.['Data/Hora'];
+      // Ajustar para pegar a segunda linha (primeira movimentação real, não o documento fake)
+      const ultimaMovimentacao = processedData[1]?.['Data/Hora'] || processedData[0]?.['Data/Hora'];
       
-      const relatorioBasico = gerarRelatorioBasico(processNumber, totalDias, documentosAtrasados, unidadesEnvolvidas, ultimaMovimentacao);
+      const relatorioBasico = gerarRelatorioBasico(processNumber, totalDias, documentosAtrasadosDataError, unidadesEnvolvidas, ultimaMovimentacao);
       
       setRelatorioGerado(relatorioBasico);
       setShowReportDialog(true);
-      setReportError('Relatório gerado com base em análise local. Para relatórios mais detalhados, configure a API do Hugging Face.');
+      // setReportError('Relatório gerado com base em análise local. Para relatórios mais detalhados, configure a API do Hugging Face.');
     } finally {
       setIsGeneratingReport(false);
     }
   };
 
   // Função para gerar relatório básico quando a API falha
-  const gerarRelatorioBasico = (processNumber: string, totalDias: number, documentosAtrasados: number, unidadesEnvolvidas: string[], ultimaMovimentacao: string) => {
+  const gerarRelatorioBasico = (processNumber: string, totalDias: number, documentosAtrasadosData: any[], unidadesEnvolvidas: string[], ultimaMovimentacao: string) => {
     const dataUltimaMovimentacao = new Date(ultimaMovimentacao).toLocaleDateString('pt-BR');
+    const documentosAtrasados = documentosAtrasadosData.length;
     const status = documentosAtrasados > 0 ? 'COM ATRASOS IDENTIFICADOS' : 'DENTRO DO PRAZO';
     
     return `# RELATÓRIO EXECUTIVO - PROCESSO ${processNumber}
@@ -274,10 +277,27 @@ Seja objetivo, profissional e use linguagem técnica adequada para gestores púb
 **Unidades Envolvidas:** ${unidadesEnvolvidas.length}
 ${unidadesEnvolvidas.map(unidade => `- ${unidade}`).join('\n')}
 
+**Tempo Máximo de Resposta por Unidade:**
+${maxResponseTimes.slice(0, 7).map(unit => 
+  `- ${unit.unidade}: ${unit.maxDias} dias`
+).join('\n')}
+
+## 3.1 ANÁLISE TEMPORAL POR USUÁRIO
+
+**Resumo por Servidor (CPF):**
+${userMetrics.slice(0, 10).map(user => 
+  `- **CPF:** ${user.cpf} | **Dias Máximo:** ${user.Dias_Maximo} | **Dias Acumulados:** ${user.Dias_Acumulados} | **Aparições:** ${user.Aparicao}`
+).join('\n')}
+
 ## 4. DOCUMENTOS ANALISADOS
 
 Total de ${processedData.length} documentos processados em ordem cronológica.
-${documentosAtrasados > 0 ? `\n⚠️ **ATENÇÃO:** ${documentosAtrasados} documento(s) apresentaram atraso superior a 15 dias.` : ''}
+${documentosAtrasados > 0 ? `
+⚠️ **ATENÇÃO:** ${documentosAtrasados} documento(s) apresentaram atraso superior a 15 dias:
+
+${documentosAtrasadosData.map(doc => 
+  `- **Protocolo:** ${doc.Protocolo || 'N/A'} | **Documento:** ${doc.Documento || 'N/A'} | **Atraso:** ${Math.abs(doc.diasEntreDocumentos || 0)} dias`
+).join('\n')}` : ''}
 
 ## 5. INDICADORES DE PERFORMANCE
 
@@ -309,30 +329,194 @@ ${documentosAtrasados > 0 ? `
   };
 
   // Função para download do relatório como PDF
-  const downloadRelatorioPDF = () => {
+  const downloadRelatorioPDF = async () => {
     const doc = new jsPDF();
     const pageHeight = doc.internal.pageSize.height;
+    const pageWidth = doc.internal.pageSize.width;
     let cursorY = 20;
 
-    // Título
+    // Função para carregar o brasão PNG
+    const loadBrasaoImage = (): Promise<string> => {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          canvas.width = img.width;
+          canvas.height = img.height;
+          
+          ctx?.drawImage(img, 0, 0);
+          const imgData = canvas.toDataURL('image/png');
+          resolve(imgData);
+        };
+        
+        img.onerror = () => {
+          reject(new Error('Falha ao carregar a imagem do brasão'));
+        };
+        
+        img.src = '/ro2025.png';
+      });
+    };
+
+    // Carregar a imagem do brasão
+    let brasaoImage: string | null = null;
+    try {
+      brasaoImage = await loadBrasaoImage();
+    } catch (error) {
+      console.warn('Não foi possível carregar o brasão:', error);
+    }
+
+    // Função para adicionar o cabeçalho com brasão (reutilizável para novas páginas)
+    const addHeader = (currentY: number) => {
+      let textY = currentY;
+      
+      // Adicionar brasão se disponível
+      if (brasaoImage) {
+        // Calcular posição central para o brasão
+        const brasaoWidth = 30;
+        const brasaoHeight = 36;
+        const brasaoX = (pageWidth - brasaoWidth) / 2;
+        
+        // Adicionar brasão centralizado no topo
+        doc.addImage(brasaoImage, 'PNG', brasaoX, currentY, brasaoWidth, brasaoHeight);
+        
+        // Atualizar posição Y para abaixo do brasão
+        textY = currentY + brasaoHeight + 8;
+      }
+
+      // Cabeçalho texto - centralizado
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(14);
+      doc.text('GOVERNO DO ESTADO DE RONDÔNIA', pageWidth / 2, textY, { align: 'center' });
+      
+      doc.setFontSize(12);
+      textY += 8;
+      doc.text('Secretaria de Estado da Saúde - SESAU', pageWidth / 2, textY, { align: 'center' });
+      
+      // Linha separadora
+      textY += 12;
+      doc.setLineWidth(0.5);
+      doc.line(20, textY, pageWidth - 20, textY);
+      
+      return textY + 10; // Retorna a nova posição Y
+    };
+
+    // Adicionar cabeçalho na primeira página
+    cursorY = addHeader(cursorY);
+
+    // Título do relatório
+    doc.setFont('helvetica', 'bold');
     doc.setFontSize(16);
     doc.text(`Relatório do Processo ${selectedProcess.split(' - ')[0]}`, 20, cursorY);
-    cursorY += 20;
+    cursorY += 15;
+
+    // Data de geração
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(10);
+    doc.text(`Gerado em: ${new Date().toLocaleString('pt-BR')}`, 20, cursorY);
+    cursorY += 15;
+
+    // Função para capturar gráficos como imagem
+    const captureChart = async (elementId: string): Promise<string | null> => {
+      try {
+        const element = document.querySelector(elementId);
+        if (element) {
+          const canvas = await html2canvas(element as HTMLElement, {
+            scale: 2,
+            useCORS: true,
+            logging: false,
+            backgroundColor: '#ffffff'
+          });
+          return canvas.toDataURL('image/png');
+        }
+      } catch (error) {
+        console.warn(`Erro ao capturar gráfico ${elementId}:`, error);
+      }
+      return null;
+    };
+
+    // Capturar gráficos se existirem - usar fallback para seletores genéricos
+    let radarChartImage = null;
+    let userChartImage = null;
+    
+    if (maxResponseTimes.length > 0) {
+      radarChartImage = await captureChart('[data-testid="radar-chart"]') || 
+                       await captureChart('.recharts-wrapper');
+    }
+    
+    if (userMetrics.length > 0) {
+      userChartImage = await captureChart('[data-testid="user-chart"]') || 
+                      await captureChart('.recharts-wrapper:last-of-type');
+    }
 
     // Quebrar texto em linhas
     const lines = relatorioGerado.split('\n');
-    doc.setFontSize(10);
 
     for (const line of lines) {
-      const wrappedLines = doc.splitTextToSize(line, 170);
-      
-      for (const wrappedLine of wrappedLines) {
-        if (cursorY > pageHeight - 20) {
+      // Verificar se é um título (começa com #)
+      if (line.startsWith('#')) {
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(line.startsWith('##') ? 12 : 14);
+        const titleText = line.replace(/#+\s*/, '');
+        
+        if (cursorY > pageHeight - 30) {
           doc.addPage();
-          cursorY = 20;
+          cursorY = addHeader(20);
         }
-        doc.text(wrappedLine, 20, cursorY);
-        cursorY += 6;
+        
+        doc.text(titleText, 20, cursorY);
+        cursorY += 10;
+
+        // Adicionar gráfico de radar após seção "ANÁLISE POR UNIDADE"
+        if (titleText.includes('ANÁLISE POR UNIDADE') && radarChartImage) {
+          if (cursorY > pageHeight - 100) {
+            doc.addPage();
+            cursorY = addHeader(20);
+          }
+          
+          doc.addImage(radarChartImage, 'PNG', 20, cursorY, 170, 100);
+          cursorY += 110;
+          
+          doc.setFont('helvetica', 'italic');
+          doc.setFontSize(8);
+          doc.text('Gráfico: Tempo Máximo de Resposta por Unidade', 20, cursorY);
+          cursorY += 15;
+        }
+
+        // Adicionar gráfico de usuários após seção "ANÁLISE TEMPORAL POR USUÁRIO"
+        if (titleText.includes('ANÁLISE TEMPORAL POR USUÁRIO') && userChartImage) {
+          if (cursorY > pageHeight - 120) {
+            doc.addPage();
+            cursorY = addHeader(20);
+          }
+          
+          doc.addImage(userChartImage, 'PNG', 20, cursorY, 170, 120);
+          cursorY += 130;
+          
+          doc.setFont('helvetica', 'italic');
+          doc.setFontSize(8);
+          doc.text('Gráfico: Análise Temporal por Usuário (CPF)', 20, cursorY);
+          cursorY += 15;
+        }
+
+      } else if (line.trim() !== '') {
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(10);
+        
+        const wrappedLines = doc.splitTextToSize(line, 170);
+        
+        for (const wrappedLine of wrappedLines) {
+          if (cursorY > pageHeight - 20) {
+            doc.addPage();
+            cursorY = addHeader(20);
+          }
+          doc.text(wrappedLine, 20, cursorY);
+          cursorY += 6;
+        }
+      } else {
+        cursorY += 4; // Espaço para linhas vazias
       }
     }
 
@@ -1079,7 +1263,7 @@ ${documentosAtrasados > 0 ? `
                 <CardTitle>Tempo Máximo de Resposta por Unidade</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="h-[400px]">
+                <div className="h-[400px]" data-testid="radar-chart">
                   <ResponsiveContainer width="100%" height="100%">
                     <RadarChart data={maxResponseTimes.slice(0,7)} cx="50%" cy="50%" outerRadius="80%">
                       <PolarGrid />
@@ -1115,12 +1299,13 @@ ${documentosAtrasados > 0 ? `
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <ResponsiveContainer width="100%" height={500}>
-              <BarChart
-                layout="vertical"
-                data={userMetrics}
-                margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-              >
+            <div data-testid="user-chart">
+              <ResponsiveContainer width="100%" height={500}>
+                <BarChart
+                  layout="vertical"
+                  data={userMetrics}
+                  margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                >
                 <XAxis type="number" />
                 <YAxis dataKey="cpf" type="category" width={150} />
                 <Tooltip formatter={(value) => [value, '']} />
@@ -1130,6 +1315,7 @@ ${documentosAtrasados > 0 ? `
                 <Bar dataKey="Aparicao" stackId="a" fill="blue" name="Aparições" />
               </BarChart>
             </ResponsiveContainer>
+            </div>
           </CardContent>
         </Card>
       )}
