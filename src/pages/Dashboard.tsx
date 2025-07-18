@@ -71,6 +71,7 @@ const Dashboard = () => {
   const [totalProcesses, setTotalProcesses] = useState(0);
   const [historicoData, setHistoricoData] = useState<CsvHistoricoItem[]>([]);
   const [concludedCount, setConcludedCount] = useState<number>(0);
+  const [terminatedCount, setTerminatedCount] = useState<number>(0);
   const [uniqueProcesses, setUniqueProcesses] = useState<string[]>([]);
   const [selectedProcess, setSelectedProcess] = useState('');
   const [processedData, setProcessedData] = useState<any[]>([]);
@@ -696,6 +697,15 @@ ${documentosAtrasados > 0 ? `
           });
           setConcludedCount(concluidosSet.size);
 
+          // Calcula Processos Encerrados
+          const encerradosSet = new Set<string>();
+          parsedData.forEach(item => {
+            if (item.Documento?.includes('Termo de Encerramento')) {
+              encerradosSet.add(item.Processo);
+            }
+          });
+          setTerminatedCount(encerradosSet.size);
+
           // Agrupa os processos
           const processosPorId = new Map<string, CsvHistoricoItem[]>();
           parsedData.forEach(item => {
@@ -706,9 +716,20 @@ ${documentosAtrasados > 0 ? `
           });
 
           // Para cada processo, calcula os dias desde a última movimentação
+          // Exclui processos encerrados da contagem de atrasados
           let atrasados = 0;
-          processosPorId.forEach((registros) => {
+          processosPorId.forEach((registros, processo) => {
             if (registros.length > 0) {
+              // Verifica se o processo está encerrado
+              const processoEncerrado = registros.some(item => 
+                item.Documento?.includes('Termo de Encerramento')
+              );
+
+              // Se o processo estiver encerrado, não conta como atrasado
+              if (processoEncerrado) {
+                return;
+              }
+
               // Ordena os registros por data, mais recente primeiro
               registros.sort((a, b) => 
                 new Date(b['Data/Hora']).getTime() - new Date(a['Data/Hora']).getTime()
@@ -975,7 +996,7 @@ ${documentosAtrasados > 0 ? `
         <h1 className="text-3xl font-bold text-sei-800">Dashboard</h1>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-5 mb-8">
         <Card 
           className="border-sei-100 cursor-pointer hover:shadow-lg transition-shadow"
           onClick={() => handleCardSuperiorClick('todos')}
@@ -997,7 +1018,7 @@ ${documentosAtrasados > 0 ? `
           className="border-sei-100 cursor-pointer hover:shadow-lg transition-shadow"
           onClick={() => handleCardSuperiorClick('homologados')}
         >
-          <CardContent className="p-6 flex items-center gap-4">
+          <CardContent className="p-6 flex items-center gap-5">
             <div className="bg-sei-100 p-3 rounded-full">
               <CheckCircle className="h-6 w-6 text-sei-600" />
             </div>
@@ -1043,8 +1064,25 @@ ${documentosAtrasados > 0 ? `
             </div>
           </CardContent>
         </Card>
+        <Card 
+          className="border-sei-100 cursor-pointer hover:shadow-lg transition-shadow"
+          onClick={() => handleCardSuperiorClick('encerrados')}
+        >
+          <CardContent className="p-6 flex items-center gap-4">
+            <div className="bg-sei-100 p-3 rounded-full">
+              <FileText className="h-6 w-6 text-gray-600" />
+            </div>
+            <div>
+              <p className="text-sm font-medium text-muted-foreground">
+                Processos Encerrados
+              </p>
+              <h3 className="text-2xl font-bold">{terminatedCount}</h3>
+            </div>
+          </CardContent>
+        </Card>
       </div>
-
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-1 mb-8">
+      </div>
       <div className="mb-8">
         <h2 className="text-2xl font-bold text-sei-800 mb-4">Processos por Tipo</h2>
         <div className="grid gap-4 grid-cols-6">

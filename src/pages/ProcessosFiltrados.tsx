@@ -73,6 +73,7 @@ const ProcessosFiltrados = () => {
               ultimaData: Date;
               ultimaDataFormatada: string;
               temHomologacao: boolean;
+              temEncerramento: boolean;
             }>();
             
             dadosCompletos.forEach((row) => {
@@ -81,6 +82,7 @@ const ProcessosFiltrados = () => {
               const processo = row['Processo'];
               const dataMovimentacao = new Date(row['Data/Hora']);
               const temHomologacao = row['Documento']?.includes('Homologação') || false;
+              const temEncerramento = row['Documento']?.includes('Termo de Encerramento') || false;
               
               if (!processosMap.has(processo) || 
                   processosMap.get(processo)!.ultimaData < dataMovimentacao) {
@@ -90,12 +92,19 @@ const ProcessosFiltrados = () => {
                   tipo_tr: row['tipo_tr'] || 'Não informado',
                   ultimaData: dataMovimentacao,
                   ultimaDataFormatada: dataMovimentacao.toLocaleDateString('pt-BR'),
-                  temHomologacao: processosMap.get(processo)?.temHomologacao || temHomologacao
+                  temHomologacao: processosMap.get(processo)?.temHomologacao || temHomologacao,
+                  temEncerramento: processosMap.get(processo)?.temEncerramento || temEncerramento
                 });
-              } else if (temHomologacao) {
-                // Se encontrar homologação, marcar o processo
-                const processoExistente = processosMap.get(processo)!;
-                processoExistente.temHomologacao = true;
+              } else {
+                // Se encontrar homologação ou encerramento, marcar o processo
+                if (temHomologacao) {
+                  const processoExistente = processosMap.get(processo)!;
+                  processoExistente.temHomologacao = true;
+                }
+                if (temEncerramento) {
+                  const processoExistente = processosMap.get(processo)!;
+                  processoExistente.temEncerramento = true;
+                }
               }
             });
             
@@ -107,7 +116,9 @@ const ProcessosFiltrados = () => {
               const atrasado = diffDays > 15;
               
               let status = 'Em Andamento';
-              if (processo.temHomologacao) {
+              if (processo.temEncerramento) {
+                status = 'Encerrado';
+              } else if (processo.temHomologacao) {
                 status = 'Homologado';
               } else if (atrasado) {
                 status = 'Atrasado';
@@ -127,6 +138,9 @@ const ProcessosFiltrados = () => {
             switch (filtro) {
               case 'homologados':
                 processosFiltrados = processosFiltrados.filter(p => p.status === 'Homologado');
+                break;
+              case 'encerrados':
+                processosFiltrados = processosFiltrados.filter(p => p.status === 'Encerrado');
                 break;
               case 'em-andamento':
                 processosFiltrados = processosFiltrados.filter(p => p.status === 'Em Andamento');
@@ -169,6 +183,7 @@ const ProcessosFiltrados = () => {
     switch (filtro) {
       case 'todos': return 'Todos os Processos';
       case 'homologados': return 'Processos Homologados';
+      case 'encerrados': return 'Processos Encerrados';
       case 'em-andamento': return 'Processos em Andamento';
       case 'atrasados': return 'Processos Atrasados';
       default: return 'Processos';
@@ -259,12 +274,15 @@ const ProcessosFiltrados = () => {
         pdf.setTextColor(0, 0, 0);
       }
       
-      // Destacar processos atrasados
+      // Destacar processos com cores diferentes
       if (processo.status === 'Atrasado') {
         pdf.setFillColor(255, 235, 235); // Fundo vermelho claro
         pdf.rect(margin, yPosition, pageWidth - 2 * margin, rowHeight, 'F');
       } else if (processo.status === 'Homologado') {
         pdf.setFillColor(235, 255, 235); // Fundo verde claro
+        pdf.rect(margin, yPosition, pageWidth - 2 * margin, rowHeight, 'F');
+      } else if (processo.status === 'Encerrado') {
+        pdf.setFillColor(245, 245, 245); // Fundo cinza claro
         pdf.rect(margin, yPosition, pageWidth - 2 * margin, rowHeight, 'F');
       }
       
@@ -410,7 +428,8 @@ const ProcessosFiltrados = () => {
                             key={index}
                             className={
                               processo.status === 'Atrasado' ? 'bg-red-50' : 
-                              processo.status === 'Homologado' ? 'bg-green-50' : ''
+                              processo.status === 'Homologado' ? 'bg-green-50' : 
+                              processo.status === 'Encerrado' ? 'bg-gray-50' : ''
                             }
                           >
                             <TableCell className="border p-2 font-medium">{processo.numero_processo}</TableCell>
@@ -426,7 +445,8 @@ const ProcessosFiltrados = () => {
                             </TableCell>
                             <TableCell className={`border p-2 text-center font-semibold ${
                               processo.status === 'Atrasado' ? 'text-red-600' : 
-                              processo.status === 'Homologado' ? 'text-green-600' : 'text-blue-600'
+                              processo.status === 'Homologado' ? 'text-green-600' : 
+                              processo.status === 'Encerrado' ? 'text-gray-600' : 'text-blue-600'
                             }`}>
                               {processo.status}
                             </TableCell>
