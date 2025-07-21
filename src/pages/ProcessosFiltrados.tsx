@@ -65,7 +65,7 @@ const ProcessosFiltrados = () => {
             
             const dadosCompletos = results.data as CsvHistoricoItem[];
             
-            // Agrupar por processo e encontrar a última movimentação
+            // Agrupar por processo e coletar TODOS os documentos com suas datas
             const processosMap = new Map<string, {
               processo: string;
               objeto: string;
@@ -74,6 +74,7 @@ const ProcessosFiltrados = () => {
               ultimaDataFormatada: string;
               temHomologacao: boolean;
               temEncerramento: boolean;
+              documentos: Array<{data: Date, documento: string}>;
             }>();
             
             dadosCompletos.forEach((row) => {
@@ -84,51 +85,85 @@ const ProcessosFiltrados = () => {
               const temHomologacao = row['Documento']?.includes('Homologação') || false;
               const temEncerramento = row['Documento']?.includes('Termo de Encerramento') || false;
               
-              if (!processosMap.has(processo) || 
-                  processosMap.get(processo)!.ultimaData < dataMovimentacao) {
+              if (!processosMap.has(processo)) {
                 processosMap.set(processo, {
                   processo: processo,
                   objeto: row['Objeto'] || 'Objeto não informado',
                   tipo_tr: row['tipo_tr'] || 'Não informado',
                   ultimaData: dataMovimentacao,
                   ultimaDataFormatada: dataMovimentacao.toLocaleDateString('pt-BR'),
-                  temHomologacao: processosMap.get(processo)?.temHomologacao || temHomologacao,
-                  temEncerramento: processosMap.get(processo)?.temEncerramento || temEncerramento
+                  temHomologacao: temHomologacao,
+                  temEncerramento: temEncerramento,
+                  documentos: [{data: dataMovimentacao, documento: row['Documento'] || ''}]
                 });
               } else {
-                // Se encontrar homologação ou encerramento, marcar o processo
+                const processoExistente = processosMap.get(processo)!;
+                
+                // Atualizar última data se for mais recente
+                if (processoExistente.ultimaData < dataMovimentacao) {
+                  processoExistente.ultimaData = dataMovimentacao;
+                  processoExistente.ultimaDataFormatada = dataMovimentacao.toLocaleDateString('pt-BR');
+                }
+                
+                // Marcar homologação e encerramento
                 if (temHomologacao) {
-                  const processoExistente = processosMap.get(processo)!;
                   processoExistente.temHomologacao = true;
                 }
                 if (temEncerramento) {
-                  const processoExistente = processosMap.get(processo)!;
                   processoExistente.temEncerramento = true;
                 }
+                
+                // Adicionar documento à lista
+                processoExistente.documentos.push({
+                  data: dataMovimentacao, 
+                  documento: row['Documento'] || ''
+                });
               }
             });
             
             // Calcular dias desde a última movimentação e aplicar filtros
             const dataHoje = new Date();
-            let processosFiltrados = Array.from(processosMap.values()).map(processo => {
-              const diffTime = Math.abs(dataHoje.getTime() - processo.ultimaData.getTime());
+            let processosFiltrados = Array.from(processosMap.values()).map(processoData => {
+              const diffTime = Math.abs(dataHoje.getTime() - processoData.ultimaData.getTime());
               const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
               const atrasado = diffDays > 15;
               
               let status = 'Em Andamento';
-              if (processo.temEncerramento) {
+              
+              // Verificar se realmente está encerrado
+              let realmenteEncerrado = false;
+              if (processoData.temEncerramento) {
+                // Encontrar a data do termo de encerramento
+                const termosEncerramento = processoData.documentos
+                  .filter(doc => doc.documento.includes('Termo de Encerramento'))
+                  .sort((a, b) => b.data.getTime() - a.data.getTime()); // Ordenar por data decrescente
+                
+                if (termosEncerramento.length > 0) {
+                  const dataTermoEncerramento = termosEncerramento[0].data;
+                  
+                  // Contar documentos após o termo de encerramento
+                  const documentosAposTermo = processoData.documentos
+                    .filter(doc => doc.data.getTime() > dataTermoEncerramento.getTime())
+                    .length;
+                  
+                  // Considerar encerrado apenas se tiver menos de 2 documentos após o termo
+                  realmenteEncerrado = documentosAposTermo < 2;
+                }
+              }
+              
+              if (realmenteEncerrado) {
                 status = 'Encerrado';
-              } else if (processo.temHomologacao) {
+              } else if (processoData.temHomologacao) {
                 status = 'Homologado';
               } else if (atrasado) {
                 status = 'Atrasado';
               }
               
               return {
-                numero_processo: processo.processo,
-                objeto: processo.objeto,
-                tipo_tr: processo.tipo_tr,
-                data_ultima_movimentacao: processo.ultimaDataFormatada,
+                numero_processo: processoData.processo,
+                objeto: processoData.objeto,
+                tipo_tr: processoData.tipo_tr,
+                data_ultima_movimentacao: processoData.ultimaDataFormatada,
                 dias_desde_ultima_movimentacao: diffDays,
                 status: status
               };
