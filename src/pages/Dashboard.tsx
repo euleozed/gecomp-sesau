@@ -140,8 +140,6 @@ DADOS RESUMIDOS:
 
 ESTRUTURA DO RELATÓRIO:
 
-# RELATÓRIO EXECUTIVO - PROCESSO ${processNumber}
-
 ## 1. RESUMO EXECUTIVO
 [Análise geral do processo, tempo total e status atual]
 
@@ -256,24 +254,18 @@ Seja objetivo, profissional e use linguagem técnica adequada para gestores púb
     const dataUltimaMovimentacao = new Date(ultimaMovimentacao).toLocaleDateString('pt-BR');
     const documentosAtrasados = documentosAtrasadosData.length;
     const status = documentosAtrasados > 0 ? 'COM ATRASOS IDENTIFICADOS' : 'DENTRO DO PRAZO';
-    
+    const diasDesdeUltimaMovimentacao = Math.floor((new Date().getTime() - new Date(ultimaMovimentacao).getTime()) / (1000 * 60 * 60 * 24));
     return `# RELATÓRIO EXECUTIVO - PROCESSO ${processNumber}
 
 ## 1. RESUMO EXECUTIVO
 
-**Processo:** ${processNumber}
 **Status:** ${status}
-**Tempo Total de Tramitação:** ${totalDias} dias
+**Duração Acumulada:** ${totalDias} dias
 **Última Movimentação:** ${dataUltimaMovimentacao}
+** Dias desde a última movimentação:** ${diasDesdeUltimaMovimentacao}
 **Total de Documentos:** ${processedData.length}
 
-## 2. ANÁLISE TEMPORAL
-
-- **Duração Total:** ${totalDias} dias de tramitação
-- **Documentos com Atraso:** ${documentosAtrasados} documento(s) com prazo superior a 15 dias
-- **Eficiência:** ${documentosAtrasados === 0 ? 'Boa' : 'Requer atenção'}
-
-## 3. ANÁLISE POR UNIDADE
+## 2. ANÁLISE POR UNIDADE
 
 **Unidades Envolvidas:** ${unidadesEnvolvidas.length}
 ${unidadesEnvolvidas.map(unidade => `- ${unidade}`).join('\n')}
@@ -384,12 +376,12 @@ ${documentosAtrasados > 0 ? `
         doc.addImage(brasaoImage, 'PNG', brasaoX, currentY, brasaoWidth, brasaoHeight);
         
         // Atualizar posição Y para abaixo do brasão
-        textY = currentY + brasaoHeight + 8;
+        textY = currentY + brasaoHeight + 4;
       }
 
       // Cabeçalho texto - centralizado
       doc.setFont('helvetica', 'bold');
-      doc.setFontSize(14);
+      doc.setFontSize(12);
       doc.text('GOVERNO DO ESTADO DE RONDÔNIA', pageWidth / 2, textY, { align: 'center' });
       
       doc.setFontSize(12);
@@ -409,9 +401,9 @@ ${documentosAtrasados > 0 ? `
 
     // Título do relatório
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(16);
+    doc.setFontSize(12);
     doc.text(`Relatório do Processo ${selectedProcess.split(' - ')[0]}`, 20, cursorY);
-    cursorY += 15;
+    cursorY += 10;
 
     // Data de geração
     doc.setFont('helvetica', 'normal');
