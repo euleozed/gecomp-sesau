@@ -1,4 +1,11 @@
 Data/Hora,Unidade,Usuário,Descrição,Processo
+21/07/2025 11:21,PGE-SESAU,52519848200,Assinado Documento 0061813312 (Parecer 441) por 52519848200,0036.014212/2024-42
+18/07/2025 09:51,SUPEL-CPEAP,52361799200,Documento 0060200938 (Relatório) retirado do bloco 1332159,0036.014212/2024-42
+18/07/2025 09:51,SUPEL-CPEAP,52361799200,Documento 0058870895 (Despacho) retirado do bloco 1332159,0036.014212/2024-42
+18/07/2025 09:51,SUPEL-CPEAP,52361799200,Documento 0057345559 (Relatório) retirado do bloco 1332159,0036.014212/2024-42
+18/07/2025 09:47,SUPEL-CPEAP,52361799200,Documento 0056663284 (Relatório) retirado do bloco 1332159,0036.014212/2024-42
+18/07/2025 09:47,SUPEL-CPEAP,52361799200,Documento 0056225918 (Relatório) retirado do bloco 1332159,0036.014212/2024-42
+18/07/2025 09:46,SUPEL-CPEAP,52361799200,Documento 0054512488 (Despacho) retirado do bloco 1332159,0036.014212/2024-42
 11/07/2025 09:51,LACEN-GTEC,73840785200,Bloco 1596830 retornado para a unidade SESAU-GECOMP,0036.014212/2024-42
 07/07/2025 13:35,LACEN-ASTEC,75269384272,Bloco 1596830 retornado para a unidade SESAU-GECOMP,0036.014212/2024-42
 02/07/2025 13:39,PGE-SESAU,3468262256,Gerado documento público 0061813312 (Parecer 441),0036.014212/2024-42
@@ -1092,13 +1099,13 @@ Data/Hora,Unidade,Usuário,Descrição,Processo
 03/06/2024 12:52,SESAU-NEEP,01053677103,Gerado documento público 0049303854 (Despacho),0036.014212/2024-42
 03/06/2024 12:52,SESAU-NEEP,01053677103,Alterada ordem dos protocolos,0036.014212/2024-42
 03/06/2024 12:52,SESAU-NEEP,01053677103,"Registro de documento externo público 0049303811 (Solicitação), conferido com documento original",0036.014212/2024-42
-03/06/2024 12:43,SESAU-NEEP,01053677103,Registro de documento externo público 0049302611 (Autorização),0036.014212/2024-42
-03/06/2024 12:39,SESAU-NEEP,01053677103,Alterada ordem dos protocolos,0036.014212/2024-42
-03/06/2024 12:38,SESAU-NEEP,01053677103,"Registro de documento externo público 0049302051 (Declaração), conferido com documento original",0036.014212/2024-42
-03/06/2024 12:38,SESAU-NEEP,01053677103,"Registro de documento externo público 0049301942 (Declaração), conferido com documento original",0036.014212/2024-42
-03/06/2024 12:37,SESAU-NEEP,01053677103,"Registro de documento externo público 0049301880 (Projeto Básico), conferido com cópia simples",0036.014212/2024-42
-03/06/2024 12:36,SESAU-NEEP,01053677103,"Registro de documento externo público 0049301770 (Portaria), conferido com documento original",0036.014212/2024-42
-03/06/2024 12:36,SESAU-NEEP,01053677103,"Registro de documento externo público 0049301681 (Portaria), conferido com documento original",0036.014212/2024-42
+03/06/2024 12:43,SESAU-NEEP,1053677103,Registro de documento externo público 0049302611 (Autorização),0036.014212/2024-42
+03/06/2024 12:39,SESAU-NEEP,1053677103,Alterada ordem dos protocolos,0036.014212/2024-42
+03/06/2024 12:38,SESAU-NEEP,1053677103,"Registro de documento externo público 0049302051 (Declaração), conferido com documento original",0036.014212/2024-42
+03/06/2024 12:38,SESAU-NEEP,1053677103,"Registro de documento externo público 0049301942 (Declaração), conferido com documento original",0036.014212/2024-42
+03/06/2024 12:37,SESAU-NEEP,1053677103,"Registro de documento externo público 0049301880 (Projeto Básico), conferido com cópia simples",0036.014212/2024-42
+03/06/2024 12:36,SESAU-NEEP,1053677103,"Registro de documento externo público 0049301770 (Portaria), conferido com documento original",0036.014212/2024-42
+03/06/2024 12:36,SESAU-NEEP,1053677103,"Registro de documento externo público 0049301681 (Portaria), conferido com documento original",0036.014212/2024-42
 03/06/2024 12:34,SESAU-NEEP,1053677103,Registro de documento externo público 0049301567 (Relação),0036.014212/2024-42
 22/04/2024 14:24,SESAU-NEEP,1053677103,"Registro de documento externo público 0048010229 (Lei), conferido com documento original",0036.014212/2024-42
 22/04/2024 14:20,SESAU-NEEP,70753270200,Alterada ordem dos protocolos,0036.014212/2024-42
