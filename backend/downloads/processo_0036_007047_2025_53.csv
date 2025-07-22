@@ -1,4 +1,8 @@
 Data/Hora,Unidade,Usuário,Descrição,Processo
+22/07/2025 13:56,SESAU-SC,84255889287,Documento 0062463837 (Ofício 37434) retirado do bloco 414080,0036.007047/2025-53
+22/07/2025 13:36,SESAU-SC,84255889287,Registro de documento externo público 0062498748 (Anexo 3 - M- CON - SOLIC PRORROG PRAZO ENTREGA),0036.007047/2025-53
+22/07/2025 13:34,SESAU-SC,84255889287,Registro de documento externo público 0062498490 (Anexo Gmail-Resposta-Ofício 37434-Início dos Serviços),0036.007047/2025-53
+21/07/2025 18:21,SESAU-SC,88558851204,Documento 0062463837 (Ofício 37434) retirado do bloco 1138949,0036.007047/2025-53
 21/07/2025 17:32,SESAU-SE,83997628220,Bloco 1138949 retornado para a unidade SESAU-SC,0036.007047/2025-53
 21/07/2025 17:28,SESAU-SC,84255889287,Registro de documento externo público 0062464398 (Anexo Gmail - Ofício 37434 - Data do Início dos Serviços),0036.007047/2025-53
 21/07/2025 17:22,SESAU-SE,74648055268,Assinado Documento 0062463837 (Ofício 37434) por 74648055268,0036.007047/2025-53
@@ -1195,10 +1199,10 @@ Data/Hora,Unidade,Usuário,Descrição,Processo
 14/02/2025 12:11,HRC-SGM,01195342233,Documento 0057341388 (Documento de Oficialização de Demanda 3) retirado do bloco 1502698,0036.007047/2025-53
 14/02/2025 12:11,COHREC-COAD,07569765613,Processo recebido na unidade,0036.007047/2025-53
 14/02/2025 12:11,HRC-SGM,01195342233,Cancelada disponibilização do bloco 1502698 para a unidade HRC-DG,0036.007047/2025-53
-14/02/2025 12:11,HRC-SGM,01195342233,Cancelada disponibilização do bloco 1502698 para a unidade COHREC-COAD,0036.007047/2025-53
-14/02/2025 12:08,HRC-DG,04241909230,Assinado Documento 0057341388 (Documento de Oficialização de Demanda 3) por 99166224268,0036.007047/2025-53
-14/02/2025 10:29,COHREC-COAD,01195342233,Processo remetido pela unidade HRC-SGM,0036.007047/2025-53
-14/02/2025 10:27,HRC-SGM,01195342233,Bloco 1502698 disponibilizado para unidade HRC-DG,0036.007047/2025-53
+14/02/2025 12:11,HRC-SGM,1195342233,Cancelada disponibilização do bloco 1502698 para a unidade COHREC-COAD,0036.007047/2025-53
+14/02/2025 12:08,HRC-DG,4241909230,Assinado Documento 0057341388 (Documento de Oficialização de Demanda 3) por 99166224268,0036.007047/2025-53
+14/02/2025 10:29,COHREC-COAD,1195342233,Processo remetido pela unidade HRC-SGM,0036.007047/2025-53
+14/02/2025 10:27,HRC-SGM,1195342233,Bloco 1502698 disponibilizado para unidade HRC-DG,0036.007047/2025-53
 14/02/2025 10:27,HRC-SGM,1195342233,Bloco 1502698 disponibilizado para unidade COHREC-COAD,0036.007047/2025-53
 14/02/2025 10:27,HRC-SGM,1195342233,Cancelada disponibilização do bloco 1502698 para a unidade HRC-DG,0036.007047/2025-53
 14/02/2025 10:27,HRC-SGM,1195342233,Cancelada disponibilização do bloco 1502698 para a unidade COHREC-COAD,0036.007047/2025-53
