@@ -1,4 +1,5 @@
 Data/Hora,Unidade,Usuário,Descrição,Processo
+24/07/2025 14:25,PGE-GABADJ,4998140299,Processo remetido pela unidade PGE-SESAU,0036.014212/2024-42
 21/07/2025 11:21,PGE-SESAU,52519848200,Assinado Documento 0061813312 (Parecer 441) por 52519848200,0036.014212/2024-42
 18/07/2025 09:51,SUPEL-CPEAP,52361799200,Documento 0060200938 (Relatório) retirado do bloco 1332159,0036.014212/2024-42
 18/07/2025 09:51,SUPEL-CPEAP,52361799200,Documento 0058870895 (Despacho) retirado do bloco 1332159,0036.014212/2024-42
@@ -1098,7 +1099,7 @@ Data/Hora,Unidade,Usuário,Descrição,Processo
 03/06/2024 13:05,SESAU-NEEP,01053677103,Assinado Documento 0049303854 (Despacho) por 01053677103,0036.014212/2024-42
 03/06/2024 12:52,SESAU-NEEP,01053677103,Gerado documento público 0049303854 (Despacho),0036.014212/2024-42
 03/06/2024 12:52,SESAU-NEEP,01053677103,Alterada ordem dos protocolos,0036.014212/2024-42
-03/06/2024 12:52,SESAU-NEEP,01053677103,"Registro de documento externo público 0049303811 (Solicitação), conferido com documento original",0036.014212/2024-42
+03/06/2024 12:52,SESAU-NEEP,1053677103,"Registro de documento externo público 0049303811 (Solicitação), conferido com documento original",0036.014212/2024-42
 03/06/2024 12:43,SESAU-NEEP,1053677103,Registro de documento externo público 0049302611 (Autorização),0036.014212/2024-42
 03/06/2024 12:39,SESAU-NEEP,1053677103,Alterada ordem dos protocolos,0036.014212/2024-42
 03/06/2024 12:38,SESAU-NEEP,1053677103,"Registro de documento externo público 0049302051 (Declaração), conferido com documento original",0036.014212/2024-42
