@@ -1,4 +1,18 @@
 Data/Hora,Unidade,Usuário,Descrição,Processo
+30/07/2025 12:35,SESAU-GECONT,88558851204,Processo atribuído para 96264799220,0036.018638/2024-75
+30/07/2025 12:13,SESAU-GECONT,96264799220,Processo recebido na unidade,0036.018638/2024-75
+29/07/2025 16:48,SESAU-GECONT,96264799220,Processo remetido pela unidade SESAU-SC,0036.018638/2024-75
+29/07/2025 16:48,SESAU-SC,96264799220,Reabertura do processo na unidade,0036.018638/2024-75
+29/07/2025 16:09,SESAU-GECONT,96264799220,Processo remetido pela unidade SESAU-SC,0036.018638/2024-75
+29/07/2025 12:04,SESAU-SC,03154207236,Documento 0062622874 (Ordem de Serviço 181) retirado do bloco 1138949,0036.018638/2024-75
+29/07/2025 10:25,PGE-PA,00093024258,Gerado documento público 0062692497 (Despacho),0036.018638/2024-75
+29/07/2025 09:24,PGE-PA,95225064272,Processo recebido na unidade,0036.018638/2024-75
+29/07/2025 09:21,SESAU-SE,83997628220,Bloco 1138949 retornado para a unidade SESAU-SC,0036.018638/2024-75
+29/07/2025 09:12,SESAU-SE,74648055268,Assinado Documento 0062622874 (Ordem de Serviço 181) por 74648055268,0036.018638/2024-75
+29/07/2025 09:05,SESAU-SC,96264799220,Liberada assinatura externa para o usuário ederson chaves antunes (ederson.antunes@linde.com) no documento 0062622874 (Ordem de Serviço 181) até 08/08/2025 (10 dias). Com visualização integral do processo.,0036.018638/2024-75
+29/07/2025 09:04,SESAU-SC,96264799220,Liberada assinatura externa para o usuário JOSELINO MACHADO DE SOUZA (joselino.souza@linde.com) no documento 0062622874 (Ordem de Serviço 181) até 08/08/2025 (10 dias). Com visualização integral do processo.,0036.018638/2024-75
+29/07/2025 09:01,PGE-PA,96264799220,Processo remetido pela unidade SESAU-SC,0036.018638/2024-75
+29/07/2025 09:00,SESAU-SC,96264799220,Documento 0062622874 (Ordem de Serviço 181) inserido no bloco 1138949,0036.018638/2024-75
 28/07/2025 16:54,SESAU-SC,97368121204,Documento 0062641937 (Despacho) retirado do bloco 414080,0036.018638/2024-75
 28/07/2025 16:54,SESAU-SC,97368121204,Documento 0062622874 (Ordem de Serviço 181) retirado do bloco 414080,0036.018638/2024-75
 28/07/2025 16:54,SESAU-SC,97368121204,Assinado Documento 0062622874 (Ordem de Serviço 181) por 97368121204,0036.018638/2024-75
