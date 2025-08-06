@@ -1,4 +1,5 @@
 Data/Hora,Unidade,Usuário,Descrição,Processo
+31/07/2025 16:31,SESAU-NSC,1331762235,Conclusão do processo na unidade,0036.003690/2024-27
 29/07/2025 15:48,SESAU-NSC,1331762235,Processo atribuído para 01331762235,0036.003690/2024-27
 29/07/2025 15:47,SESAU-NSC,1331762235,Processo recebido na unidade,0036.003690/2024-27
 29/07/2025 14:33,SESAU-NSC,3559126274,Processo remetido pela unidade SESAU-GECOMP,0036.003690/2024-27
@@ -1398,7 +1399,7 @@ Data/Hora,Unidade,Usuário,Descrição,Processo
 21/03/2024 14:09,SESAU-GECOMP,672614260,Processo remetido pela unidade CAIS-GPES,0036.003690/2024-27
 21/03/2024 13:06,CAIS-GPES,445198265,Documento 0047046553 (Documento de Oficialização de Demanda 27) retirado do bloco 1061314,0036.003690/2024-27
 21/03/2024 12:55,CAIS-GPES,445198265,Assinado Documento 0047046553 (Documento de Oficialização de Demanda 27) por 00445198265,0036.003690/2024-27
-21/03/2024 12:22,CAIS-GPES,672614260,Documento 0047046553 (Documento de Oficialização de Demanda 27) inserido no bloco 1061314,0036.003690/2024-27
+21/03/2024 12:22,CAIS-GPES,00672614260,Documento 0047046553 (Documento de Oficialização de Demanda 27) inserido no bloco 1061314,0036.003690/2024-27
 21/03/2024 12:22,CAIS-GPES,00672614260,Assinado Documento 0047046553 (Documento de Oficialização de Demanda 27) por 00672614260,0036.003690/2024-27
 21/03/2024 12:08,CAIS-GPES,00672614260,Gerado documento público 0047046553 (Documento de Oficialização de Demanda 27),0036.003690/2024-27
 20/03/2024 16:07,CAIS-GPES,00419142606,Processo atribuído para 00672614260,0036.003690/2024-27
