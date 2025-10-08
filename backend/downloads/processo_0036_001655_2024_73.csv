@@ -1,4 +1,5 @@
 Data/Hora,Unidade,Usuário,Descrição,Processo
+18/08/2025 09:21,SESAU-GAF,39001318215,Processo recebido na unidade,0036.001655/2024-73
 12/08/2025 16:46,SESAU-CAFI,39001318215,Processo recebido na unidade,0036.001655/2024-73
 12/08/2025 16:46,SESAU-GAF,39001318215,Processo remetido pela unidade SESAU-CAFI,0036.001655/2024-73
 08/08/2025 10:07,SESAU-CAFI,96303042287,Processo remetido pela unidade SESAU-NPROC,0036.001655/2024-73
@@ -298,7 +299,7 @@ Data/Hora,Unidade,Usuário,Descrição,Processo
 25/04/2025 13:33,SUPEL-NA,03296378278,Assinado Documento 0059592314 (Despacho) por 03296378278,0036.001655/2024-73
 25/04/2025 13:28,SUPEL-NA,03296378278,Gerado documento público 0059592314 (Despacho),0036.001655/2024-73
 24/04/2025 11:21,SUPEL-NA,70407393218,Registro de documento externo público 0059530006 (Proposta Atualizada -),0036.001655/2024-73
-23/04/2025 12:42,SUPEL-NA,03296378278,Registro de documento externo público 0059491893 (Proposta Atualizada -),0036.001655/2024-73
+23/04/2025 12:42,SUPEL-NA,3296378278,Registro de documento externo público 0059491893 (Proposta Atualizada -),0036.001655/2024-73
 23/04/2025 10:48,SUPEL-NA,3296378278,Registro de documento externo público 0059477872 (Proposta Atualizada -),0036.001655/2024-73
 23/04/2025 10:16,SUPEL-NA,3296378278,Registro de documento externo público 0059473833 (Proposta Atualizada -),0036.001655/2024-73
 16/04/2025 14:58,SUPEL-NA,3296378278,Assinado Documento 0059391388 (Informação 20) por 03296378278,0036.001655/2024-73
@@ -698,7 +699,7 @@ Data/Hora,Unidade,Usuário,Descrição,Processo
 06/01/2025 11:25,SUPEL-COSAU1,2246306280,Processo recebido na unidade,0036.001655/2024-73
 06/01/2025 11:23,SUPEL-COSAU1,2294597222,Processo remetido pela unidade SUPEL-NA,0036.001655/2024-73
 06/01/2025 11:23,SUPEL-NA,2294597222,Assinado Documento 0056231529 (Termo de Juntada) por 02294597222,0036.001655/2024-73
-06/01/2025 11:22,SUPEL-NA,2294597222,Gerado documento público 0056231529 (Termo de Juntada),0036.001655/2024-73
+06/01/2025 11:22,SUPEL-NA,02294597222,Gerado documento público 0056231529 (Termo de Juntada),0036.001655/2024-73
 06/01/2025 11:22,SUPEL-NA,02294597222,Registro de documento externo público 0056231506 (Publicação da Resposta - Site Supel),0036.001655/2024-73
 06/01/2025 11:18,SUPEL-NA,02294597222,Registro de documento externo público 0056231116 (E-mail de Resposta -),0036.001655/2024-73
 06/01/2025 10:31,SUPEL-NA,02294597222,Processo recebido na unidade,0036.001655/2024-73
@@ -898,7 +899,7 @@ Data/Hora,Unidade,Usuário,Descrição,Processo
 17/10/2024 10:04,SESAU-GECOMP,01331762235,Cancelada disponibilização do bloco 997022 para a unidade SESAU-SE,0036.001655/2024-73
 17/10/2024 10:00,SESAU-GECOMP,89091574291,Bloco 997022 disponibilizado para unidade SESAU-SE,0036.001655/2024-73
 17/10/2024 10:01,SUPEL-COSAU1,02246306280,Processo atribuído para 03296378278,0036.001655/2024-73
-17/10/2024 10:00,SUPEL-COSAU1,02246306280,Processo recebido na unidade,0036.001655/2024-73
+17/10/2024 10:00,SUPEL-COSAU1,2246306280,Processo recebido na unidade,0036.001655/2024-73
 17/10/2024 10:00,SESAU-GECOMP,89091574291,Cancelada disponibilização do bloco 997022 para a unidade SESAU-SE,0036.001655/2024-73
 17/10/2024 09:50,SESAU-GECOMP,3411113251,Bloco 997022 disponibilizado para unidade SESAU-SE,0036.001655/2024-73
 17/10/2024 09:50,SESAU-GECOMP,3411113251,Cancelada disponibilização do bloco 997022 para a unidade SESAU-SE,0036.001655/2024-73
@@ -1098,7 +1099,7 @@ Data/Hora,Unidade,Usuário,Descrição,Processo
 07/10/2024 09:51,SESAU-GECOMP,01331762235,Bloco 997022 disponibilizado para unidade SESAU-SE,0036.001655/2024-73
 07/10/2024 09:51,SESAU-GECOMP,01331762235,Cancelada disponibilização do bloco 997022 para a unidade SESAU-SE,0036.001655/2024-73
 07/10/2024 09:20,SESAU-GECOMP,01042853207,Bloco 997022 disponibilizado para unidade SESAU-SE,0036.001655/2024-73
-07/10/2024 09:20,SESAU-GECOMP,01042853207,Cancelada disponibilização do bloco 997022 para a unidade SESAU-SE,0036.001655/2024-73
+07/10/2024 09:20,SESAU-GECOMP,1042853207,Cancelada disponibilização do bloco 997022 para a unidade SESAU-SE,0036.001655/2024-73
 07/10/2024 09:19,SESAU-GECOMP,89091574291,Bloco 997022 disponibilizado para unidade SESAU-SE,0036.001655/2024-73
 07/10/2024 09:19,SESAU-GECOMP,89091574291,Cancelada disponibilização do bloco 997022 para a unidade SESAU-SE,0036.001655/2024-73
 07/10/2024 09:02,SESAU-GECOMP,1379890241,Bloco 997022 disponibilizado para unidade SESAU-SE,0036.001655/2024-73
