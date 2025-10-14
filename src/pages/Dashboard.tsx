@@ -1206,8 +1206,48 @@ ${documentosAtrasados > 0 ? `
       </div>
 
       {selectedProcess && (
-        <>
-          <Card className="border-sei-100 mt-6">
+        <div className="space-y-6">
+          <div className="mb-8 space-y-4">
+            <Card className="border-sei-100">
+              <CardContent className="p-6">
+                <div className="grid grid-cols-2 gap-6">
+                  <div>
+                    <h3 className="text-sm font-medium text-muted-foreground mb-2">Objeto do Processo</h3>
+                    <p className="text-lg font-semibold">{selectedProcess.split(' - ')[1]}</p>
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-medium text-muted-foreground mb-2">Data de Chegada na GECOMP/CECOMP</h3>
+                    {processedData.length > 0 && (() => {
+                      // Ordena os dados por data (mais antiga primeiro) e encontra a primeira ocorrência
+                      const chegadaItem = [...processedData]
+                        .sort((a, b) => new Date(a['Data/Hora']).getTime() - new Date(b['Data/Hora']).getTime())
+                        .find(item => item.Unidade === 'SESAU-GECOMP' || item.Unidade === 'SESAU-CECOMP');
+                      
+                      if (chegadaItem) {
+                        const dataChegada = new Date(chegadaItem['Data/Hora']);
+                        const hoje = new Date();
+                        const diasDecorridos = Math.floor((hoje.getTime() - dataChegada.getTime()) / (1000 * 60 * 60 * 24));
+                        
+                        return (
+                          <div>
+                            <p className="text-lg font-semibold">
+                              {dataChegada.toLocaleDateString('pt-BR')}
+                            </p>
+                            <p className="text-sm text-muted-foreground mt-1">
+                              {diasDecorridos} dias decorridos
+                            </p>
+                          </div>
+                        );
+                      }
+                      
+                      return <p className="text-lg text-muted-foreground">Não encontrado</p>;
+                    })()}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+          <Card className="border-sei-100">
             <CardHeader>
               <div className="flex items-center justify-between">
                 <div>
@@ -1313,7 +1353,7 @@ ${documentosAtrasados > 0 ? `
               </CardContent>
             </Card>
           )}
-        </>
+        </div>
       )}
 
       {userMetrics.length > 0 && (

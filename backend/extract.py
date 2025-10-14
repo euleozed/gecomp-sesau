@@ -14,6 +14,7 @@ import re
 from dotenv import load_dotenv
 
 
+
 load_dotenv()  # Carrega variáveis do arquivo .env
 
 # Caminho fixo do driver

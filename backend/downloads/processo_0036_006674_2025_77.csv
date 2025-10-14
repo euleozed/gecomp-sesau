@@ -1,4 +1,6 @@
 Data/Hora,Unidade,Usuário,Descrição,Processo
+13/10/2025 12:29,SESAU-NPA,95230424249,Processo remetido pela unidade SESAU-NMN,0036.006674/2025-77
+13/10/2025 12:27,SESAU-NMN,95230424249,Removida atribuição do processo,0036.006674/2025-77
 08/10/2025 09:56,SESAU-NPA,01384421262,Processo recebido na unidade,0036.006674/2025-77
 07/10/2025 10:03,SUPEL-CPEAP,10215554442,Documento 0065109533 (Despacho) retirado do bloco 106129,0036.006674/2025-77
 07/10/2025 10:03,SUPEL-CPEAP,10215554442,Documento 0065105544 (Relatório) retirado do bloco 106129,0036.006674/2025-77
@@ -97,7 +99,7 @@ Data/Hora,Unidade,Usuário,Descrição,Processo
 20/08/2025 18:52,SESAU-GENE,00536351244,Conclusão do processo na unidade,0036.006674/2025-77
 20/08/2025 18:05,SESAU-GENE,glpi-automacao,"Cancelado documento 0063167176 (Despacho). EQUIVOCO, de acordo com o Chamado de num: 2025108291 da plataforma GLPI",0036.006674/2025-77
 20/08/2025 18:05,SESAU-GENE,glpi-automacao,Documento 0063167176 (Despacho) retirado do bloco 1633850,0036.006674/2025-77
-20/08/2025 16:56,SESAU-GENE,00536351244,Reabertura do processo na unidade,0036.006674/2025-77
+20/08/2025 16:56,SESAU-GENE,536351244,Reabertura do processo na unidade,0036.006674/2025-77
 20/08/2025 11:14,SESAU-NPA,86031686287,Assinado Documento 0063398304 (Relatório) por 86031686287,0036.006674/2025-77
 19/08/2025 08:48,SESAU-NPA,91895162220,Documento 0063398304 (Relatório) retirado do bloco 1621963,0036.006674/2025-77
 19/08/2025 08:47,SESAU-NPA,91895162220,Assinado Documento 0063398304 (Relatório) por 91895162220,0036.006674/2025-77

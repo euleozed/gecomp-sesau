@@ -10,7 +10,9 @@ import {
 } from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Download } from "lucide-react";
+import { ArrowLeft, Download, BarChart as BarChartIcon, Search } from "lucide-react";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { Input } from "@/components/ui/input";
 import Papa from 'papaparse';
 import Layout from '@/components/Layout';
 import jsPDF from 'jspdf';
@@ -20,6 +22,8 @@ interface ProcessoFiltrado {
   objeto: string;
   tipo_tr: string;
   data_ultima_movimentacao: string;
+  data_primeira_homologacao: string;
+  duracao_ate_homologacao: number;
   dias_desde_ultima_movimentacao: number;
   status: string;
 }
@@ -41,8 +45,10 @@ const ProcessosFiltrados = () => {
   const { filtro } = useParams<{ filtro: string }>();
   const navigate = useNavigate();
   const [processos, setProcessos] = useState<ProcessoFiltrado[]>([]);
+  const [processosOriginal, setProcessosOriginal] = useState<ProcessoFiltrado[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     const carregarProcessos = async () => {
@@ -159,11 +165,33 @@ const ProcessosFiltrados = () => {
                 status = 'Atrasado';
               }
               
+              // Encontrar a primeira homologação
+              const homologacoes = processoData.documentos
+                .filter(doc => doc.documento.includes('Homologação'))
+                .sort((a, b) => a.data.getTime() - b.data.getTime()); // Ordenar por data crescente
+
+              // Encontrar o primeiro documento do processo
+              const primeiroDocumento = processoData.documentos
+                .sort((a, b) => a.data.getTime() - b.data.getTime())[0];
+
+              // Calcular duração até a homologação se houver
+              let duracaoAteHomologacao = 0;
+              let dataPrimeiraHomologacao = '';
+              if (homologacoes.length > 0) {
+                const primeiraHomologacao = homologacoes[0];
+                dataPrimeiraHomologacao = primeiraHomologacao.data.toLocaleDateString('pt-BR');
+                duracaoAteHomologacao = Math.ceil(
+                  (primeiraHomologacao.data.getTime() - primeiroDocumento.data.getTime()) / (1000 * 60 * 60 * 24)
+                );
+              }
+
               return {
                 numero_processo: processoData.processo,
                 objeto: processoData.objeto,
                 tipo_tr: processoData.tipo_tr,
                 data_ultima_movimentacao: processoData.ultimaDataFormatada,
+                data_primeira_homologacao: dataPrimeiraHomologacao,
+                duracao_ate_homologacao: duracaoAteHomologacao,
                 dias_desde_ultima_movimentacao: diffDays,
                 status: status
               };
@@ -193,6 +221,7 @@ const ProcessosFiltrados = () => {
             processosFiltrados.sort((a, b) => b.dias_desde_ultima_movimentacao - a.dias_desde_ultima_movimentacao);
             
             console.log('Processos filtrados:', processosFiltrados);
+            setProcessosOriginal(processosFiltrados);
             setProcessos(processosFiltrados);
             setLoading(false);
           },
@@ -213,6 +242,23 @@ const ProcessosFiltrados = () => {
       carregarProcessos();
     }
   }, [filtro]);
+
+  // Efeito para filtrar processos baseado no termo de pesquisa
+  useEffect(() => {
+    if (searchTerm.trim() === '') {
+      setProcessos(processosOriginal);
+      return;
+    }
+
+    const termLower = searchTerm.toLowerCase();
+    const filtered = processosOriginal.filter(processo => 
+      processo.numero_processo.toLowerCase().includes(termLower) ||
+      processo.objeto.toLowerCase().includes(termLower) ||
+      processo.tipo_tr.toLowerCase().includes(termLower)
+    );
+
+    setProcessos(filtered);
+  }, [searchTerm, processosOriginal]);
 
   const getFiltroDisplayName = (filtro: string | undefined) => {
     switch (filtro) {
@@ -237,8 +283,8 @@ const ProcessosFiltrados = () => {
       return pdf.splitTextToSize(text, maxWidth);
     };
 
-    const headers = ['Número do Processo', 'Objeto do Processo', 'Tipo', 'Último Andamento', 'Dias', 'Status'];
-    const colWidths = [45, 100, 30, 35, 20, 25]; // Larguras ajustadas para paisagem
+    const headers = ['Número do Processo', 'Objeto do Processo', 'Tipo', 'Data da Homologação', 'Duração (dias)', 'Status'];
+    const colWidths = [45, 100, 30, 35, 30, 25]; // Larguras ajustadas para paisagem
     
     // Função para desenhar cabeçalho padronizado
     const drawTableHeader = (yPos: number) => {
@@ -326,8 +372,8 @@ const ProcessosFiltrados = () => {
         processo.numero_processo,
         processo.objeto, // Objeto completo, será quebrado automaticamente
         processo.tipo_tr,
-        processo.data_ultima_movimentacao,
-        processo.dias_desde_ultima_movimentacao.toString(),
+        processo.data_primeira_homologacao || '-',
+        processo.data_primeira_homologacao ? processo.duracao_ate_homologacao.toString() : '-',
         processo.status
       ];
       
@@ -411,6 +457,19 @@ const ProcessosFiltrados = () => {
               <CardTitle>
                 {getFiltroDisplayName(filtro)} ({processos.length} processos)
               </CardTitle>
+              {filtro === 'todos' && (
+                <div className="flex items-center gap-2 w-1/3">
+                  <div className="relative flex-1">
+                    <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      placeholder="Pesquisar processos..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="pl-8"
+                    />
+                  </div>
+                </div>
+              )}
               {!loading && processos.length > 0 && (
                 <Button
                   onClick={exportToPDF}
@@ -445,8 +504,8 @@ const ProcessosFiltrados = () => {
                         <TableHead className="border p-2 min-w-[180px] bg-blue-50">Número do Processo</TableHead>
                         <TableHead className="border p-2 min-w-[300px] bg-blue-50">Objeto</TableHead>
                         <TableHead className="border p-2 min-w-[120px] bg-blue-50">Tipo</TableHead>
-                        <TableHead className="border p-2 min-w-[140px] bg-blue-50">Último Andamento</TableHead>
-                        <TableHead className="border p-2 min-w-[100px] text-center bg-blue-50">Dias desde Última Movimentação</TableHead>
+                        <TableHead className="border p-2 min-w-[140px] bg-blue-50">Data da Homologação</TableHead>
+                        <TableHead className="border p-2 min-w-[100px] text-center bg-blue-50">Duração até Homologação (dias)</TableHead>
                         <TableHead className="border p-2 min-w-[120px] text-center bg-blue-50">Status</TableHead>
                       </TableRow>
                     </TableHeader>
@@ -474,9 +533,9 @@ const ProcessosFiltrados = () => {
                               </div>
                             </TableCell>
                             <TableCell className="border p-2">{processo.tipo_tr}</TableCell>
-                            <TableCell className="border p-2">{processo.data_ultima_movimentacao}</TableCell>
-                            <TableCell className={`border p-2 text-center ${processo.status === 'Atrasado' ? 'text-red-600 font-semibold' : ''}`}>
-                              {processo.dias_desde_ultima_movimentacao}
+                            <TableCell className="border p-2">{processo.data_primeira_homologacao || '-'}</TableCell>
+                            <TableCell className="border p-2 text-center">
+                              {processo.data_primeira_homologacao ? processo.duracao_ate_homologacao : '-'}
                             </TableCell>
                             <TableCell className={`border p-2 text-center font-semibold ${
                               processo.status === 'Atrasado' ? 'text-red-600' : 
@@ -491,6 +550,68 @@ const ProcessosFiltrados = () => {
                     </TableBody>
                   </Table>
                 </div>
+
+                {/* Gráfico de Média de Duração por Tipo */}
+                {processos.length > 0 && filtro === 'homologados' && (
+                  <Card className="mt-8">
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <BarChartIcon className="h-5 w-5" />
+                        Média de Duração até Homologação por Tipo
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="h-[400px] w-full">
+                        <ResponsiveContainer width="100%" height="100%">
+                          <BarChart
+                            data={(() => {
+                              // Agrupar processos por tipo e calcular média
+                              const groupedByType = processos.reduce((acc, processo) => {
+                                if (!processo.data_primeira_homologacao) return acc;
+                                
+                                if (!acc[processo.tipo_tr]) {
+                                  acc[processo.tipo_tr] = {
+                                    total: processo.duracao_ate_homologacao,
+                                    count: 1
+                                  };
+                                } else {
+                                  acc[processo.tipo_tr].total += processo.duracao_ate_homologacao;
+                                  acc[processo.tipo_tr].count += 1;
+                                }
+                                return acc;
+                              }, {} as { [key: string]: { total: number; count: number } });
+
+                              // Calcular médias e formatar para o gráfico
+                              return Object.entries(groupedByType).map(([tipo, { total, count }]) => ({
+                                tipo,
+                                media: Math.round(total / count)
+                              }));
+                            })()}
+                            margin={{ top: 20, right: 30, left: 40, bottom: 60 }}
+                          >
+                            <XAxis
+                              dataKey="tipo"
+                              angle={-45}
+                              textAnchor="end"
+                              height={60}
+                              interval={0}
+                            />
+                            <YAxis label={{ value: 'Dias', angle: -90, position: 'insideLeft' }} />
+                            <Tooltip
+                              formatter={(value) => [`${value} dias`, 'Média']}
+                              labelFormatter={(label) => `Tipo: ${label}`}
+                            />
+                            <Bar
+                              dataKey="media"
+                              fill="#0c93e4"
+                              name="Média de Dias"
+                            />
+                          </BarChart>
+                        </ResponsiveContainer>
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
               </div>
             )}
           </CardContent>
