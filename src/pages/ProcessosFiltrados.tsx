@@ -20,6 +20,7 @@ import { ptBR } from "date-fns/locale";
 import Papa from 'papaparse';
 import Layout from '@/components/Layout';
 import jsPDF from 'jspdf';
+import { utils as XLSXUtils, writeFile as XLSXWriteFile } from 'xlsx';
 
 interface ProcessoFiltrado {
   numero_processo: string;
@@ -363,6 +364,39 @@ const ProcessosFiltrados = () => {
     }
   };
 
+  const exportToExcel = () => {
+    // Preparar os dados para o Excel
+    const excelData = processos.map(processo => ({
+      'Número do Processo': processo.numero_processo,
+      'Objeto': processo.objeto,
+      'Tipo': processo.tipo_tr,
+      'Data de Chegada': processo.data_chegada,
+      'Data da Homologação': processo.data_primeira_homologacao,
+      'Duração até Homologação (dias)': processo.data_primeira_homologacao ? processo.duracao_ate_homologacao : '-',
+      'Status': processo.status
+    }));
+
+    // Criar uma nova planilha
+    const ws = XLSXUtils.json_to_sheet(excelData);
+    const wb = XLSXUtils.book_new();
+    XLSXUtils.book_append_sheet(wb, ws, 'Processos');
+
+    // Ajustar largura das colunas
+    const colWidths = [
+      { wch: 20 }, // Número do Processo
+      { wch: 50 }, // Objeto
+      { wch: 15 }, // Tipo
+      { wch: 15 }, // Data de Chegada
+      { wch: 15 }, // Data da Homologação
+      { wch: 15 }, // Duração
+      { wch: 15 }, // Status
+    ];
+    ws['!cols'] = colWidths;
+
+    // Salvar o arquivo
+    XLSXWriteFile(wb, `processos_${filtro}_${new Date().toISOString().split('T')[0]}.xlsx`);
+  };
+
   const exportToPDF = () => {
     // Formato A4 PAISAGEM
     const pdf = new jsPDF('l', 'mm', 'a4'); // 'l' = landscape (paisagem)
@@ -534,12 +568,12 @@ const ProcessosFiltrados = () => {
           </h1>
         </div>
         <Button
-          onClick={exportToPDF}
-          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700"
+          onClick={exportToExcel}
+          className="flex items-center gap-2 bg-green-600 hover:bg-green-700"
           disabled={loading || processos.length === 0}
         >
           <Download className="h-4 w-4" />
-          Exportar PDF
+          Exportar Excel
         </Button>
       </div>
       
