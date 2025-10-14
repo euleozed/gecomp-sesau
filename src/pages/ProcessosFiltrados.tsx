@@ -13,6 +13,10 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, Download, BarChart as BarChartIcon, Search } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { Input } from "@/components/ui/input";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
 import Papa from 'papaparse';
 import Layout from '@/components/Layout';
 import jsPDF from 'jspdf';
@@ -21,6 +25,7 @@ interface ProcessoFiltrado {
   numero_processo: string;
   objeto: string;
   tipo_tr: string;
+  data_chegada: string;
   data_ultima_movimentacao: string;
   data_primeira_homologacao: string;
   duracao_ate_homologacao: number;
@@ -49,6 +54,8 @@ const ProcessosFiltrados = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [dataInicial, setDataInicial] = useState<Date | null>(null);
+  const [dataFinal, setDataFinal] = useState<Date | null>(null);
 
   useEffect(() => {
     const carregarProcessos = async () => {
@@ -80,7 +87,7 @@ const ProcessosFiltrados = () => {
               ultimaDataFormatada: string;
               temHomologacao: boolean;
               temEncerramento: boolean;
-              documentos: Array<{data: Date, documento: string}>;
+              documentos: CsvHistoricoItem[];
             }>();
             
             dadosCompletos.forEach((row) => {
@@ -100,7 +107,7 @@ const ProcessosFiltrados = () => {
                   ultimaDataFormatada: dataMovimentacao.toLocaleDateString('pt-BR'),
                   temHomologacao: temHomologacao,
                   temEncerramento: temEncerramento,
-                  documentos: [{data: dataMovimentacao, documento: row['Documento'] || ''}]
+                  documentos: [row]
                 });
               } else {
                 const processoExistente = processosMap.get(processo)!;
@@ -120,16 +127,53 @@ const ProcessosFiltrados = () => {
                 }
                 
                 // Adicionar documento à lista
-                processoExistente.documentos.push({
-                  data: dataMovimentacao, 
-                  documento: row['Documento'] || ''
-                });
+                processoExistente.documentos.push(row);
               }
             });
             
             // Calcular dias desde a última movimentação e aplicar filtros
             const dataHoje = new Date();
             let processosFiltrados = Array.from(processosMap.values()).map(processoData => {
+              const processarDocumentos = (documentos: CsvHistoricoItem[]) => {
+                // Ordenar documentos por data
+                const docsOrdenados = [...documentos].sort(
+                  (a, b) => new Date(a['Data/Hora']).getTime() - new Date(b['Data/Hora']).getTime()
+                );
+
+                // Encontrar a primeira homologação
+                const homologacoes = docsOrdenados.filter(doc => doc.Documento?.includes('Homologação'));
+                const primeiroDocumento = docsOrdenados[0];
+
+                // Calcular duração até a homologação se houver
+                let duracaoAteHomologacao = 0;
+                let dataPrimeiraHomologacao = '';
+                if (homologacoes.length > 0) {
+                  const primeiraHomologacao = homologacoes[0];
+                  dataPrimeiraHomologacao = new Date(primeiraHomologacao['Data/Hora']).toLocaleDateString('pt-BR');
+                  duracaoAteHomologacao = Math.ceil(
+                    (new Date(primeiraHomologacao['Data/Hora']).getTime() - new Date(primeiroDocumento['Data/Hora']).getTime()) / (1000 * 60 * 60 * 24)
+                  );
+                }
+
+                // Encontrar a primeira ocorrência em GECOMP/CECOMP
+                const primeiraChegada = docsOrdenados.find(doc => {
+                  const isRemessaParaGecomp = doc.Documento?.toLowerCase().includes('remetido') &&
+                    doc.Unidade?.toLowerCase().includes('gecomp');
+                  const isRemessaParaCecomp = doc.Documento?.toLowerCase().includes('remetido') &&
+                    doc.Unidade?.toLowerCase().includes('cecomp');
+                  const isUnidadeGecompCecomp = doc.Unidade === 'SESAU-GECOMP' || doc.Unidade === 'SESAU-CECOMP';
+                  
+                  return isRemessaParaGecomp || isRemessaParaCecomp || isUnidadeGecompCecomp;
+                });
+
+                return {
+                  data_chegada: primeiraChegada ? new Date(primeiraChegada['Data/Hora']).toLocaleDateString('pt-BR') : '-',
+                  data_primeira_homologacao: dataPrimeiraHomologacao || '-',
+                  duracao_ate_homologacao: duracaoAteHomologacao
+                };
+              };
+
+              const dadosProcessados = processarDocumentos(processoData.documentos);
               const diffTime = Math.abs(dataHoje.getTime() - processoData.ultimaData.getTime());
               const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
               const atrasado = diffDays > 15;
@@ -141,15 +185,15 @@ const ProcessosFiltrados = () => {
               if (processoData.temEncerramento) {
                 // Encontrar a data do termo de encerramento
                 const termosEncerramento = processoData.documentos
-                  .filter(doc => doc.documento.includes('Termo de Encerramento'))
-                  .sort((a, b) => b.data.getTime() - a.data.getTime()); // Ordenar por data decrescente
+                  .filter(doc => doc.Documento?.includes('Termo de Encerramento'))
+                  .sort((a, b) => new Date(b['Data/Hora']).getTime() - new Date(a['Data/Hora']).getTime()); // Ordenar por data decrescente
                 
                 if (termosEncerramento.length > 0) {
-                  const dataTermoEncerramento = termosEncerramento[0].data;
+                  const dataTermoEncerramento = new Date(termosEncerramento[0]['Data/Hora']);
                   
                   // Contar documentos após o termo de encerramento
                   const documentosAposTermo = processoData.documentos
-                    .filter(doc => doc.data.getTime() > dataTermoEncerramento.getTime())
+                    .filter(doc => new Date(doc['Data/Hora']).getTime() > dataTermoEncerramento.getTime())
                     .length;
                   
                   // Considerar encerrado apenas se tiver menos de 2 documentos após o termo
@@ -167,37 +211,54 @@ const ProcessosFiltrados = () => {
               
               // Encontrar a primeira homologação
               const homologacoes = processoData.documentos
-                .filter(doc => doc.documento.includes('Homologação'))
-                .sort((a, b) => a.data.getTime() - b.data.getTime()); // Ordenar por data crescente
+                .filter(doc => doc.Documento?.includes('Homologação'))
+                .sort((a, b) => new Date(a['Data/Hora']).getTime() - new Date(b['Data/Hora']).getTime()); // Ordenar por data crescente
 
               // Encontrar o primeiro documento do processo
               const primeiroDocumento = processoData.documentos
-                .sort((a, b) => a.data.getTime() - b.data.getTime())[0];
+                .sort((a, b) => new Date(a['Data/Hora']).getTime() - new Date(b['Data/Hora']).getTime())[0];
 
               // Calcular duração até a homologação se houver
               let duracaoAteHomologacao = 0;
               let dataPrimeiraHomologacao = '';
               if (homologacoes.length > 0) {
                 const primeiraHomologacao = homologacoes[0];
-                dataPrimeiraHomologacao = primeiraHomologacao.data.toLocaleDateString('pt-BR');
+                dataPrimeiraHomologacao = new Date(primeiraHomologacao['Data/Hora']).toLocaleDateString('pt-BR');
                 duracaoAteHomologacao = Math.ceil(
-                  (primeiraHomologacao.data.getTime() - primeiroDocumento.data.getTime()) / (1000 * 60 * 60 * 24)
+                  (new Date(primeiraHomologacao['Data/Hora']).getTime() - new Date(primeiroDocumento['Data/Hora']).getTime()) / (1000 * 60 * 60 * 24)
                 );
               }
+
+              // Encontrar a primeira ocorrência em GECOMP/CECOMP
+              const primeiraChegada = processoData.documentos
+                .sort((a, b) => new Date(a['Data/Hora']).getTime() - new Date(b['Data/Hora']).getTime())
+                .find(doc => {
+                  // Verifica se o documento indica remessa para GECOMP/CECOMP
+                  const isRemessaParaGecomp = doc.Documento?.toLowerCase().includes('remetido') &&
+                    doc.Unidade?.toLowerCase().includes('gecomp');
+                  
+                  // Verifica se o documento indica remessa para CECOMP
+                  const isRemessaParaCecomp = doc.Documento?.toLowerCase().includes('remetido') &&
+                    doc.Unidade?.toLowerCase().includes('cecomp');
+                  
+                  // Verifica se é um documento na unidade GECOMP/CECOMP
+                  const isUnidadeGecompCecomp = doc.Unidade === 'SESAU-GECOMP' || doc.Unidade === 'SESAU-CECOMP';
+                  
+                  return isRemessaParaGecomp || isRemessaParaCecomp || isUnidadeGecompCecomp;
+                });
 
               return {
                 numero_processo: processoData.processo,
                 objeto: processoData.objeto,
                 tipo_tr: processoData.tipo_tr,
+                ...dadosProcessados,
                 data_ultima_movimentacao: processoData.ultimaDataFormatada,
-                data_primeira_homologacao: dataPrimeiraHomologacao,
-                duracao_ate_homologacao: duracaoAteHomologacao,
                 dias_desde_ultima_movimentacao: diffDays,
                 status: status
               };
             });
-            
-            // Aplicar filtro baseado no parâmetro da URL
+
+            // Depois aplicar o filtro baseado no parâmetro da URL
             switch (filtro) {
               case 'homologados':
                 processosFiltrados = processosFiltrados.filter(p => p.status === 'Homologado');
@@ -217,8 +278,19 @@ const ProcessosFiltrados = () => {
                 break;
             }
             
-            // Ordenar por dias desde última movimentação (decrescente)
-            processosFiltrados.sort((a, b) => b.dias_desde_ultima_movimentacao - a.dias_desde_ultima_movimentacao);
+            // Ordenar por data de chegada (do mais recente para o mais antigo)
+            processosFiltrados.sort((a, b) => {
+              // Se algum dos processos não tem data de chegada, colocar no final
+              if (a.data_chegada === '-') return 1;
+              if (b.data_chegada === '-') return -1;
+              
+              // Converter as datas (formato dd/mm/yyyy) para objetos Date
+              const dateA = new Date(a.data_chegada.split('/').reverse().join('-'));
+              const dateB = new Date(b.data_chegada.split('/').reverse().join('-'));
+              
+              // Ordenar do mais recente para o mais antigo
+              return dateB.getTime() - dateA.getTime();
+            });
             
             console.log('Processos filtrados:', processosFiltrados);
             setProcessosOriginal(processosFiltrados);
@@ -241,24 +313,44 @@ const ProcessosFiltrados = () => {
     if (filtro) {
       carregarProcessos();
     }
-  }, [filtro]);
+  }, [filtro])
+  ;
 
   // Efeito para filtrar processos baseado no termo de pesquisa
   useEffect(() => {
-    if (searchTerm.trim() === '') {
-      setProcessos(processosOriginal);
-      return;
+    let filtered = [...processosOriginal];
+
+    // Aplicar filtro de texto
+    if (searchTerm.trim() !== '') {
+      const termLower = searchTerm.toLowerCase();
+      filtered = filtered.filter(processo => 
+        processo.numero_processo.toLowerCase().includes(termLower) ||
+        processo.objeto.toLowerCase().includes(termLower) ||
+        processo.tipo_tr.toLowerCase().includes(termLower)
+      );
     }
 
-    const termLower = searchTerm.toLowerCase();
-    const filtered = processosOriginal.filter(processo => 
-      processo.numero_processo.toLowerCase().includes(termLower) ||
-      processo.objeto.toLowerCase().includes(termLower) ||
-      processo.tipo_tr.toLowerCase().includes(termLower)
-    );
+    // Aplicar filtro de data
+    if (dataInicial || dataFinal) {
+      filtered = filtered.filter(processo => {
+        const dataChegada = processo.data_chegada !== '-' ? new Date(processo.data_chegada.split('/').reverse().join('-')) : null;
+        
+        if (!dataChegada) return false;
+        
+        if (dataInicial && dataFinal) {
+          return dataChegada >= dataInicial && dataChegada <= dataFinal;
+        } else if (dataInicial) {
+          return dataChegada >= dataInicial;
+        } else if (dataFinal) {
+          return dataChegada <= dataFinal;
+        }
+        
+        return true;
+      });
+    }
 
     setProcessos(filtered);
-  }, [searchTerm, processosOriginal]);
+  }, [searchTerm, processosOriginal, dataInicial, dataFinal]);
 
   const getFiltroDisplayName = (filtro: string | undefined) => {
     switch (filtro) {
@@ -283,8 +375,8 @@ const ProcessosFiltrados = () => {
       return pdf.splitTextToSize(text, maxWidth);
     };
 
-    const headers = ['Número do Processo', 'Objeto do Processo', 'Tipo', 'Data da Homologação', 'Duração (dias)', 'Status'];
-    const colWidths = [45, 100, 30, 35, 30, 25]; // Larguras ajustadas para paisagem
+    const headers = ['Número do Processo', 'Objeto do Processo', 'Tipo', 'Data de Chegada', 'Data da Homologação', 'Duração (dias)', 'Status'];
+    const colWidths = [45, 90, 25, 30, 30, 25, 25]; // Larguras ajustadas para paisagem
     
     // Função para desenhar cabeçalho padronizado
     const drawTableHeader = (yPos: number) => {
@@ -372,6 +464,7 @@ const ProcessosFiltrados = () => {
         processo.numero_processo,
         processo.objeto, // Objeto completo, será quebrado automaticamente
         processo.tipo_tr,
+        processo.data_chegada,
         processo.data_primeira_homologacao || '-',
         processo.data_primeira_homologacao ? processo.duracao_ate_homologacao.toString() : '-',
         processo.status
@@ -458,15 +551,59 @@ const ProcessosFiltrados = () => {
                 {getFiltroDisplayName(filtro)} ({processos.length} processos)
               </CardTitle>
               {filtro === 'todos' && (
-                <div className="flex items-center gap-2 w-1/3">
-                  <div className="relative flex-1">
+                <div className="flex items-center gap-4">
+                  <div className="relative">
                     <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
                     <Input
                       placeholder="Pesquisar processos..."
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
-                      className="pl-8"
+                      className="pl-8 w-[300px]"
                     />
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button variant="outline" className="w-[150px] justify-start text-left font-normal">
+                          {dataInicial ? format(dataInicial, 'dd/MM/yyyy') : 'Data inicial'}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0">
+                        <Calendar
+                          mode="single"
+                          selected={dataInicial}
+                          onSelect={setDataInicial}
+                          locale={ptBR}
+                        />
+                      </PopoverContent>
+                    </Popover>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button variant="outline" className="w-[150px] justify-start text-left font-normal">
+                          {dataFinal ? format(dataFinal, 'dd/MM/yyyy') : 'Data final'}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0">
+                        <Calendar
+                          mode="single"
+                          selected={dataFinal}
+                          onSelect={setDataFinal}
+                          locale={ptBR}
+                        />
+                      </PopoverContent>
+                    </Popover>
+                    {(dataInicial || dataFinal) && (
+                      <Button
+                        variant="ghost"
+                        onClick={() => {
+                          setDataInicial(null);
+                          setDataFinal(null);
+                        }}
+                        className="h-8 px-2"
+                      >
+                        Limpar
+                      </Button>
+                    )}
                   </div>
                 </div>
               )}
@@ -504,6 +641,7 @@ const ProcessosFiltrados = () => {
                         <TableHead className="border p-2 min-w-[180px] bg-blue-50">Número do Processo</TableHead>
                         <TableHead className="border p-2 min-w-[300px] bg-blue-50">Objeto</TableHead>
                         <TableHead className="border p-2 min-w-[120px] bg-blue-50">Tipo</TableHead>
+                        <TableHead className="border p-2 min-w-[120px] bg-blue-50">Data de Chegada</TableHead>
                         <TableHead className="border p-2 min-w-[140px] bg-blue-50">Data da Homologação</TableHead>
                         <TableHead className="border p-2 min-w-[100px] text-center bg-blue-50">Duração até Homologação (dias)</TableHead>
                         <TableHead className="border p-2 min-w-[120px] text-center bg-blue-50">Status</TableHead>
@@ -533,6 +671,8 @@ const ProcessosFiltrados = () => {
                               </div>
                             </TableCell>
                             <TableCell className="border p-2">{processo.tipo_tr}</TableCell>
+                            {/* ordenar por data_chegada */}
+                            <TableCell className="border p-2">{processo.data_chegada}</TableCell>
                             <TableCell className="border p-2">{processo.data_primeira_homologacao || '-'}</TableCell>
                             <TableCell className="border p-2 text-center">
                               {processo.data_primeira_homologacao ? processo.duracao_ate_homologacao : '-'}
