@@ -540,8 +540,8 @@ ${documentosAtrasados > 0 ? `
           const dispensaCount = metadata.tipos_processo?.Dispensa || 0;
           const emergencialCount = metadata.tipos_processo?.Emergencial || 0;
           const inexigibilidadeCount = metadata.tipos_processo?.Inexigibilidade || 0;
-          const licitatorioCount = metadata.tipos_processo?.Licitatório || 0;
-          const licitatorioSrpCount = metadata.tipos_processo?.['Licitatório SRP'] || 0;
+          const licitatorioCount = metadata.tipos_processo?.['Pregão eletrônico'] || 0;
+          const licitatorioSrpCount = metadata.tipos_processo?.['Registro de Preços'] || 0;
           const organizacaoSocialCount = metadata.tipos_processo?.['Organização Social'] || 0;
           
           setDispensaCount(dispensaCount);
@@ -661,8 +661,8 @@ ${documentosAtrasados > 0 ? `
           setDispensaCount(processosPorTipo.get('Dispensa')?.size || 0);
           setEmergencialCount(processosPorTipo.get('Emergencial')?.size || 0);
           setInexigibilidadeCount(processosPorTipo.get('Inexigibilidade')?.size || 0);
-          setLicitatorioCount(processosPorTipo.get('Licitatório')?.size || 0);
-          setLicitatorioSrpCount(processosPorTipo.get('Licitatório SRP')?.size || 0);
+          setLicitatorioCount(processosPorTipo.get('Pregão eletrônico')?.size || 0);
+          setLicitatorioSrpCount(processosPorTipo.get('Registro de Preços')?.size || 0);
           setOrganizacaoSocialCount(processosPorTipo.get('Organização Social')?.size || 0);
 
           console.log('Contagens calculadas:', {
@@ -1035,7 +1035,7 @@ ${documentosAtrasados > 0 ? `
               <p className="text-sm font-medium text-muted-foreground">
                 Em Andamento
               </p>
-              <h3 className="text-2xl font-bold">{totalProcesses - concludedCount - terminatedCount}</h3>
+              <h3 className="text-2xl font-bold">{totalProcesses - concludedCount - overdueProcessesCount}</h3>
             </div>
           </CardContent>
         </Card>
@@ -1132,7 +1132,7 @@ ${documentosAtrasados > 0 ? `
 
           <Card 
             className="border-sei-100 cursor-pointer hover:shadow-lg transition-shadow" 
-            onClick={() => handleTipoClick('Licitatório')}
+            onClick={() => handleTipoClick('Pregão eletrônico')}
           >
             <CardContent className="p-6 flex items-center gap-4">
               <div className="bg-green-100 p-3 rounded-full">
@@ -1140,7 +1140,7 @@ ${documentosAtrasados > 0 ? `
               </div>
               <div>
                 <p className="text-sm font-medium text-muted-foreground">
-                  Licitatório
+                  Pregão Eletrônico
                 </p>
                 <h3 className="text-2xl font-bold">{licitatorioCount}</h3>
               </div>
@@ -1149,7 +1149,7 @@ ${documentosAtrasados > 0 ? `
 
           <Card 
             className="border-sei-100 cursor-pointer hover:shadow-lg transition-shadow" 
-            onClick={() => handleTipoClick('Licitatório SRP')}
+            onClick={() => handleTipoClick('Registro de Preços')}
           >
             <CardContent className="p-6 flex items-center gap-4">
               <div className="bg-purple-100 p-3 rounded-full">
@@ -1157,7 +1157,7 @@ ${documentosAtrasados > 0 ? `
               </div>
               <div>
                 <p className="text-sm font-medium text-muted-foreground">
-                  Licitatório SRP
+                  Registro de Preços
                 </p>
                 <h3 className="text-2xl font-bold">{licitatorioSrpCount}</h3>
               </div>
