@@ -147,6 +147,18 @@ def extrair_dados_tabela(Processo, nome_arquivo):
         print(f"Nenhum dado extraído para o processo {Processo}.")
     
 
+# Verificar e exibir processos duplicados
+duplicados = df_documentos[df_documentos.duplicated(['Processo'], keep=False)]
+if not duplicados.empty:
+    print("\nProcessos duplicados encontrados:")
+    for processo in duplicados['Processo'].unique():
+        count = duplicados[duplicados['Processo'] == processo].shape[0]
+        print(f"Processo {processo} aparece {count} vezes")
+    
+    # Remover duplicatas mantendo apenas a primeira ocorrência
+    df_documentos = df_documentos.drop_duplicates(subset=['Processo'], keep='first')
+    print("\nDuplicatas removidas. Mantida apenas a primeira ocorrência de cada processo.")
+
 # Filtrar linhas onde a coluna 'Processo' não está vazia
 df_documentos = df_documentos[df_documentos['Processo'].notna()]
 df_documentos = df_documentos[df_documentos['Processo'].astype(str).str.strip() != ""]

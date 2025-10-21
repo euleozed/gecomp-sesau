@@ -1252,7 +1252,7 @@ ${documentosAtrasados > 0 ? `
               <div className="flex items-center justify-between">
                 <div>
                   <CardTitle>Histórico do Processo</CardTitle>
-                  <CardDescription>Todos os registros do histórico do processo {selectedProcess}</CardDescription>
+                  {/* <CardDescription>Todos os registros do histórico do processo {selectedProcess}</CardDescription> */}
                 </div>
                 <div className="flex gap-2">
                   <Button 
@@ -1269,6 +1269,8 @@ ${documentosAtrasados > 0 ? `
                       <>
                         <FileText className="mr-2 h-4 w-4" />
                         Gerar Relatório IA
+                        {/* TODO: add descrição 'em breve' em fonte menor e colorida em baixo do botão */}
+                        <span className="text-sm text-yellow-500 ml-2">em breve</span>
                       </>
                     )}
                   </Button>
@@ -1363,7 +1365,7 @@ ${documentosAtrasados > 0 ? `
             <CardDescription>
               • Laranja = indica o maior período (dias) para a produção de um documento
               <br />
-              • Verde = indica os dias acumulados de cada servido envolvido no processo
+              • Verde = indica os dias acumulados de cada servidor envolvido no processo
               <br />
               • Azul = indica a quantidade de aparições do servidor no processso
             </CardDescription>
