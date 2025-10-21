@@ -1,4 +1,5 @@
 Data/Hora,Unidade,Usuário,Descrição,Processo
+20/10/2025 14:33,SESAU-NEFI,75728613268,Processo atribuído para 02768340200,0036.017426/2025-51
 19/09/2025 08:49,SESAU-NEFI,58149457291,Processo recebido na unidade,0036.017426/2025-51
 18/09/2025 16:02,SESAU-NEFI,57844801204,Processo remetido pela unidade SESAU-GACP,0036.017426/2025-51
 18/09/2025 16:01,SESAU-GACP,57844801204,Assinado Documento 0064560681 (Análise 2864) por 57844801204,0036.017426/2025-51
@@ -698,7 +699,7 @@ Data/Hora,Unidade,Usuário,Descrição,Processo
 06/05/2025 14:26,SESAU-CLAP,1221495216,Documento 0059644947 (Documento de Oficialização de Demanda 6) inserido no bloco 1109346,0036.017426/2025-51
 06/05/2025 14:26,SESAU-CLAP,1221495216,Assinado Documento 0059644947 (Documento de Oficialização de Demanda 6) por 01221495216,0036.017426/2025-51
 06/05/2025 14:23,SESAU-CLAP,1221495216,Gerado documento público 0059865540 (Despacho),0036.017426/2025-51
-06/05/2025 10:39,SESAU-CLAP,1221495216,Registro de documento externo público 0059837032 (Planilha),0036.017426/2025-51
+06/05/2025 10:39,SESAU-CLAP,01221495216,Registro de documento externo público 0059837032 (Planilha),0036.017426/2025-51
 06/05/2025 10:37,SESAU-CLAP,01221495216,Registro de documento externo público 0059836903 (Planilha),0036.017426/2025-51
 06/05/2025 09:24,SESAU-CLAP,glpi-automacao,"Cancelado documento 0059123670 (Planilha). alteração de quantitativos, de acordo com o Chamado de num: 2025055526 da plataforma GLPI",0036.017426/2025-51
 06/05/2025 09:24,SESAU-CLAP,glpi-automacao,"Cancelado documento 0059123555 (Planilha). alteração de quantitativos, de acordo com o Chamado de num: 2025055525 da plataforma GLPI",0036.017426/2025-51
@@ -798,7 +799,7 @@ Data/Hora,Unidade,Usuário,Descrição,Processo
 23/04/2025 15:16,SESAU-NAP,79511341200,Documento 0059502148 (Resposta) inserido no bloco 989625,0036.017426/2025-51
 23/04/2025 14:27,SESAU-NAP,79511341200,Gerado documento público 0059502148 (Resposta),0036.017426/2025-51
 15/04/2025 16:53,SESAU-NAP,00979107245,Processo atribuído para 79511341200,0036.017426/2025-51
-15/04/2025 16:51,SESAU-NAP,00979107245,Processo inserido no bloco 1476228,0036.017426/2025-51
+15/04/2025 16:51,SESAU-NAP,979107245,Processo inserido no bloco 1476228,0036.017426/2025-51
 15/04/2025 16:15,SESAU-NAP,979107245,Processo recebido na unidade,0036.017426/2025-51
 15/04/2025 16:02,SESAU-NAP,2773788265,Processo remetido pela unidade SESAU-GECOMP,0036.017426/2025-51
 15/04/2025 16:02,SESAU-GECOMP,2773788265,Assinado Documento 0059339682 (Despacho) por 02773788265,0036.017426/2025-51

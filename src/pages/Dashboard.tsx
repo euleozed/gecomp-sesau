@@ -1035,7 +1035,7 @@ ${documentosAtrasados > 0 ? `
               <p className="text-sm font-medium text-muted-foreground">
                 Em Andamento
               </p>
-              <h3 className="text-2xl font-bold">{totalProcesses - concludedCount}</h3>
+              <h3 className="text-2xl font-bold">{totalProcesses - concludedCount - terminatedCount}</h3>
             </div>
           </CardContent>
         </Card>
@@ -1076,7 +1076,7 @@ ${documentosAtrasados > 0 ? `
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-1 mb-8">
       </div>
       <div className="mb-8">
-        <h2 className="text-2xl font-bold text-sei-800 mb-4">Processos por Tipo</h2>
+        <h2 className="text-2xl font-bold text-sei-800 mb-4">Processos em Andamento por Tipo</h2>
         <div className="grid gap-4 grid-cols-6">
           <Card 
             className="border-sei-100 cursor-pointer hover:shadow-lg transition-shadow" 

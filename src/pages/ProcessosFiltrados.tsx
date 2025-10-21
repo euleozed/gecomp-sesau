@@ -29,8 +29,11 @@ interface ProcessoFiltrado {
   data_chegada: string;
   data_ultima_movimentacao: string;
   data_primeira_homologacao: string;
+  data_encerramento: string;
   duracao_ate_homologacao: number;
+  duracao_total: number;
   dias_desde_ultima_movimentacao: number;
+  dias_em_atraso: number;
   status: string;
 }
 
@@ -141,18 +144,32 @@ const ProcessosFiltrados = () => {
                   (a, b) => new Date(a['Data/Hora']).getTime() - new Date(b['Data/Hora']).getTime()
                 );
 
+                const primeiroDocumento = docsOrdenados[0];
+                const ultimoDocumento = docsOrdenados[docsOrdenados.length - 1];
+
                 // Encontrar a primeira homologação
                 const homologacoes = docsOrdenados.filter(doc => doc.Documento?.includes('Homologação'));
-                const primeiroDocumento = docsOrdenados[0];
-
-                // Calcular duração até a homologação se houver
-                let duracaoAteHomologacao = 0;
                 let dataPrimeiraHomologacao = '';
+                let duracaoAteHomologacao = 0;
+
                 if (homologacoes.length > 0) {
                   const primeiraHomologacao = homologacoes[0];
                   dataPrimeiraHomologacao = new Date(primeiraHomologacao['Data/Hora']).toLocaleDateString('pt-BR');
                   duracaoAteHomologacao = Math.ceil(
                     (new Date(primeiraHomologacao['Data/Hora']).getTime() - new Date(primeiroDocumento['Data/Hora']).getTime()) / (1000 * 60 * 60 * 24)
+                  );
+                }
+
+                // Encontrar o encerramento
+                const encerramentos = docsOrdenados.filter(doc => doc.Documento?.includes('Termo de Encerramento'));
+                let dataEncerramento = '';
+                let duracaoTotal = 0;
+
+                if (encerramentos.length > 0) {
+                  const ultimoEncerramento = encerramentos[encerramentos.length - 1];
+                  dataEncerramento = new Date(ultimoEncerramento['Data/Hora']).toLocaleDateString('pt-BR');
+                  duracaoTotal = Math.ceil(
+                    (new Date(ultimoEncerramento['Data/Hora']).getTime() - new Date(primeiroDocumento['Data/Hora']).getTime()) / (1000 * 60 * 60 * 24)
                   );
                 }
 
@@ -167,10 +184,20 @@ const ProcessosFiltrados = () => {
                   return isRemessaParaGecomp || isRemessaParaCecomp || isUnidadeGecompCecomp;
                 });
 
+                // Calcular dias em atraso (se mais de 15 dias desde última movimentação)
+                const diasDesdeUltimaMovimentacao = Math.ceil(
+                  (new Date().getTime() - new Date(ultimoDocumento['Data/Hora']).getTime()) / (1000 * 60 * 60 * 24)
+                );
+                const diasEmAtraso = diasDesdeUltimaMovimentacao > 15 ? diasDesdeUltimaMovimentacao - 15 : 0;
+
                 return {
                   data_chegada: primeiraChegada ? new Date(primeiraChegada['Data/Hora']).toLocaleDateString('pt-BR') : '-',
                   data_primeira_homologacao: dataPrimeiraHomologacao || '-',
-                  duracao_ate_homologacao: duracaoAteHomologacao
+                  data_encerramento: dataEncerramento || '-',
+                  duracao_ate_homologacao: duracaoAteHomologacao,
+                  duracao_total: duracaoTotal,
+                  dias_desde_ultima_movimentacao: diasDesdeUltimaMovimentacao,
+                  dias_em_atraso: diasEmAtraso
                 };
               };
 
@@ -178,8 +205,6 @@ const ProcessosFiltrados = () => {
               const diffTime = Math.abs(dataHoje.getTime() - processoData.ultimaData.getTime());
               const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
               const atrasado = diffDays > 15;
-              
-              let status = 'Em Andamento';
               
               // Verificar se realmente está encerrado
               let realmenteEncerrado = false;
@@ -201,13 +226,16 @@ const ProcessosFiltrados = () => {
                   realmenteEncerrado = documentosAposTermo < 2;
                 }
               }
-              
+
+              // Definir status com base nas condições
+              let status;
               if (realmenteEncerrado) {
                 status = 'Encerrado';
               } else if (processoData.temHomologacao) {
                 status = 'Homologado';
-              } else if (atrasado) {
-                status = 'Atrasado';
+              } else {
+                // Se não está encerrado nem homologado, pode estar em andamento ou atrasado
+                status = atrasado ? 'Atrasado' : 'Em Andamento';
               }
               
               // Encontrar a primeira homologação
@@ -268,7 +296,9 @@ const ProcessosFiltrados = () => {
                 processosFiltrados = processosFiltrados.filter(p => p.status === 'Encerrado');
                 break;
               case 'em-andamento':
-                processosFiltrados = processosFiltrados.filter(p => p.status === 'Em Andamento');
+                processosFiltrados = processosFiltrados.filter(p => 
+                  p.status === 'Em Andamento' || p.status === 'Atrasado'
+                );
                 break;
               case 'atrasados':
                 processosFiltrados = processosFiltrados.filter(p => p.status === 'Atrasado');
@@ -366,15 +396,54 @@ const ProcessosFiltrados = () => {
 
   const exportToExcel = () => {
     // Preparar os dados para o Excel
-    const excelData = processos.map(processo => ({
-      'Número do Processo': processo.numero_processo,
-      'Objeto': processo.objeto,
-      'Tipo': processo.tipo_tr,
-      'Data de Chegada': processo.data_chegada,
-      'Data da Homologação': processo.data_primeira_homologacao,
-      'Duração até Homologação (dias)': processo.data_primeira_homologacao ? processo.duracao_ate_homologacao : '-',
-      'Status': processo.status
-    }));
+    const excelData = processos.map(processo => {
+      const dadosBase = {
+        'Número do Processo': processo.numero_processo,
+        'Objeto': processo.objeto,
+        'Tipo': processo.tipo_tr,
+        'Data de Chegada': processo.data_chegada,
+      };
+
+      let dadosEspecificos = {};
+      
+      switch (filtro) {
+        case 'em-andamento':
+          dadosEspecificos = {
+            'Data da Última Movimentação': processo.data_ultima_movimentacao,
+            'Dias Desde Última Movimentação': processo.dias_desde_ultima_movimentacao,
+          };
+          break;
+        case 'homologados':
+          dadosEspecificos = {
+            'Data da Homologação': processo.data_primeira_homologacao,
+            'Duração até Homologação (dias)': processo.duracao_ate_homologacao,
+          };
+          break;
+        case 'encerrados':
+          dadosEspecificos = {
+            'Data do Encerramento': processo.data_encerramento,
+            'Duração Total (dias)': processo.duracao_total,
+          };
+          break;
+        case 'atrasados':
+          dadosEspecificos = {
+            'Data da Última Movimentação': processo.data_ultima_movimentacao,
+            'Dias em Atraso': processo.dias_em_atraso,
+          };
+          break;
+        default:
+          dadosEspecificos = {
+            'Data da Última Movimentação': processo.data_ultima_movimentacao,
+            'Dias Desde Última Movimentação': processo.dias_desde_ultima_movimentacao,
+          };
+      }
+
+      return {
+        ...dadosBase,
+        ...dadosEspecificos,
+        'Status': processo.status
+      };
+    });
 
     // Criar uma nova planilha
     const ws = XLSXUtils.json_to_sheet(excelData);
@@ -409,8 +478,31 @@ const ProcessosFiltrados = () => {
       return pdf.splitTextToSize(text, maxWidth);
     };
 
-    const headers = ['Número do Processo', 'Objeto do Processo', 'Tipo', 'Data de Chegada', 'Data da Homologação', 'Duração (dias)', 'Status'];
-    const colWidths = [45, 90, 25, 30, 30, 25, 25]; // Larguras ajustadas para paisagem
+    // Definir cabeçalhos e larguras baseados no filtro
+    let headers = ['Número do Processo', 'Objeto do Processo', 'Tipo', 'Data de Chegada'];
+    let colWidths = [45, 90, 25, 30];
+
+    switch (filtro) {
+      case 'em-andamento':
+        headers.push('Data da Última Movimentação', 'Dias Desde Última Mov.', 'Status');
+        colWidths.push(30, 25, 25);
+        break;
+      case 'homologados':
+        headers.push('Data da Homologação', 'Duração até Homolog.', 'Status');
+        colWidths.push(30, 25, 25);
+        break;
+      case 'encerrados':
+        headers.push('Data do Encerramento', 'Duração Total', 'Status');
+        colWidths.push(30, 25, 25);
+        break;
+      case 'atrasados':
+        headers.push('Data da Última Movimentação', 'Dias em Atraso', 'Status');
+        colWidths.push(30, 25, 25);
+        break;
+      default:
+        headers.push('Data da Última Movimentação', 'Dias Desde Última Mov.', 'Status');
+        colWidths.push(30, 25, 25);
+    }
     
     // Função para desenhar cabeçalho padronizado
     const drawTableHeader = (yPos: number) => {
@@ -494,15 +586,51 @@ const ProcessosFiltrados = () => {
       }
       
       // Dados da linha
+      // Dados base da linha
       const rowData = [
         processo.numero_processo,
-        processo.objeto, // Objeto completo, será quebrado automaticamente
+        processo.objeto,
         processo.tipo_tr,
-        processo.data_chegada,
-        processo.data_primeira_homologacao || '-',
-        processo.data_primeira_homologacao ? processo.duracao_ate_homologacao.toString() : '-',
-        processo.status
+        processo.data_chegada
       ];
+
+      // Adicionar dados específicos baseado no filtro
+      switch (filtro) {
+        case 'em-andamento':
+          rowData.push(
+            processo.data_ultima_movimentacao,
+            processo.dias_desde_ultima_movimentacao.toString(),
+            processo.status
+          );
+          break;
+        case 'homologados':
+          rowData.push(
+            processo.data_primeira_homologacao,
+            processo.duracao_ate_homologacao.toString(),
+            processo.status
+          );
+          break;
+        case 'encerrados':
+          rowData.push(
+            processo.data_encerramento,
+            processo.duracao_total.toString(),
+            processo.status
+          );
+          break;
+        case 'atrasados':
+          rowData.push(
+            processo.data_ultima_movimentacao,
+            processo.dias_em_atraso.toString(),
+            processo.status
+          );
+          break;
+        default:
+          rowData.push(
+            processo.data_ultima_movimentacao,
+            processo.dias_desde_ultima_movimentacao.toString(),
+            processo.status
+          );
+      }
       
       let xPosition = margin;
       rowData.forEach((data, dataIndex) => {
@@ -582,7 +710,8 @@ const ProcessosFiltrados = () => {
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle>
-                {getFiltroDisplayName(filtro)} ({processos.length} processos)
+                {/* TODO: total de processos menos os encerrados e homologados */}
+                {/* {getFiltroDisplayName(filtro)} ({processos.length - processos.filter(p => p.status === 'Encerrado' || p.status === 'Homologado').length} processos) */}
               </CardTitle>
               {filtro === 'todos' && (
                 <div className="flex items-center gap-4">
@@ -676,8 +805,30 @@ const ProcessosFiltrados = () => {
                         <TableHead className="border p-2 min-w-[300px] bg-blue-50">Objeto</TableHead>
                         <TableHead className="border p-2 min-w-[120px] bg-blue-50">Tipo</TableHead>
                         <TableHead className="border p-2 min-w-[120px] bg-blue-50">Data de Chegada</TableHead>
-                        <TableHead className="border p-2 min-w-[140px] bg-blue-50">Data da Homologação</TableHead>
-                        <TableHead className="border p-2 min-w-[100px] text-center bg-blue-50">Duração até Homologação (dias)</TableHead>
+                        {filtro === 'em-andamento' && (
+                          <>
+                            <TableHead className="border p-2 min-w-[140px] bg-blue-50">Data da Última Movimentação</TableHead>
+                            <TableHead className="border p-2 min-w-[100px] text-center bg-blue-50">Dias Desde Última Movimentação</TableHead>
+                          </>
+                        )}
+                        {filtro === 'homologados' && (
+                          <>
+                            <TableHead className="border p-2 min-w-[140px] bg-blue-50">Data da Homologação</TableHead>
+                            <TableHead className="border p-2 min-w-[100px] text-center bg-blue-50">Duração até Homologação (dias)</TableHead>
+                          </>
+                        )}
+                        {filtro === 'encerrados' && (
+                          <>
+                            <TableHead className="border p-2 min-w-[140px] bg-blue-50">Data do Encerramento</TableHead>
+                            <TableHead className="border p-2 min-w-[100px] text-center bg-blue-50">Duração Total (dias)</TableHead>
+                          </>
+                        )}
+                        {filtro === 'atrasados' && (
+                          <>
+                            <TableHead className="border p-2 min-w-[140px] bg-blue-50">Data da Última Movimentação</TableHead>
+                            <TableHead className="border p-2 min-w-[100px] text-center bg-blue-50">Dias em Atraso</TableHead>
+                          </>
+                        )}
                         <TableHead className="border p-2 min-w-[120px] text-center bg-blue-50">Status</TableHead>
                       </TableRow>
                     </TableHeader>
@@ -707,10 +858,38 @@ const ProcessosFiltrados = () => {
                             <TableCell className="border p-2">{processo.tipo_tr}</TableCell>
                             {/* ordenar por data_chegada */}
                             <TableCell className="border p-2">{processo.data_chegada}</TableCell>
-                            <TableCell className="border p-2">{processo.data_primeira_homologacao || '-'}</TableCell>
-                            <TableCell className="border p-2 text-center">
-                              {processo.data_primeira_homologacao ? processo.duracao_ate_homologacao : '-'}
-                            </TableCell>
+                            {filtro === 'em-andamento' && (
+                              <>
+                                <TableCell className="border p-2">{processo.data_ultima_movimentacao}</TableCell>
+                                <TableCell className="border p-2 text-center">
+                                  {processo.dias_desde_ultima_movimentacao}
+                                </TableCell>
+                              </>
+                            )}
+                            {filtro === 'homologados' && (
+                              <>
+                                <TableCell className="border p-2">{processo.data_primeira_homologacao}</TableCell>
+                                <TableCell className="border p-2 text-center">
+                                  {processo.duracao_ate_homologacao}
+                                </TableCell>
+                              </>
+                            )}
+                            {filtro === 'encerrados' && (
+                              <>
+                                <TableCell className="border p-2">{processo.data_encerramento}</TableCell>
+                                <TableCell className="border p-2 text-center">
+                                  {processo.duracao_total}
+                                </TableCell>
+                              </>
+                            )}
+                            {filtro === 'atrasados' && (
+                              <>
+                                <TableCell className="border p-2">{processo.data_ultima_movimentacao}</TableCell>
+                                <TableCell className="border p-2 text-center text-red-600 font-semibold">
+                                  {processo.dias_em_atraso}
+                                </TableCell>
+                              </>
+                            )}
                             <TableCell className={`border p-2 text-center font-semibold ${
                               processo.status === 'Atrasado' ? 'text-red-600' : 
                               processo.status === 'Homologado' ? 'text-green-600' : 
