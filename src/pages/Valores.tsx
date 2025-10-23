@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { maskCurrency, unmaskCurrency, parseCurrencyInput } from '@/utils/currencyMask';
-import Layout from '../components/Layout';
+import Layout from '@/components/Layout';
 import { processosService } from '@/services/processosService';
 import {
   Table,
@@ -16,6 +16,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { valoresService } from '@/services/valoresService';
+import { nucleoService } from '@/services/nucleoService';
 import { ProcessoInfo, ValorProcesso } from '@/types/valores';
 import { formatCurrency } from '@/utils/formatCurrency';
 import {
@@ -33,12 +34,16 @@ import {
 export default function Valores() {
   const { toast } = useToast();
   const [searchTerm, setSearchTerm] = useState('');
+  const [filterTerm, setFilterTerm] = useState('');
+  const [filterTipo, setFilterTipo] = useState('todos');
+  const [filterNucleo, setFilterNucleo] = useState('todos');
   const [processoInfo, setProcessoInfo] = useState<ProcessoInfo | null>(null);
   const [valorEstimado, setValorEstimado] = useState('');
   const [valores, setValores] = useState<ValorProcesso[]>([]);
   const [loading, setLoading] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [tipoContratacao, setTipoContratacao] = useState('');
+  const [nucleo, setNucleo] = useState('');
 
   const tiposContratacao = [
     'Dispensa',
@@ -46,8 +51,10 @@ export default function Valores() {
     'Inexigibilidade',
     'Pregão Eletrônico',
     'Registro de Preços',
-    'Organização Social'
+    'Chamamento Público',
   ];
+
+  const nucleos = ['CECOMP', 'NMP', 'NSC', 'NSM', 'NDJPL', 'NOSE', 'NPA', 'NMCHE', 'NMSG', 'NMN', 'NLAB'];
 
   useEffect(() => {
     loadValores();
@@ -91,7 +98,7 @@ export default function Valores() {
   };
 
   const handleSave = async () => {
-    if (!searchTerm || !valorEstimado || !processoInfo || !tipoContratacao) return;
+    if (!searchTerm || !valorEstimado || !processoInfo || !tipoContratacao || !nucleo) return;
 
     try {
       const valorNumber = unmaskCurrency(valorEstimado);
@@ -102,6 +109,10 @@ export default function Valores() {
         tipo_contratacao: tipoContratacao
       });
 
+      // Salva o núcleo
+      await nucleoService.save(searchTerm, nucleo);
+
+      // Salva os valores
       if (editingId) {
         await valoresService.update(editingId, {
           valor_estimado: valorNumber,
@@ -149,9 +160,12 @@ export default function Valores() {
 
   const loadValores = async () => {
     try {
+      console.log('Carregando valores...');
       const data = await valoresService.list();
+      console.log('Dados carregados:', data);
       setValores(data);
     } catch (error) {
+      console.error('Erro ao carregar valores:', error);
       toast({
         title: 'Erro',
         description: 'Erro ao carregar valores',
@@ -163,25 +177,7 @@ export default function Valores() {
   return (
     <Layout>
       <div className="container mx-auto py-6 space-y-6">
-        <Card>
-        <CardHeader>
-          <CardTitle>Buscar Processo</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="flex gap-4">
-            <Input
-              placeholder="Número do Processo"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-            <Button onClick={handleSearch} disabled={loading}>
-              {loading ? 'Buscando...' : 'Buscar'}
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-
-      {processoInfo && (
+        {processoInfo && (
         <Card>
           <CardHeader>
             <CardTitle>Informações do Processo</CardTitle>
@@ -191,20 +187,37 @@ export default function Valores() {
               <div>
                 <strong>Objeto:</strong> {processoInfo.objeto}
               </div>
-              <div>
-                <strong>Tipo de Contratação:</strong>
-                <Select value={tipoContratacao} onValueChange={setTipoContratacao}>
-                  <SelectTrigger className="w-[280px] mt-2">
-                    <SelectValue placeholder="Selecione o tipo de contratação" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {tiposContratacao.map((tipo) => (
-                      <SelectItem key={tipo} value={tipo}>
-                        {tipo}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <strong>Tipo de Contratação:</strong>
+                  <Select value={tipoContratacao} onValueChange={setTipoContratacao}>
+                    <SelectTrigger className="w-full mt-2">
+                      <SelectValue placeholder="Selecione o tipo de contratação" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {tiposContratacao.map((tipo) => (
+                        <SelectItem key={tipo} value={tipo}>
+                          {tipo}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <strong>Núcleo:</strong>
+                  <Select value={nucleo} onValueChange={setNucleo}>
+                    <SelectTrigger className="w-full mt-2">
+                      <SelectValue placeholder="Selecione o núcleo" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {nucleos.map((n) => (
+                        <SelectItem key={n} value={n}>
+                          {n}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
               <div>
                 <strong>Data de Abertura:</strong>{' '}
@@ -253,65 +266,126 @@ export default function Valores() {
           <CardTitle>Valores Cadastrados</CardTitle>
         </CardHeader>
         <CardContent>
+          <div className="mb-6 space-y-4">
+            <div className="text-sm font-medium">Filtros:</div>
+            <div className="grid grid-cols-3 gap-4">
+              <Input
+                placeholder="Filtrar por processo ou objeto"
+                value={filterTerm}
+                onChange={(e) => setFilterTerm(e.target.value)}
+              />
+              <Select 
+                value={filterTipo} 
+                onValueChange={setFilterTipo}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Filtrar por tipo" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="todos">Todos</SelectItem>
+                  {tiposContratacao.map((tipo) => (
+                    <SelectItem key={tipo} value={tipo}>
+                      {tipo}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Select 
+                value={filterNucleo} 
+                onValueChange={setFilterNucleo}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Filtrar por núcleo" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="todos">Todos</SelectItem>
+                  {nucleos.map((n) => (
+                    <SelectItem key={n} value={n}>
+                      {n}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
           <Table>
             <TableHeader>
               <TableRow>
                 <TableHead>Processo</TableHead>
+                <TableHead>Objeto</TableHead>
                 <TableHead>Tipo de Contratação</TableHead>
                 <TableHead>Valor Estimado</TableHead>
-                <TableHead>Data de Cadastro</TableHead>
+                <TableHead>Valor Contratado</TableHead>
+                <TableHead>Núcleo</TableHead>
                 <TableHead className="w-[100px]">Ações</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {valores.map((valor) => (
-                <TableRow key={valor.id}>
-                  <TableCell>{valor.numero_processo}</TableCell>
-                  <TableCell>{valor.tipo_contratacao}</TableCell>
-                  <TableCell>{formatCurrency(valor.valor_estimado)}</TableCell>
-                  <TableCell>
-                    {new Date(valor.created_at).toLocaleDateString()}
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex gap-2">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => {
-                          setSearchTerm(valor.numero_processo);
-                          handleSearch();
-                        }}
-                      >
-                        Editar
-                      </Button>
-                      <AlertDialog>
-                        <AlertDialogTrigger asChild>
-                          <Button variant="destructive" size="sm">
-                            Excluir
-                          </Button>
-                        </AlertDialogTrigger>
-                        <AlertDialogContent>
-                          <AlertDialogHeader>
-                            <AlertDialogTitle>Confirmar exclusão</AlertDialogTitle>
-                            <AlertDialogDescription>
-                              Tem certeza que deseja excluir este valor estimado?
-                              Esta ação não pode ser desfeita.
-                            </AlertDialogDescription>
-                          </AlertDialogHeader>
-                          <AlertDialogFooter>
-                            <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                            <AlertDialogAction
-                              onClick={() => handleDelete(valor.id)}
-                            >
-                              Confirmar
-                            </AlertDialogAction>
-                          </AlertDialogFooter>
-                        </AlertDialogContent>
-                      </AlertDialog>
-                    </div>
+              {valores.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={7} className="text-center py-4">
+                    Nenhum processo encontrado
                   </TableCell>
                 </TableRow>
-              ))}
+              ) : (
+                valores
+                  .filter((valor) => {
+                    const matchesTerm = filterTerm === '' || 
+                      valor.numero_processo.toLowerCase().includes(filterTerm.toLowerCase()) ||
+                      (valor.processos?.objeto || '').toLowerCase().includes(filterTerm.toLowerCase());
+                    const matchesTipo = filterTipo === 'todos' || valor.tipo_contratacao === filterTipo;
+                    const matchesNucleo = filterNucleo === 'todos' || valor.nucleo === filterNucleo;
+                    return matchesTerm && matchesTipo && matchesNucleo;
+                  })
+                  .map((valor) => (
+                    <TableRow key={valor.id}>
+                      <TableCell>{valor.numero_processo}</TableCell>
+                      <TableCell>{valor.processos?.objeto || '-'}</TableCell>
+                      <TableCell>{valor.tipo_contratacao}</TableCell>
+                      <TableCell>{formatCurrency(valor.valor_estimado)}</TableCell>
+                      <TableCell>{valor.valor_contratado ? formatCurrency(valor.valor_contratado) : '-'}</TableCell>
+                      <TableCell>{valor.nucleo || '-'}</TableCell>
+                      <TableCell>
+                        <div className="flex gap-2">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => {
+                              setSearchTerm(valor.numero_processo);
+                              handleSearch();
+                            }}
+                          >
+                            Editar
+                          </Button>
+                          <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                              <Button variant="destructive" size="sm">
+                                Excluir
+                              </Button>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                              <AlertDialogHeader>
+                                <AlertDialogTitle>Confirmar exclusão</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                  Tem certeza que deseja excluir este valor estimado?
+                                  Esta ação não pode ser desfeita.
+                                </AlertDialogDescription>
+                              </AlertDialogHeader>
+                              <AlertDialogFooter>
+                                <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                                <AlertDialogAction
+                                  onClick={() => handleDelete(valor.id)}
+                                >
+                                  Confirmar
+                                </AlertDialogAction>
+                              </AlertDialogFooter>
+                            </AlertDialogContent>
+                          </AlertDialog>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))
+              )}
             </TableBody>
           </Table>
         </CardContent>
@@ -319,4 +393,4 @@ export default function Valores() {
       </div>
     </Layout>
   );
-}
+}     
