@@ -90,6 +90,7 @@ const Dashboard = () => {
   const [licitatorioCount, setLicitatorioCount] = useState<number>(0);
   const [licitatorioSrpCount, setLicitatorioSrpCount] = useState<number>(0);
   const [organizacaoSocialCount, setOrganizacaoSocialCount] = useState<number>(0);
+  const [chamamentoPublicoCount, setChamamentoPublicoCount] = useState<number>(0);
 
   // Estados para relatório IA
   const [relatorioGerado, setRelatorioGerado] = useState<string>('');
@@ -543,6 +544,7 @@ ${documentosAtrasados > 0 ? `
           const licitatorioCount = metadata.tipos_processo?.['Pregão eletrônico'] || 0;
           const licitatorioSrpCount = metadata.tipos_processo?.['Registro de Preços'] || 0;
           const organizacaoSocialCount = metadata.tipos_processo?.['Organização Social'] || 0;
+          const chamamentoPublicoCount = metadata.tipos_processo?.['Chamamento Público'] || 0;
           
           setDispensaCount(dispensaCount);
           setEmergencialCount(emergencialCount);
@@ -550,6 +552,7 @@ ${documentosAtrasados > 0 ? `
           setLicitatorioCount(licitatorioCount);
           setLicitatorioSrpCount(licitatorioSrpCount);
           setOrganizacaoSocialCount(organizacaoSocialCount);
+          setChamamentoPublicoCount(chamamentoPublicoCount);
           
           // Define outras métricas dos metadados
           setTotalProcesses(metadata.total_processos || 0);
@@ -664,6 +667,7 @@ ${documentosAtrasados > 0 ? `
           setLicitatorioCount(processosPorTipo.get('Pregão eletrônico')?.size || 0);
           setLicitatorioSrpCount(processosPorTipo.get('Registro de Preços')?.size || 0);
           setOrganizacaoSocialCount(processosPorTipo.get('Organização Social')?.size || 0);
+          setChamamentoPublicoCount(processosPorTipo.get('Chamamento Público')?.size || 0);
 
           console.log('Contagens calculadas:', {
             Dispensa: processosPorTipo.get('Dispensa')?.size || 0,
@@ -671,7 +675,8 @@ ${documentosAtrasados > 0 ? `
             Inexigibilidade: processosPorTipo.get('Inexigibilidade')?.size || 0,
             Licitatório: processosPorTipo.get('Licitatório')?.size || 0,
             'Licitatório SRP': processosPorTipo.get('Licitatório SRP')?.size || 0,
-            'Organização Social': processosPorTipo.get('Organização Social')?.size || 0
+            'Organização Social': processosPorTipo.get('Organização Social')?.size || 0,
+            'Chamamento Público': processosPorTipo.get('Chamamento Público')?.size || 0
           });
 
 
@@ -988,7 +993,7 @@ ${documentosAtrasados > 0 ? `
         <h1 className="text-3xl font-bold text-sei-800">Dashboard</h1>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-5 mb-8">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-8">
         <Card 
           className="border-sei-100 cursor-pointer hover:shadow-lg transition-shadow"
           onClick={() => handleCardSuperiorClick('todos')}
@@ -1023,7 +1028,7 @@ ${documentosAtrasados > 0 ? `
           </CardContent>
         </Card>
 
-        <Card 
+        {/* <Card 
           className="border-sei-100 cursor-pointer hover:shadow-lg transition-shadow"
           onClick={() => handleCardSuperiorClick('em-andamento')}
         >
@@ -1038,25 +1043,25 @@ ${documentosAtrasados > 0 ? `
               <h3 className="text-2xl font-bold">{totalProcesses - concludedCount - overdueProcessesCount}</h3>
             </div>
           </CardContent>
-        </Card>
+        </Card> */}
 
         <Card 
           className="border-sei-100 cursor-pointer hover:shadow-lg transition-shadow"
-          onClick={() => handleCardSuperiorClick('atrasados')}
+          onClick={() => handleCardSuperiorClick('em-andamento')}
         >
           <CardContent className="p-6 flex items-center gap-4">
             <div className="bg-sei-100 p-3 rounded-full">
-              <AlertTriangle className="h-6 w-6 text-orange-600" />
+              <Clock className="h-6 w-6 text-orange-600" />
             </div>
             <div>
               <p className="text-sm font-medium text-muted-foreground">
-                Processos Atrasados
+                Processos em Andamento
               </p>
-              <h3 className="text-2xl font-bold">{overdueProcessesCount}</h3>
+              <h3 className="text-2xl font-bold">{totalProcesses - concludedCount}</h3>
             </div>
           </CardContent>
         </Card>
-        <Card 
+        {/* <Card 
           className="border-sei-100 cursor-pointer hover:shadow-lg transition-shadow"
           onClick={() => handleCardSuperiorClick('encerrados')}
         >
@@ -1071,13 +1076,13 @@ ${documentosAtrasados > 0 ? `
               <h3 className="text-2xl font-bold">{terminatedCount}</h3>
             </div>
           </CardContent>
-        </Card>
+        </Card> */}
       </div>
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-1 mb-8">
       </div>
       <div className="mb-8">
         <h2 className="text-2xl font-bold text-sei-800 mb-4">Processos em Andamento por Tipo</h2>
-        <div className="grid gap-4 grid-cols-6">
+        <div className="grid gap-4 grid-cols-3">
           <Card 
             className="border-sei-100 cursor-pointer hover:shadow-lg transition-shadow" 
             onClick={() => handleTipoClick('Dispensa')}
@@ -1180,10 +1185,43 @@ ${documentosAtrasados > 0 ? `
               </div>
             </CardContent>
           </Card>
+
+          <Card 
+            className="border-sei-100 cursor-pointer hover:shadow-lg transition-shadow" 
+            onClick={() => handleTipoClick('Credenciamento')}
+          >
+            <CardContent className="p-6 flex items-center gap-4">
+              <div className="bg-teal-100 p-3 rounded-full">
+                <FileCheck className="h-6 w-6 text-teal-600" />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-muted-foreground">
+                  Credenciamento
+                </p>
+                <h3 className="text-2xl font-bold">{chamamentoPublicoCount}</h3>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-sei-100">
+            <CardContent className="p-6 flex items-center gap-4">
+              <div className="bg-gray-100 p-3 rounded-full">
+                <FileCheck className="h-6 w-6 text-gray-400" />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-muted-foreground">
+                  Em breve
+                </p>
+                <h3 className="text-2xl font-bold">-</h3>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
 
       <div className="mb-8">
+        {/* todo: add title "Filtrar processos" */}
+        <h2 className="text-2xl font-bold text-sei-800 mb-4">Filtrar processos</h2>
         <input
           type="text"
           placeholder="Digite uma palavra-chave para filtrar processos"

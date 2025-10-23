@@ -3,6 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Valores from "./pages/Valores";
 import { AuthProvider } from "./contexts/AuthContext";
 
 // import Login from "./pages/Login";
@@ -31,6 +32,7 @@ const App = () => (
             <Route path="/processos" element={<Processos />} />
             <Route path="/processos-por-tipo/:tipo" element={<ProcessosPorTipo />} />
             <Route path="/processos-filtrados/:filtro" element={<ProcessosFiltrados />} />
+            <Route path="/valores" element={<Valores />} />
             {/* <Route path="/credentials" element={<Credentials />} />
             <Route path="/processes" element={<Processes />} /> */}
             <Route path="*" element={<NotFound />} />

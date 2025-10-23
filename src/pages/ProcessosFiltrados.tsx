@@ -10,12 +10,28 @@ import {
 } from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Download, BarChart as BarChartIcon, Search } from "lucide-react";
+import { ArrowLeft, Download, BarChart as BarChartIcon, Search, Edit2 } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
+import { nucleoProcessosService, nucleos, type NucleoKey } from "@/services/nucleoProcessosService";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { ptBR } from "date-fns/locale";
 import Papa from 'papaparse';
 import Layout from '@/components/Layout';
@@ -35,6 +51,7 @@ interface ProcessoFiltrado {
   dias_desde_ultima_movimentacao: number;
   dias_em_atraso: number;
   status: string;
+  nucleo?: string;
 }
 
 interface CsvHistoricoItem {
@@ -60,13 +77,44 @@ const ProcessosFiltrados = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [dataInicial, setDataInicial] = useState<Date | null>(null);
   const [dataFinal, setDataFinal] = useState<Date | null>(null);
+  const [editingProcesso, setEditingProcesso] = useState<ProcessoFiltrado | null>(null);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [selectedNucleo, setSelectedNucleo] = useState<NucleoKey | ''>('');
+  const [nucleosCarregados, setNucleosCarregados] = useState(false);
 
+  const handleUpdateNucleo = async () => {
+    if (!editingProcesso || !selectedNucleo) return;
+
+    const success = await nucleoProcessosService.updateNucleo(
+      editingProcesso.numero_processo,
+      selectedNucleo as NucleoKey
+    );
+
+    if (success) {
+      // Recarregar o núcleo atualizado do banco
+      const nucleoProcesso = await nucleoProcessosService.getNucleoByProcesso(editingProcesso.numero_processo);
+      
+      // Atualizar o processo na lista
+      const updatedProcessos = processosOriginal.map(p => {
+        if (p.numero_processo === editingProcesso.numero_processo) {
+          return { ...p, nucleo: nucleoProcesso?.nucleo || undefined };
+        }
+        return p;
+      });
+      
+      setProcessosOriginal(updatedProcessos);
+      setIsEditDialogOpen(false);
+      setSelectedNucleo('');
+      setEditingProcesso(null);
+    }
+  };
+
+  // Efeito para carregar dados iniciais
   useEffect(() => {
     const carregarProcessos = async () => {
       try {
         setLoading(true);
         setError(null);
-        console.log('Carregando processos para filtro:', filtro);
         
         const response = await fetch('/backend/df.csv');
         if (!response.ok) {
@@ -77,9 +125,7 @@ const ProcessosFiltrados = () => {
         Papa.parse(csvText, {
           header: true,
           skipEmptyLines: true,
-          complete: (results) => {
-            console.log('Dados CSV carregados, colunas:', results.meta.fields);
-            
+          complete: async (results) => {
             const dadosCompletos = results.data as CsvHistoricoItem[];
             
             // Agrupar por processo e coletar TODOS os documentos com suas datas
@@ -237,44 +283,6 @@ const ProcessosFiltrados = () => {
                 // Se não está encerrado nem homologado, pode estar em andamento ou atrasado
                 status = atrasado ? 'Atrasado' : 'Em Andamento';
               }
-              
-              // Encontrar a primeira homologação
-              const homologacoes = processoData.documentos
-                .filter(doc => doc.Documento?.includes('Homologação'))
-                .sort((a, b) => new Date(a['Data/Hora']).getTime() - new Date(b['Data/Hora']).getTime()); // Ordenar por data crescente
-
-              // Encontrar o primeiro documento do processo
-              const primeiroDocumento = processoData.documentos
-                .sort((a, b) => new Date(a['Data/Hora']).getTime() - new Date(b['Data/Hora']).getTime())[0];
-
-              // Calcular duração até a homologação se houver
-              let duracaoAteHomologacao = 0;
-              let dataPrimeiraHomologacao = '';
-              if (homologacoes.length > 0) {
-                const primeiraHomologacao = homologacoes[0];
-                dataPrimeiraHomologacao = new Date(primeiraHomologacao['Data/Hora']).toLocaleDateString('pt-BR');
-                duracaoAteHomologacao = Math.ceil(
-                  (new Date(primeiraHomologacao['Data/Hora']).getTime() - new Date(primeiroDocumento['Data/Hora']).getTime()) / (1000 * 60 * 60 * 24)
-                );
-              }
-
-              // Encontrar a primeira ocorrência em GECOMP/CECOMP
-              const primeiraChegada = processoData.documentos
-                .sort((a, b) => new Date(a['Data/Hora']).getTime() - new Date(b['Data/Hora']).getTime())
-                .find(doc => {
-                  // Verifica se o documento indica remessa para GECOMP/CECOMP
-                  const isRemessaParaGecomp = doc.Documento?.toLowerCase().includes('remetido') &&
-                    doc.Unidade?.toLowerCase().includes('gecomp');
-                  
-                  // Verifica se o documento indica remessa para CECOMP
-                  const isRemessaParaCecomp = doc.Documento?.toLowerCase().includes('remetido') &&
-                    doc.Unidade?.toLowerCase().includes('cecomp');
-                  
-                  // Verifica se é um documento na unidade GECOMP/CECOMP
-                  const isUnidadeGecompCecomp = doc.Unidade === 'SESAU-GECOMP' || doc.Unidade === 'SESAU-CECOMP';
-                  
-                  return isRemessaParaGecomp || isRemessaParaCecomp || isUnidadeGecompCecomp;
-                });
 
               return {
                 numero_processo: processoData.processo,
@@ -322,10 +330,21 @@ const ProcessosFiltrados = () => {
               // Ordenar do mais recente para o mais antigo
               return dateB.getTime() - dateA.getTime();
             });
+
+            // Carregar núcleos para todos os processos
+            const processosComNucleos = await Promise.all(
+              processosFiltrados.map(async (processo) => {
+                const nucleoProcesso = await nucleoProcessosService.getNucleoByProcesso(processo.numero_processo);
+                return {
+                  ...processo,
+                  nucleo: nucleoProcesso?.nucleo || undefined
+                };
+              })
+            );
             
-            console.log('Processos filtrados:', processosFiltrados);
-            setProcessosOriginal(processosFiltrados);
-            setProcessos(processosFiltrados);
+            setProcessosOriginal(processosComNucleos);
+            setProcessos(processosComNucleos);
+            setNucleosCarregados(true);
             setLoading(false);
           },
           error: (error) => {
@@ -344,11 +363,12 @@ const ProcessosFiltrados = () => {
     if (filtro) {
       carregarProcessos();
     }
-  }, [filtro])
-  ;
+  }, [filtro]);
 
-  // Efeito para filtrar processos baseado no termo de pesquisa
+  // Efeito para filtrar processos
   useEffect(() => {
+    if (!nucleosCarregados) return;
+
     let filtered = [...processosOriginal];
 
     // Aplicar filtro de texto
@@ -381,18 +401,7 @@ const ProcessosFiltrados = () => {
     }
 
     setProcessos(filtered);
-  }, [searchTerm, processosOriginal, dataInicial, dataFinal]);
-
-  const getFiltroDisplayName = (filtro: string | undefined) => {
-    switch (filtro) {
-      case 'todos': return 'Todos os Processos';
-      case 'homologados': return 'Processos Homologados';
-      case 'encerrados': return 'Processos Encerrados';
-      case 'em-andamento': return 'Processos em Andamento';
-      case 'atrasados': return 'Processos Atrasados';
-      default: return 'Processos';
-    }
-  };
+  }, [searchTerm, processosOriginal, dataInicial, dataFinal, nucleosCarregados]);
 
   const exportToExcel = () => {
     // Preparar os dados para o Excel
@@ -402,6 +411,7 @@ const ProcessosFiltrados = () => {
         'Objeto': processo.objeto,
         'Tipo': processo.tipo_tr,
         'Data de Chegada': processo.data_chegada,
+        'Núcleo': processo.nucleo || '-',
       };
 
       let dadosEspecificos = {};
@@ -479,8 +489,8 @@ const ProcessosFiltrados = () => {
     };
 
     // Definir cabeçalhos e larguras baseados no filtro
-    let headers = ['Número do Processo', 'Objeto do Processo', 'Tipo', 'Data de Chegada'];
-    let colWidths = [45, 90, 25, 30];
+    let headers = ['Número do Processo', 'Objeto do Processo', 'Tipo', 'Data de Chegada', 'Núcleo'];
+    let colWidths = [45, 80, 25, 30, 30];
 
     switch (filtro) {
       case 'em-andamento':
@@ -554,7 +564,7 @@ const ProcessosFiltrados = () => {
     pdf.setFontSize(9);
     pdf.setTextColor(0, 0, 0);
     
-    processos.forEach((processo, index) => {
+    processos.forEach((processo) => {
       // Calcular altura da linha baseada no objeto (que pode ter múltiplas linhas)
       const objetoLines = splitTextToSize(processo.objeto, colWidths[1] - 4);
       const rowHeight = Math.max(6, objetoLines.length * 4 + 2);
@@ -586,12 +596,12 @@ const ProcessosFiltrados = () => {
       }
       
       // Dados da linha
-      // Dados base da linha
       const rowData = [
         processo.numero_processo,
         processo.objeto,
         processo.tipo_tr,
-        processo.data_chegada
+        processo.data_chegada,
+        processo.nucleo || '-'
       ];
 
       // Adicionar dados específicos baseado no filtro
@@ -676,6 +686,17 @@ const ProcessosFiltrados = () => {
     // Salvar o PDF
     const fileName = `processos_${filtro}_${new Date().toISOString().split('T')[0]}.pdf`;
     pdf.save(fileName);
+  };
+
+  const getFiltroDisplayName = (filtro: string | undefined) => {
+    switch (filtro) {
+      case 'todos': return 'Todos os Processos';
+      case 'homologados': return 'Processos Homologados';
+      case 'encerrados': return 'Processos Encerrados';
+      // case 'em-andamento': return 'Processos em Andamento';
+      case 'atrasados': return 'Processos em Andamento';
+      default: return 'Processos';
+    }
   };
 
   return (
@@ -830,6 +851,8 @@ const ProcessosFiltrados = () => {
                           </>
                         )}
                         <TableHead className="border p-2 min-w-[120px] text-center bg-blue-50">Status</TableHead>
+                        <TableHead className="border p-2 min-w-[120px] text-center bg-blue-50">Núcleo</TableHead>
+                        <TableHead className="border p-2 min-w-[80px] text-center bg-blue-50">Ações</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -856,7 +879,6 @@ const ProcessosFiltrados = () => {
                               </div>
                             </TableCell>
                             <TableCell className="border p-2">{processo.tipo_tr}</TableCell>
-                            {/* ordenar por data_chegada */}
                             <TableCell className="border p-2">{processo.data_chegada}</TableCell>
                             {filtro === 'em-andamento' && (
                               <>
@@ -897,74 +919,80 @@ const ProcessosFiltrados = () => {
                             }`}>
                               {processo.status}
                             </TableCell>
+                            <TableCell className="border p-2 text-center">
+                              {processo.nucleo || '-'}
+                            </TableCell>
+                            <TableCell className="border p-2 text-center">
+                              <Dialog open={isEditDialogOpen && editingProcesso?.numero_processo === processo.numero_processo} onOpenChange={(open) => {
+                                setIsEditDialogOpen(open);
+                                if (!open) {
+                                  setEditingProcesso(null);
+                                  setSelectedNucleo('');
+                                }
+                              }}>
+                                <DialogTrigger asChild>
+                                  <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    onClick={() => {
+                                      setEditingProcesso(processo);
+                                      setSelectedNucleo(processo.nucleo as NucleoKey || '');
+                                    }}
+                                  >
+                                    <Edit2 className="h-4 w-4" />
+                                  </Button>
+                                </DialogTrigger>
+                                <DialogContent>
+                                  <DialogHeader>
+                                    <DialogTitle>Editar Núcleo do Processo</DialogTitle>
+                                    <DialogDescription>
+                                      Selecione o núcleo responsável pelo processo {processo.numero_processo}
+                                    </DialogDescription>
+                                  </DialogHeader>
+                                  <div className="py-4">
+                                    <Select
+                                      value={selectedNucleo}
+                                      onValueChange={(value) => setSelectedNucleo(value as NucleoKey)}
+                                    >
+                                      <SelectTrigger>
+                                        <SelectValue placeholder="Selecione o núcleo" />
+                                      </SelectTrigger>
+                                      <SelectContent>
+                                        {Object.entries(nucleos).map(([key, value]) => (
+                                          <SelectItem key={key} value={key}>
+                                            {value}
+                                          </SelectItem>
+                                        ))}
+                                      </SelectContent>
+                                    </Select>
+                                  </div>
+                                  <div className="flex justify-end gap-4">
+                                    <Button
+                                      variant="outline"
+                                      onClick={() => {
+                                        setIsEditDialogOpen(false);
+                                        setEditingProcesso(null);
+                                        setSelectedNucleo('');
+                                      }}
+                                    >
+                                      Cancelar
+                                    </Button>
+                                    <Button
+                                      onClick={handleUpdateNucleo}
+                                      disabled={!selectedNucleo}
+                                    >
+                                      Salvar
+                                    </Button>
+                                  </div>
+                                </DialogContent>
+                              </Dialog>
+                            </TableCell>
                           </TableRow>
                         ))
                       )}
                     </TableBody>
                   </Table>
                 </div>
-
-                {/* Gráfico de Média de Duração por Tipo */}
-                {processos.length > 0 && filtro === 'homologados' && (
-                  <Card className="mt-8">
-                    <CardHeader>
-                      <CardTitle className="flex items-center gap-2">
-                        <BarChartIcon className="h-5 w-5" />
-                        Média de Duração até Homologação por Tipo
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="h-[400px] w-full">
-                        <ResponsiveContainer width="100%" height="100%">
-                          <BarChart
-                            data={(() => {
-                              // Agrupar processos por tipo e calcular média
-                              const groupedByType = processos.reduce((acc, processo) => {
-                                if (!processo.data_primeira_homologacao) return acc;
-                                
-                                if (!acc[processo.tipo_tr]) {
-                                  acc[processo.tipo_tr] = {
-                                    total: processo.duracao_ate_homologacao,
-                                    count: 1
-                                  };
-                                } else {
-                                  acc[processo.tipo_tr].total += processo.duracao_ate_homologacao;
-                                  acc[processo.tipo_tr].count += 1;
-                                }
-                                return acc;
-                              }, {} as { [key: string]: { total: number; count: number } });
-
-                              // Calcular médias e formatar para o gráfico
-                              return Object.entries(groupedByType).map(([tipo, { total, count }]) => ({
-                                tipo,
-                                media: Math.round(total / count)
-                              }));
-                            })()}
-                            margin={{ top: 20, right: 30, left: 40, bottom: 60 }}
-                          >
-                            <XAxis
-                              dataKey="tipo"
-                              angle={-45}
-                              textAnchor="end"
-                              height={60}
-                              interval={0}
-                            />
-                            <YAxis label={{ value: 'Dias', angle: -90, position: 'insideLeft' }} />
-                            <Tooltip
-                              formatter={(value) => [`${value} dias`, 'Média']}
-                              labelFormatter={(label) => `Tipo: ${label}`}
-                            />
-                            <Bar
-                              dataKey="media"
-                              fill="#0c93e4"
-                              name="Média de Dias"
-                            />
-                          </BarChart>
-                        </ResponsiveContainer>
-                      </div>
-                    </CardContent>
-                  </Card>
-                )}
               </div>
             )}
           </CardContent>
@@ -974,4 +1002,4 @@ const ProcessosFiltrados = () => {
   );
 };
 
-export default ProcessosFiltrados; 
+export default ProcessosFiltrados;
