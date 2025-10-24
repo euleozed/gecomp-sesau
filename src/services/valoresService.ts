@@ -87,11 +87,13 @@ export const valoresService = {
 
   async create(data: ValorProcessoForm): Promise<ValorProcesso | null> {
     try {
+      const numeroProcesso = data.numero_processo.trim();
       const { data: result, error } = await supabase
         .from(TABLE_NAME)
         .insert({
+          id: numeroProcesso,
           ...data,
-          numero_processo: data.numero_processo.trim()
+          numero_processo: numeroProcesso
         })
         .select()
         .single();
@@ -116,7 +118,7 @@ export const valoresService = {
       const { data: result, error } = await supabase
         .from(TABLE_NAME)
         .update(updateData)
-        .eq('id', id)
+        .eq('numero_processo', id) // Usando numero_processo ao invés de id
         .select()
         .single();
 
@@ -136,7 +138,7 @@ export const valoresService = {
       const { error } = await supabase
         .from(TABLE_NAME)
         .delete()
-        .eq('id', id);
+        .eq('numero_processo', id); // Usando numero_processo ao invés de id
 
       if (error) {
         console.error('Erro ao excluir registro:', error);
@@ -150,10 +152,12 @@ export const valoresService = {
 
   async getByProcesso(numeroProcesso: string): Promise<ValorProcesso | null> {
     try {
+      const numeroProcessoSanitizado = numeroProcesso.trim();
+      
       const { data, error } = await supabase
         .from(TABLE_NAME)
         .select()
-        .eq('numero_processo', numeroProcesso)
+        .eq('numero_processo', numeroProcessoSanitizado)
         .single();
 
       if (error) {
