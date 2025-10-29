@@ -13,9 +13,8 @@ import Login from "./pages/Login";
 import Producao from "./pages/Producao";
 import Processos from "./pages/Processos";
 import ProcessosPorTipo from "./pages/ProcessosPorTipo";
-
 import ProcessosFiltrados from "./pages/ProcessosFiltrados";
-import Nucleos from "./pages/Nucleos";
+
 const queryClient = new QueryClient();
 
 const App = () => (

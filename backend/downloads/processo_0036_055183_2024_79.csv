@@ -1,4 +1,5 @@
 Data/Hora,Unidade,Usuário,Descrição,Processo
+22/10/2025 17:26,HEURO-ASGAB,07649241688,Conclusão do processo na unidade,0036.055183/2024-79
 15/10/2025 12:45,HEURO-ASGAB,07649241688,Reabertura do processo na unidade,0036.055183/2024-79
 17/09/2025 10:54,SESAU-SCREG,35206784893,Processo recebido na unidade,0036.055183/2024-79
 17/09/2025 10:53,SESAU-SCREG,92193188149,Processo remetido pela unidade SESAU-GCAV,0036.055183/2024-79
@@ -198,7 +199,7 @@ Data/Hora,Unidade,Usuário,Descrição,Processo
 26/02/2025 14:58,SESAU-GECOMP,95637508291,Reabertura do processo na unidade,0036.055183/2024-79
 26/02/2025 14:49,SESAU-NEOR,01031113282,Bloco 777367 disponibilizado para unidade SESAU-CFES,0036.055183/2024-79
 26/02/2025 14:48,SESAU-NEOR,01031113282,Documento 0057716847 (NE - Nota de Empenho) retirado do bloco 970699,0036.055183/2024-79
-26/02/2025 14:46,SESAU-NEOR,01031113282,Cancelada disponibilização do bloco 970699 para a unidade SESAU-SE,0036.055183/2024-79
+26/02/2025 14:46,SESAU-NEOR,1031113282,Cancelada disponibilização do bloco 970699 para a unidade SESAU-SE,0036.055183/2024-79
 26/02/2025 14:43,SESAU-NEOR,1031113282,Cancelada disponibilização do bloco 777367 para a unidade SESAU-CFES,0036.055183/2024-79
 26/02/2025 14:14,SESAU-SE,83997628220,Assinado Documento 0057716847 (NE - Nota de Empenho) por 79396364215,0036.055183/2024-79
 26/02/2025 13:58,SESAU-NEOR,3632491259,Bloco 970699 disponibilizado para unidade SESAU-SE,0036.055183/2024-79
