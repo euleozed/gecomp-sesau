@@ -39,7 +39,6 @@ export const valoresService = {
               processo: string;
               objeto: string;
               tipo_tr: string;
-              valor_estimado: number;
             }>();
             
             dadosCompletos.forEach((row) => {
@@ -52,24 +51,64 @@ export const valoresService = {
                   processo: processo,
                   objeto: row['Objeto'] || 'Objeto não informado',
                   tipo_tr: row['tipo_tr'] || 'Não informado',
-                  valor_estimado: 0, // Valor estimado será atualizado depois
                 });
               }
             });
 
-            // Converter para o formato ValorProcesso
-            const valores: ValorProcesso[] = Array.from(processosMap.values()).map(p => ({
-              id: p.processo, // Usando o número do processo como ID
-              numero_processo: p.processo,
-              objeto: p.objeto,
-              tipo_contratacao: p.tipo_tr,
-              valor_estimado: 0,
-              created_at: new Date().toISOString(),
-              updated_at: new Date().toISOString(),
-              processos: {
-                objeto: p.objeto
-              }
-            }));
+            // Buscar dados salvos no banco de dados
+            const { data: valoresBD, error: errorBD } = await supabase
+              .from(TABLE_NAME)
+              .select('*');
+
+            if (errorBD) {
+              console.error('Erro ao buscar valores do banco:', errorBD);
+            }
+
+            // Criar um mapa dos valores do banco
+            const valoresBDMap = new Map<string, any>();
+            if (valoresBD) {
+              valoresBD.forEach((valor) => {
+                valoresBDMap.set(valor.numero_processo, valor);
+              });
+            }
+
+            // Buscar núcleos salvos no banco
+            const { data: nucleosBD, error: errorNucleos } = await supabase
+              .from('nucleo_processos')
+              .select('*');
+
+            if (errorNucleos) {
+              console.error('Erro ao buscar núcleos do banco:', errorNucleos);
+            }
+
+            // Criar um mapa dos núcleos
+            const nucleosMap = new Map<string, string>();
+            if (nucleosBD) {
+              nucleosBD.forEach((nucleo) => {
+                nucleosMap.set(nucleo.numero_processo, nucleo.nucleo);
+              });
+            }
+
+            // Converter para o formato ValorProcesso, mesclando com dados do banco
+            const valores: ValorProcesso[] = Array.from(processosMap.values()).map(p => {
+              const valorBD = valoresBDMap.get(p.processo);
+              const nucleoBD = nucleosMap.get(p.processo);
+              
+              return {
+                id: valorBD?.id || p.processo,
+                numero_processo: p.processo,
+                objeto: p.objeto,
+                tipo_contratacao: valorBD?.tipo_contratacao || p.tipo_tr,
+                valor_estimado: valorBD?.valor_estimado || 0,
+                valor_contratado: valorBD?.valor_contratado,
+                nucleo: nucleoBD,
+                created_at: valorBD?.created_at || new Date().toISOString(),
+                updated_at: valorBD?.updated_at || new Date().toISOString(),
+                processos: {
+                  objeto: p.objeto
+                }
+              };
+            });
 
             resolve(valores);
           },
@@ -115,10 +154,14 @@ export const valoresService = {
         ? { ...data, numero_processo: data.numero_processo.trim() }
         : data;
 
+      // Usar upsert para criar ou atualizar
       const { data: result, error } = await supabase
         .from(TABLE_NAME)
-        .update(updateData)
-        .eq('numero_processo', id) // Usando numero_processo ao invés de id
+        .upsert({
+          id: id,
+          numero_processo: id,
+          ...updateData
+        })
         .select()
         .single();
 

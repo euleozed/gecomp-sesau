@@ -22,5 +22,6 @@ export interface ProcessoInfo {
 export interface ValorProcessoForm {
   numero_processo: string;
   valor_estimado: number;
+  valor_contratado?: number;
   tipo_contratacao: string;
 }

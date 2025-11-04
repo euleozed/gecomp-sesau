@@ -18,6 +18,7 @@ import {
 import { valoresService } from '@/services/valoresService';
 import { nucleoService } from '@/services/nucleoService';
 import { tiposContratacaoService } from '@/services/tiposContratacaoService';
+import { nucleosCecompService, NucleoCecomp } from '@/services/nucleosCecompService';
 import { ProcessoInfo, ValorProcesso } from '@/types/valores';
 import { formatCurrency } from '@/utils/formatCurrency';
 import {
@@ -48,6 +49,7 @@ export default function Valores() {
   const [filterNucleo, setFilterNucleo] = useState('todos');
   const [processoInfo, setProcessoInfo] = useState<ProcessoInfo | null>(null);
   const [valorEstimado, setValorEstimado] = useState('');
+  const [valorContratado, setValorContratado] = useState('');
   const [valores, setValores] = useState<ValorProcesso[]>([]);
   const [loading, setLoading] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -57,12 +59,12 @@ export default function Valores() {
   const [editingProcesso, setEditingProcesso] = useState<ValorProcesso | null>(null);
 
   const [tiposContratacao, setTiposContratacao] = useState<string[]>([]);
-
-  const nucleos = ['CECOMP', 'NMP', 'NSC', 'NSM', 'NDJPL', 'NOSE', 'NPA', 'NMCHE', 'NMSG', 'NMN', 'NLAB'];
+  const [nucleos, setNucleos] = useState<NucleoCecomp[]>([]);
 
   useEffect(() => {
     loadValores();
     loadTiposContratacao();
+    loadNucleos();
   }, []);
 
   const loadTiposContratacao = async () => {
@@ -71,6 +73,15 @@ export default function Valores() {
       setTiposContratacao(tipos);
     } catch (error) {
       console.error('Erro ao carregar tipos de contratação:', error);
+    }
+  };
+
+  const loadNucleos = async () => {
+    try {
+      const nucleosList = await nucleosCecompService.list();
+      setNucleos(nucleosList);
+    } catch (error) {
+      console.error('Erro ao carregar núcleos:', error);
     }
   };
 
@@ -112,31 +123,41 @@ export default function Valores() {
   };
 
   const handleSave = async () => {
-    if (!editingProcesso || !valorEstimado || !tipoContratacao || !nucleo) return;
+    if (!editingProcesso || !tipoContratacao || !nucleo) {
+      toast({
+        title: 'Campos obrigatórios',
+        description: 'Tipo de contratação e núcleo são obrigatórios',
+        variant: 'destructive',
+      });
+      return;
+    }
 
     try {
-      const valorNumber = unmaskCurrency(valorEstimado);
+      const valorEstimadoNumber = valorEstimado ? unmaskCurrency(valorEstimado) : 0;
+      const valorContratadoNumber = valorContratado ? unmaskCurrency(valorContratado) : undefined;
       
       // Salva o núcleo
       await nucleoService.save(editingProcesso.numero_processo, nucleo);
 
       // Salva os valores
+      const valoresData = {
+        valor_estimado: valorEstimadoNumber,
+        valor_contratado: valorContratadoNumber,
+        tipo_contratacao: tipoContratacao,
+      };
+
       if (editingId) {
-        await valoresService.update(editingId, {
-          valor_estimado: valorNumber,
-          tipo_contratacao: tipoContratacao,
-        });
+        await valoresService.update(editingId, valoresData);
       } else {
         await valoresService.create({
           numero_processo: editingProcesso.numero_processo,
-          valor_estimado: valorNumber,
-          tipo_contratacao: tipoContratacao,
+          ...valoresData,
         });
       }
 
       toast({
         title: 'Sucesso',
-        description: 'Valor estimado salvo com sucesso',
+        description: 'Dados salvos com sucesso',
       });
 
       setIsEditDialogOpen(false);
@@ -144,7 +165,7 @@ export default function Valores() {
     } catch (error) {
       toast({
         title: 'Erro',
-        description: 'Erro ao salvar valor estimado',
+        description: 'Erro ao salvar dados',
         variant: 'destructive',
       });
     }
@@ -185,9 +206,19 @@ export default function Valores() {
 
   const handleEdit = async (valor: ValorProcesso) => {
     setEditingProcesso(valor);
-    setEditingId(valor.id);
-    setValorEstimado(valor.valor_estimado.toString());
+    setValorEstimado(valor.valor_estimado ? valor.valor_estimado.toString() : '');
+    setValorContratado(valor.valor_contratado ? valor.valor_contratado.toString() : '');
     setTipoContratacao(valor.tipo_contratacao);
+
+    // Verificar se existe registro salvo no banco
+    try {
+      const valorExistente = await valoresService.getByProcesso(valor.numero_processo);
+      // Se existe registro no banco, usa o ID dele para update
+      setEditingId(valorExistente ? valorExistente.id : null);
+    } catch (error) {
+      console.error('Erro ao verificar processo:', error);
+      setEditingId(null);
+    }
 
     // Buscar núcleo atual do processo
     try {
@@ -206,7 +237,11 @@ export default function Valores() {
       <div className="container mx-auto py-6 space-y-6">
         <Card>
           <CardHeader>
-            <CardTitle>Valores Cadastrados</CardTitle>
+            <CardTitle>Processos Cadastrados</CardTitle>
+            {/* todo: inserir a quantidade de processos cadastrados */}
+            <div className="text-sm font-medium">
+              Total de processos: {valores.length}
+            </div>
           </CardHeader>
           <CardContent>
             <div className="mb-6 space-y-4">
@@ -225,6 +260,7 @@ export default function Valores() {
                     <SelectValue placeholder="Filtrar por tipo" />
                   </SelectTrigger>
                   <SelectContent>
+                    
                     <SelectItem value="todos">Todos</SelectItem>
                     {tiposContratacao.map((tipo) => (
                       <SelectItem key={tipo} value={tipo}>
@@ -243,8 +279,8 @@ export default function Valores() {
                   <SelectContent>
                     <SelectItem value="todos">Todos</SelectItem>
                     {nucleos.map((n) => (
-                      <SelectItem key={n} value={n}>
-                        {n}
+                      <SelectItem key={n.id} value={n.sigla}>
+                        {n.sigla} - {n.nome}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -253,6 +289,15 @@ export default function Valores() {
             </div>
             <Table>
               <TableHeader>
+                {/* todo: inserir a quantidade de processos cadastrados na tabela, mesmo após a aplicação do filtro. texto sem quebra de linha */}
+                <div className="text-sm font-medium inline-block mr-2">Quantidade de processos: {valores.filter((valor) => {
+                      const matchesTerm = filterTerm === '' || 
+                        valor.numero_processo.toLowerCase().includes(filterTerm.toLowerCase()) ||
+                        (valor.processos?.objeto || '').toLowerCase().includes(filterTerm.toLowerCase());
+                      const matchesTipo = filterTipo === 'todos' || valor.tipo_contratacao === filterTipo;
+                      const matchesNucleo = filterNucleo === 'todos' || valor.nucleo === filterNucleo;
+                      return matchesTerm && matchesTipo && matchesNucleo;
+                    }).length}</div>
                 <TableRow>
                   <TableHead>Processo</TableHead>
                   <TableHead>Objeto</TableHead>
@@ -366,8 +411,8 @@ export default function Valores() {
                   </SelectTrigger>
                   <SelectContent>
                     {nucleos.map((n) => (
-                      <SelectItem key={n} value={n}>
-                        {n}
+                      <SelectItem key={n.id} value={n.sigla}>
+                        {n.sigla} - {n.nome}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -375,31 +420,60 @@ export default function Valores() {
               </div>
             </div>
 
-            <div>
-              <label className="text-sm font-medium">Valor Estimado</label>
-              <Input
-                type="text"
-                value={valorEstimado}
-                onChange={(e) => {
-                  const value = e.target.value;
-                  const numericValue = value.replace(/\D/g, '');
-                  if (numericValue) {
-                    setValorEstimado(maskCurrency(numericValue));
-                  } else {
-                    setValorEstimado('');
-                  }
-                }}
-                onPaste={(e) => {
-                  e.preventDefault();
-                  const pastedValue = e.clipboardData.getData('text');
-                  const newValue = parseCurrencyInput(pastedValue);
-                  if (newValue !== null) {
-                    setValorEstimado(newValue);
-                  }
-                }}
-                placeholder="R$ 0,00"
-                className="mt-2"
-              />
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="text-sm font-medium">Valor Estimado</label>
+                <Input
+                  type="text"
+                  value={valorEstimado}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    const numericValue = value.replace(/\D/g, '');
+                    if (numericValue) {
+                      setValorEstimado(maskCurrency(numericValue));
+                    } else {
+                      setValorEstimado('');
+                    }
+                  }}
+                  onPaste={(e) => {
+                    e.preventDefault();
+                    const pastedValue = e.clipboardData.getData('text');
+                    const newValue = parseCurrencyInput(pastedValue);
+                    if (newValue !== null) {
+                      setValorEstimado(newValue);
+                    }
+                  }}
+                  placeholder="R$ 0,00"
+                  className="mt-2"
+                />
+              </div>
+
+              <div>
+                <label className="text-sm font-medium">Valor Contratado</label>
+                <Input
+                  type="text"
+                  value={valorContratado}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    const numericValue = value.replace(/\D/g, '');
+                    if (numericValue) {
+                      setValorContratado(maskCurrency(numericValue));
+                    } else {
+                      setValorContratado('');
+                    }
+                  }}
+                  onPaste={(e) => {
+                    e.preventDefault();
+                    const pastedValue = e.clipboardData.getData('text');
+                    const newValue = parseCurrencyInput(pastedValue);
+                    if (newValue !== null) {
+                      setValorContratado(newValue);
+                    }
+                  }}
+                  placeholder="R$ 0,00"
+                  className="mt-2"
+                />
+              </div>
             </div>
           </div>
 

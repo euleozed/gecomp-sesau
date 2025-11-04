@@ -411,7 +411,7 @@ const ProcessosFiltrados = () => {
         'Objeto': processo.objeto,
         'Tipo': processo.tipo_tr,
         'Data de Chegada': processo.data_chegada,
-        'Núcleo': processo.nucleo || '-',
+        // 'Núcleo': processo.nucleo || '-',
       };
 
       let dadosEspecificos = {};
@@ -489,8 +489,8 @@ const ProcessosFiltrados = () => {
     };
 
     // Definir cabeçalhos e larguras baseados no filtro
-    let headers = ['Número do Processo', 'Objeto do Processo', 'Tipo', 'Data de Chegada', 'Núcleo'];
-    let colWidths = [45, 80, 25, 30, 30];
+    let headers = ['Número do Processo', 'Objeto do Processo', 'Tipo', 'Data de Chegada'];
+    let colWidths = [45, 80, 25, 30];
 
     switch (filtro) {
       case 'em-andamento':
@@ -600,8 +600,7 @@ const ProcessosFiltrados = () => {
         processo.numero_processo,
         processo.objeto,
         processo.tipo_tr,
-        processo.data_chegada,
-        processo.nucleo || '-'
+        processo.data_chegada
       ];
 
       // Adicionar dados específicos baseado no filtro
@@ -851,8 +850,9 @@ const ProcessosFiltrados = () => {
                           </>
                         )}
                         <TableHead className="border p-2 min-w-[120px] text-center bg-blue-50">Status</TableHead>
-                        <TableHead className="border p-2 min-w-[120px] text-center bg-blue-50">Núcleo</TableHead>
-                        <TableHead className="border p-2 min-w-[80px] text-center bg-blue-50">Ações</TableHead>
+                        {/* <TableHead className="border p-2 min-w-[120px] text-center bg-blue-50">Núcleo</TableHead> */}
+                        {/* <TableHead className="border p-2 min-w-[80px] text-center bg-blue-50">Ações</TableHead> */}
+                        {/*  todo: desativar as */}
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -919,7 +919,7 @@ const ProcessosFiltrados = () => {
                             }`}>
                               {processo.status}
                             </TableCell>
-                            <TableCell className="border p-2 text-center">
+                            {/* <TableCell className="border p-2 text-center">
                               {processo.nucleo || '-'}
                             </TableCell>
                             <TableCell className="border p-2 text-center">
@@ -986,7 +986,7 @@ const ProcessosFiltrados = () => {
                                   </div>
                                 </DialogContent>
                               </Dialog>
-                            </TableCell>
+                            </TableCell> */}
                           </TableRow>
                         ))
                       )}
