@@ -1,8 +1,102 @@
 Data/Hora,Unidade,Usuário,Descrição,Processo
-14/10/2025 13:10,JPII-DG,4504073900,Bloco 1576891 retornado para a unidade JPII-NEP,0036.014674/2025-41
-13/10/2025 19:25,JPII-NEP,941705250,Bloco 1576891 disponibilizado para unidade JPII-DG,0036.014674/2025-41
+04/11/2025 09:39,SESAU-GEOF,03714100962,Processo recebido na unidade,0036.014674/2025-41
+03/11/2025 17:38,SESAU-GEOF,00095780211,Processo remetido pela unidade SESAU-NCOF,0036.014674/2025-41
+03/11/2025 17:38,SESAU-NCOF,00095780211,Assinado Documento 0066038624 (Despacho) por 00095780211,0036.014674/2025-41
+03/11/2025 17:30,SESAU-NCOF,00095780211,Gerado documento público 0066038624 (Despacho),0036.014674/2025-41
+03/11/2025 17:09,SESAU-NCOF,00095780211,Registro de documento externo público 0066038173 (Consulta),0036.014674/2025-41
+30/10/2025 18:27,SESAU-NCOF,00095780211,Processo atribuído para 00095780211,0036.014674/2025-41
+30/10/2025 18:25,SESAU-NCOF,00095780211,Processo recebido na unidade,0036.014674/2025-41
+30/10/2025 11:02,SESAU-NCOF,27185842204,Processo remetido pela unidade SESAU-CES,0036.014674/2025-41
+30/10/2025 11:01,SESAU-CES,27185842204,Documento 0065734921 (Relatório) retirado do bloco 1297998,0036.014674/2025-41
+30/10/2025 11:01,SESAU-CES,27185842204,Documento 0065734810 (Termo de Recebimento Definitivo 23) retirado do bloco 1297998,0036.014674/2025-41
+30/10/2025 11:01,SESAU-CES,27185842204,Documento 0065730606 (Relatório) retirado do bloco 1297998,0036.014674/2025-41
+30/10/2025 11:01,SESAU-CES,27185842204,Documento 0065730513 (Termo de Recebimento Definitivo 22) retirado do bloco 1297998,0036.014674/2025-41
+30/10/2025 11:01,SESAU-CES,27185842204,Documento 0065675037 (Relatório) retirado do bloco 1297998,0036.014674/2025-41
+30/10/2025 11:01,SESAU-CES,27185842204,Documento 0065674766 (Termo de Recebimento Definitivo 21) retirado do bloco 1297998,0036.014674/2025-41
+30/10/2025 11:00,SESAU-CES,27185842204,Cancelada disponibilização do bloco 1297998 para a unidade POC-GMED,0036.014674/2025-41
+30/10/2025 10:47,POC-GMED,09870893821,Assinado Documento 0065675037 (Relatório) por 09870893821,0036.014674/2025-41
+30/10/2025 10:47,POC-GMED,09870893821,Assinado Documento 0065674766 (Termo de Recebimento Definitivo 21) por 09870893821,0036.014674/2025-41
+30/10/2025 10:47,POC-GMED,09870893821,Assinado Documento 0065734921 (Relatório) por 09870893821,0036.014674/2025-41
+30/10/2025 10:47,POC-GMED,09870893821,Assinado Documento 0065734810 (Termo de Recebimento Definitivo 23) por 09870893821,0036.014674/2025-41
+30/10/2025 10:47,POC-GMED,09870893821,Assinado Documento 0065730606 (Relatório) por 09870893821,0036.014674/2025-41
+30/10/2025 10:47,POC-GMED,09870893821,Assinado Documento 0065730513 (Termo de Recebimento Definitivo 22) por 09870893821,0036.014674/2025-41
+30/10/2025 10:44,SESAU-CES,soares.pvh@hotmail.com,Assinado Documento 0065674766 (Termo de Recebimento Definitivo 21) por soares.pvh@hotmail.com,0036.014674/2025-41
+30/10/2025 10:44,SESAU-CES,soares.pvh@hotmail.com,Assinado Documento 0065675037 (Relatório) por soares.pvh@hotmail.com,0036.014674/2025-41
+30/10/2025 10:44,SESAU-CES,soares.pvh@hotmail.com,Assinado Documento 0065730513 (Termo de Recebimento Definitivo 22) por soares.pvh@hotmail.com,0036.014674/2025-41
+30/10/2025 10:44,SESAU-CES,soares.pvh@hotmail.com,Assinado Documento 0065730606 (Relatório) por soares.pvh@hotmail.com,0036.014674/2025-41
+30/10/2025 10:44,SESAU-CES,soares.pvh@hotmail.com,Assinado Documento 0065734810 (Termo de Recebimento Definitivo 23) por soares.pvh@hotmail.com,0036.014674/2025-41
+30/10/2025 10:44,SESAU-CES,soares.pvh@hotmail.com,Assinado Documento 0065734921 (Relatório) por soares.pvh@hotmail.com,0036.014674/2025-41
+28/10/2025 14:15,JPII-NAP,02689105292,Processo recebido na unidade,0036.014674/2025-41
+28/10/2025 13:51,JPII-NAP,00941705250,Processo remetido pela unidade JPII-NEP,0036.014674/2025-41
+28/10/2025 13:51,JPII-NAP,00941705250,Processo remetido pela unidade JPII-NEP,0036.014674/2025-41
+24/10/2025 11:24,SESAU-CES,27185842204,Bloco 1297998 disponibilizado para unidade POC-GMED,0036.014674/2025-41
+23/10/2025 17:26,SESAU-CES,27185842204,Liberada assinatura externa para o usuário RAIMUNDO NONATO SOARES (soares.pvh@hotmail.com) no documento 0065734921 (Relatório) até 30/10/2025 (7 dias). Com visualização integral do processo.,0036.014674/2025-41
+23/10/2025 17:25,SESAU-CES,27185842204,Liberada assinatura externa para o usuário RAIMUNDO NONATO SOARES (soares.pvh@hotmail.com) no documento 0065734810 (Termo de Recebimento Definitivo 23) até 30/10/2025 (7 dias). Com visualização integral do processo.,0036.014674/2025-41
+23/10/2025 17:24,SESAU-CES,27185842204,Liberada assinatura externa para o usuário RAIMUNDO NONATO SOARES (soares.pvh@hotmail.com) no documento 0065730606 (Relatório) até 30/10/2025 (7 dias). Com visualização integral do processo.,0036.014674/2025-41
+23/10/2025 17:24,SESAU-CES,27185842204,Liberada assinatura externa para o usuário RAIMUNDO NONATO SOARES (soares.pvh@hotmail.com) no documento 0065730513 (Termo de Recebimento Definitivo 22) até 30/10/2025 (7 dias). Com visualização integral do processo.,0036.014674/2025-41
+23/10/2025 17:23,SESAU-CES,27185842204,Liberada assinatura externa para o usuário RAIMUNDO NONATO SOARES (soares.pvh@hotmail.com) no documento 0065675037 (Relatório) até 30/10/2025 (7 dias). Com visualização integral do processo.,0036.014674/2025-41
+23/10/2025 17:22,SESAU-CES,27185842204,Liberada assinatura externa para o usuário RAIMUNDO NONATO SOARES (soares.pvh@hotmail.com) no documento 0065674766 (Termo de Recebimento Definitivo 21) até 30/10/2025 (7 dias). Com visualização integral do processo.,0036.014674/2025-41
+23/10/2025 17:14,SESAU-CES,27185842204,Documento 0065734921 (Relatório) inserido no bloco 1297998,0036.014674/2025-41
+23/10/2025 17:14,SESAU-CES,27185842204,Documento 0065734810 (Termo de Recebimento Definitivo 23) inserido no bloco 1297998,0036.014674/2025-41
+23/10/2025 17:14,SESAU-CES,27185842204,Documento 0065730606 (Relatório) inserido no bloco 1297998,0036.014674/2025-41
+23/10/2025 17:14,SESAU-CES,27185842204,Documento 0065730513 (Termo de Recebimento Definitivo 22) inserido no bloco 1297998,0036.014674/2025-41
+23/10/2025 17:14,SESAU-CES,27185842204,Documento 0065675037 (Relatório) inserido no bloco 1297998,0036.014674/2025-41
+23/10/2025 17:14,SESAU-CES,27185842204,Documento 0065674766 (Termo de Recebimento Definitivo 21) inserido no bloco 1297998,0036.014674/2025-41
+23/10/2025 17:10,SESAU-CES,27185842204,Documento 0065681936 (Despacho) retirado do bloco 22129,0036.014674/2025-41
+23/10/2025 17:10,SESAU-CES,27185842204,Documento 0065734921 (Relatório) retirado do bloco 22129,0036.014674/2025-41
+23/10/2025 17:10,SESAU-CES,27185842204,Documento 0065734810 (Termo de Recebimento Definitivo 23) retirado do bloco 22129,0036.014674/2025-41
+23/10/2025 17:10,SESAU-CES,27185842204,Documento 0065730606 (Relatório) retirado do bloco 22129,0036.014674/2025-41
+23/10/2025 17:10,SESAU-CES,27185842204,Documento 0065730513 (Termo de Recebimento Definitivo 22) retirado do bloco 22129,0036.014674/2025-41
+23/10/2025 17:10,SESAU-CES,27185842204,Documento 0065675037 (Relatório) retirado do bloco 22129,0036.014674/2025-41
+23/10/2025 17:10,SESAU-CES,27185842204,Documento 0065674766 (Termo de Recebimento Definitivo 21) retirado do bloco 22129,0036.014674/2025-41
+23/10/2025 16:14,SESAU-CES,16169301287,Assinado Documento 0065674766 (Termo de Recebimento Definitivo 21) por 16169301287,0036.014674/2025-41
+23/10/2025 16:13,SESAU-CES,16169301287,Assinado Documento 0065675037 (Relatório) por 16169301287,0036.014674/2025-41
+23/10/2025 16:13,SESAU-CES,16169301287,Assinado Documento 0065730513 (Termo de Recebimento Definitivo 22) por 16169301287,0036.014674/2025-41
+23/10/2025 16:13,SESAU-CES,16169301287,Assinado Documento 0065730606 (Relatório) por 16169301287,0036.014674/2025-41
+23/10/2025 16:12,SESAU-CES,16169301287,Assinado Documento 0065734810 (Termo de Recebimento Definitivo 23) por 16169301287,0036.014674/2025-41
+23/10/2025 16:11,SESAU-CES,16169301287,Assinado Documento 0065734921 (Relatório) por 16169301287,0036.014674/2025-41
+23/10/2025 16:11,SESAU-CES,16169301287,Assinado Documento 0065681936 (Despacho) por 16169301287,0036.014674/2025-41
+23/10/2025 15:12,SESAU-CES,35108916272,Assinado Documento 0065681511 (Checklist) por 35108916272,0036.014674/2025-41
+23/10/2025 13:37,SESAU-CES,27185842204,Documento 0065681936 (Despacho) inserido no bloco 22129,0036.014674/2025-41
+23/10/2025 13:37,SESAU-CES,27185842204,Documento 0065734921 (Relatório) inserido no bloco 22129,0036.014674/2025-41
+23/10/2025 13:37,SESAU-CES,27185842204,Documento 0065734810 (Termo de Recebimento Definitivo 23) inserido no bloco 22129,0036.014674/2025-41
+23/10/2025 13:37,SESAU-CES,27185842204,Documento 0065730606 (Relatório) inserido no bloco 22129,0036.014674/2025-41
+23/10/2025 13:37,SESAU-CES,27185842204,Documento 0065730513 (Termo de Recebimento Definitivo 22) inserido no bloco 22129,0036.014674/2025-41
+23/10/2025 13:37,SESAU-CES,27185842204,Documento 0065675037 (Relatório) inserido no bloco 22129,0036.014674/2025-41
+23/10/2025 13:37,SESAU-CES,27185842204,Documento 0065674766 (Termo de Recebimento Definitivo 21) inserido no bloco 22129,0036.014674/2025-41
+23/10/2025 13:18,SESAU-CES,27185842204,Assinado Documento 0065735577 (Checklist) por 27185842204,0036.014674/2025-41
+23/10/2025 13:16,SESAU-CES,27185842204,Assinado Documento 0065731604 (Checklist) por 27185842204,0036.014674/2025-41
+23/10/2025 13:05,SESAU-CES,27185842204,Alterada ordem dos protocolos,0036.014674/2025-41
+23/10/2025 13:01,SESAU-CES,27185842204,"Registro de documento externo público 0065737860 (Adendo Fotos Material Gráfico), conferido com documento original",0036.014674/2025-41
+23/10/2025 12:41,SESAU-CES,27185842204,Gerado documento público 0065735577 (Checklist),0036.014674/2025-41
+23/10/2025 12:35,SESAU-CES,27185842204,Gerado documento público 0065734921 (Relatório),0036.014674/2025-41
+23/10/2025 12:34,SESAU-CES,27185842204,Gerado documento público 0065734810 (Termo de Recebimento Definitivo 23),0036.014674/2025-41
+23/10/2025 12:33,SESAU-CES,27185842204,Registro de documento externo público 0065734682 (Adendo Certidões Negativas),0036.014674/2025-41
+23/10/2025 12:32,SESAU-CES,27185842204,Registro de documento externo público 0065734539 (E-mail de Envio da Nota Fiscal),0036.014674/2025-41
+23/10/2025 12:31,SESAU-CES,27185842204,Registro de documento externo público 0065734431 (Consulta de Autenticidade NF. 211 GUIMARÃES LIMA LTDA),0036.014674/2025-41
+23/10/2025 12:29,SESAU-CES,27185842204,Registro de documento externo público 0065734244 (Nota Fiscal Nº 211 GUIMARÃES LIMA LTDA),0036.014674/2025-41
+23/10/2025 12:07,SESAU-CES,27185842204,Gerado documento público 0065731604 (Checklist),0036.014674/2025-41
+23/10/2025 12:00,SESAU-CES,27185842204,Gerado documento público 0065730606 (Relatório),0036.014674/2025-41
+23/10/2025 11:59,SESAU-CES,27185842204,Gerado documento público 0065730513 (Termo de Recebimento Definitivo 22),0036.014674/2025-41
+23/10/2025 11:58,SESAU-CES,27185842204,Registro de documento externo público 0065730448 (Adendo Certidões Negativas),0036.014674/2025-41
+23/10/2025 11:57,SESAU-CES,27185842204,Registro de documento externo público 0065730343 (Consulta de Autenticidade NF. 185 EAS IND. GRÁFICA),0036.014674/2025-41
+23/10/2025 11:56,SESAU-CES,27185842204,"Registro de documento externo público 0065730130 (Nota Fiscal Nº 185 - EAS IND. GRÁFICA), conferido com documento original",0036.014674/2025-41
+22/10/2025 11:52,SESAU-CES,35108916272,Gerado documento público 0065681936 (Despacho),0036.014674/2025-41
+22/10/2025 11:48,SESAU-CES,35108916272,Gerado documento público 0065681511 (Checklist),0036.014674/2025-41
+22/10/2025 11:03,SESAU-CES,35108916272,Registro de documento externo público 0065676072 (Portaria),0036.014674/2025-41
+22/10/2025 10:55,SESAU-CES,35108916272,Gerado documento público 0065675037 (Relatório),0036.014674/2025-41
+22/10/2025 10:54,SESAU-CES,35108916272,Exclusão do documento 0065674885,0036.014674/2025-41
+22/10/2025 10:54,SESAU-CES,35108916272,Gerado documento público 0065674885,0036.014674/2025-41
+22/10/2025 10:53,SESAU-CES,35108916272,Gerado documento público 0065674766 (Termo de Recebimento Definitivo 21),0036.014674/2025-41
+22/10/2025 10:51,SESAU-CES,35108916272,Alterada ordem dos protocolos,0036.014674/2025-41
+22/10/2025 10:49,SESAU-CES,35108916272,Registro de documento externo público 0065674275 (Certidão),0036.014674/2025-41
+22/10/2025 10:42,SESAU-CES,35108916272,Registro de documento externo público 0065673402 (Adendo),0036.014674/2025-41
+22/10/2025 10:40,SESAU-CES,35108916272,Registro de documento externo público 0065673220 (Consulta),0036.014674/2025-41
+22/10/2025 10:37,SESAU-CES,35108916272,Registro de documento externo público 0065672855 (Nota Fiscal),0036.014674/2025-41
+14/10/2025 13:10,JPII-DG,04504073900,Bloco 1576891 retornado para a unidade JPII-NEP,0036.014674/2025-41
+13/10/2025 19:25,JPII-NEP,00941705250,Bloco 1576891 disponibilizado para unidade JPII-DG,0036.014674/2025-41
 13/10/2025 14:34,JPII-DG,93785810210,Bloco 1576891 retornado para a unidade JPII-NEP,0036.014674/2025-41
-13/10/2025 14:04,JPII-NEP,941705250,Bloco 1576891 disponibilizado para unidade JPII-DG,0036.014674/2025-41
+13/10/2025 14:04,JPII-NEP,00941705250,Bloco 1576891 disponibilizado para unidade JPII-DG,0036.014674/2025-41
 08/10/2025 13:52,SESAU-CES,27185842204,Documento 0065200858 (Ordem de Fornecimento 83) retirado do bloco 22129,0036.014674/2025-41
 08/10/2025 13:52,SESAU-CES,27185842204,Documento 0065194020 (Ordem de Fornecimento 82) retirado do bloco 22129,0036.014674/2025-41
 08/10/2025 13:52,SESAU-CES,27185842204,Documento 0065182421 (Ordem de Fornecimento 81) retirado do bloco 22129,0036.014674/2025-41

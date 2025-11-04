@@ -1,4 +1,5 @@
 Data/Hora,Unidade,Usuário,Descrição,Processo
+04/11/2025 11:48,SESAU-GPACC,02662281278,Disponibilizado acesso externo para Cleane Possmoser de Melo (administracao@hospacidentados.com.br) (administracao@hospacidentados.com.br) até 03/05/2026 (180 dias). Com visualização integral do processo. Solicitação da empresa/Princípio da publicidade,0036.024820/2023-84
 10/10/2025 12:03,SUPEL-COESP,76065936200,Conclusão do processo na unidade,0036.024820/2023-84
 09/10/2025 14:32,SUPEL-COESP,glpi-automacao,"Cancelado documento 0065191578 (Ofício 7011). Erro em inserir o documentos, de acordo com o Chamado de num: 2025133647 da plataforma GLPI",0036.024820/2023-84
 09/10/2025 14:32,SUPEL-COESP,glpi-automacao,"Cancelado documento 0065208279 (E-mail aos interessados). Erro em inserir o documentos, de acordo com o Chamado de num: 2025133646 da plataforma GLPI",0036.024820/2023-84
@@ -98,7 +99,7 @@ Data/Hora,Unidade,Usuário,Descrição,Processo
 22/09/2025 13:12,SESAU-NEOR,79181732287,Cancelada disponibilização do bloco 1144103 para a unidade SESAU-SE,0036.024820/2023-84
 22/09/2025 13:07,SESAU-NEOR,03632491259,Bloco 1144103 disponibilizado para unidade SESAU-SE,0036.024820/2023-84
 22/09/2025 12:06,SESAU-NEOR,03632491259,Cancelada disponibilização do bloco 777367 para a unidade SESAU-FES,0036.024820/2023-84
-22/09/2025 11:24,SESAU-NEOR,03632491259,Bloco 777367 disponibilizado para unidade SESAU-FES,0036.024820/2023-84
+22/09/2025 11:24,SESAU-NEOR,3632491259,Bloco 777367 disponibilizado para unidade SESAU-FES,0036.024820/2023-84
 22/09/2025 11:19,SESAU-NEOR,79181732287,Cancelada disponibilização do bloco 777367 para a unidade SESAU-FES,0036.024820/2023-84
 22/09/2025 10:56,SESAU-FES,97290459253,Assinado Documento 0064573998 (NE - Nota de Empenho) por 97290459253,0036.024820/2023-84
 22/09/2025 10:52,SESAU-FES,97290459253,Assinado Documento 0064574466 (NE - Nota de Empenho) por 97290459253,0036.024820/2023-84
@@ -1498,7 +1499,7 @@ Data/Hora,Unidade,Usuário,Descrição,Processo
 22/11/2024 11:24,SESAU-NEOR,01031113282,Documento 0054780972 (NE - Nota de Empenho) retirado do bloco 1432057,0036.024820/2023-84
 22/11/2024 11:24,SESAU-NEOR,01031113282,Documento 0054780937 (NE - Nota de Empenho) retirado do bloco 1432057,0036.024820/2023-84
 22/11/2024 11:24,SESAU-SC,01031113282,Processo remetido pela unidade SESAU-NEOR,0036.024820/2023-84
-22/11/2024 11:24,SESAU-NEOR,01031113282,Assinado Documento 0054994360 (Despacho) por 01031113282,0036.024820/2023-84
+22/11/2024 11:24,SESAU-NEOR,1031113282,Assinado Documento 0054994360 (Despacho) por 01031113282,0036.024820/2023-84
 22/11/2024 10:37,SESAU-NEOR,1031113282,Gerado documento público 0054994360 (Despacho),0036.024820/2023-84
 22/11/2024 10:28,SESAU-SE,83997628220,Assinado Documento 0054780972 (NE - Nota de Empenho) por 79396364215,0036.024820/2023-84
 22/11/2024 10:28,SESAU-SE,83997628220,Assinado Documento 0054780937 (NE - Nota de Empenho) por 79396364215,0036.024820/2023-84
@@ -1598,7 +1599,7 @@ Data/Hora,Unidade,Usuário,Descrição,Processo
 04/11/2024 12:35,SESAU-NAP,4881313240,Registro de documento externo público 0054421162 (Anexo FGTS),0036.024820/2023-84
 04/11/2024 12:33,SESAU-NAP,4881313240,Registro de documento externo público 0054420963 (Anexo Certidão de Regularidade de Débitos Municipais),0036.024820/2023-84
 04/11/2024 12:22,SESAU-NAP,4881313240,Registro de documento externo público 0054419538 (Anexo Certidão de Regularidade de Débitos Estaduais),0036.024820/2023-84
-04/11/2024 12:20,SESAU-NAP,4881313240,Registro de documento externo público 0054419343 (Anexo Regularidade fiscal perante a Fazenda Nacional),0036.024820/2023-84
+04/11/2024 12:20,SESAU-NAP,04881313240,Registro de documento externo público 0054419343 (Anexo Regularidade fiscal perante a Fazenda Nacional),0036.024820/2023-84
 04/11/2024 12:18,SESAU-NAP,04881313240,Registro de documento externo público 0054419069 (Anexo SICAF -),0036.024820/2023-84
 04/11/2024 12:02,SESAU-NAP,04881313240,Registro de documento externo público 0054416801 (Anexo Certidão Negativa de Recuperação Judicial),0036.024820/2023-84
 04/11/2024 09:59,SESAU-NAP,04881313240,Alterada ordem dos protocolos,0036.024820/2023-84

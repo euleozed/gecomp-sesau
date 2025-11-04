@@ -1,4 +1,13 @@
 Data/Hora,Unidade,Usuário,Descrição,Processo
+04/11/2025 14:43,SESAU-GECONT,3521284298,Envio de correspondência eletrônica 0066086204 (E-mail),0050.006133/2025-61
+04/11/2025 14:43,SESAU-GECONT,3521284298,Gerado documento público 0066086204 (E-mail),0050.006133/2025-61
+04/11/2025 10:55,SESAU-GECONT,282311203,Exclusão do documento 0066058777,0050.006133/2025-61
+04/11/2025 10:53,SESAU-GECONT,282311203,Gerado documento público 0066058777,0050.006133/2025-61
+04/11/2025 10:52,SESAU-GECONT,282311203,Reabertura do processo na unidade,0050.006133/2025-61
+03/11/2025 15:15,PGE-SESAU,2847216200,Liberada assinatura externa para o usuário Carlos Alberto Azevedo Silva Filho (licitacao@cirmed.com.br) no documento 0066020791 (Termo de Contrato 1240) até 13/11/2025 (10 dias). Sem acesso ao processo.,0050.006133/2025-61
+03/11/2025 14:52,PGE-SESAU,87656531220,Assinado Documento 0066008003 (Despacho) por 87656531220,0050.006133/2025-61
+03/11/2025 12:56,PGE-SESAU,2847216200,Gerado documento público 0066020791 (Termo de Contrato 1240),0050.006133/2025-61
+03/11/2025 11:28,PGE-SESAU,2847216200,Gerado documento público 0066008003 (Despacho),0050.006133/2025-61
 22/10/2025 10:17,SESAU-GECONT,910420467,Conclusão do processo na unidade,0050.006133/2025-61
 22/10/2025 10:14,SESAU-GECONT,910420467,Disponibilizado acesso externo para Carlos Alberto Azevedo Silva Filho (licitacao@cirmed.com.br) até 20/01/2026 (90 dias). Com visualização integral do processo. Solicitação formal através do processo 0007.001719/2025-64,0050.006133/2025-61
 22/10/2025 09:54,SESAU-GECONT,910420467,Reabertura do processo na unidade,0050.006133/2025-61
@@ -492,8 +501,8 @@ Data/Hora,Unidade,Usuário,Descrição,Processo
 14/07/2025 15:24,SESAU-GECOMP,81798440210,Cancelada disponibilização do bloco 997022 para a unidade SESAU-SE,0050.006133/2025-61
 14/07/2025 15:23,SESAU-GECOMP,81798440210,Bloco 997022 disponibilizado para unidade SESAU-SE,0050.006133/2025-61
 14/07/2025 15:23,SESAU-GECOMP,81798440210,Cancelada disponibilização do bloco 997022 para a unidade SESAU-SE,0050.006133/2025-61
-14/07/2025 14:35,SESAU-GECOMP,2662281278,Bloco 997022 disponibilizado para unidade SESAU-SE,0050.006133/2025-61
-14/07/2025 14:34,SESAU-GECOMP,2662281278,Cancelada disponibilização do bloco 997022 para a unidade SESAU-SE,0050.006133/2025-61
+14/07/2025 14:35,SESAU-GECOMP,02662281278,Bloco 997022 disponibilizado para unidade SESAU-SE,0050.006133/2025-61
+14/07/2025 14:34,SESAU-GECOMP,02662281278,Cancelada disponibilização do bloco 997022 para a unidade SESAU-SE,0050.006133/2025-61
 14/07/2025 14:11,SESAU-GECOMP,95637508291,Bloco 997022 disponibilizado para unidade SESAU-SE,0050.006133/2025-61
 14/07/2025 14:11,SESAU-GECOMP,95637508291,Cancelada disponibilização do bloco 997022 para a unidade SESAU-SE,0050.006133/2025-61
 14/07/2025 14:09,SESAU-GECOMP,95637508291,Bloco 997022 disponibilizado para unidade SESAU-SE,0050.006133/2025-61
