@@ -206,8 +206,22 @@ export default function Valores() {
 
   const handleEdit = async (valor: ValorProcesso) => {
     setEditingProcesso(valor);
-    setValorEstimado(valor.valor_estimado ? valor.valor_estimado.toString() : '');
-    setValorContratado(valor.valor_contratado ? valor.valor_contratado.toString() : '');
+    
+    // Aplicar máscara de moeda aos valores ao carregar
+    if (valor.valor_estimado) {
+      const valorEstimadoCents = Math.round(valor.valor_estimado * 100).toString();
+      setValorEstimado(maskCurrency(valorEstimadoCents));
+    } else {
+      setValorEstimado('');
+    }
+    
+    if (valor.valor_contratado) {
+      const valorContratadoCents = Math.round(valor.valor_contratado * 100).toString();
+      setValorContratado(maskCurrency(valorContratadoCents));
+    } else {
+      setValorContratado('');
+    }
+    
     setTipoContratacao(valor.tipo_contratacao);
 
     // Verificar se existe registro salvo no banco
@@ -287,17 +301,18 @@ export default function Valores() {
                 </Select>
               </div>
             </div>
+            <div className="mb-3 text-sm font-medium">
+              Quantidade de processos filtrados: {valores.filter((valor) => {
+                const matchesTerm = filterTerm === '' || 
+                  valor.numero_processo.toLowerCase().includes(filterTerm.toLowerCase()) ||
+                  (valor.processos?.objeto || '').toLowerCase().includes(filterTerm.toLowerCase());
+                const matchesTipo = filterTipo === 'todos' || valor.tipo_contratacao === filterTipo;
+                const matchesNucleo = filterNucleo === 'todos' || valor.nucleo === filterNucleo;
+                return matchesTerm && matchesTipo && matchesNucleo;
+              }).length}
+            </div>
             <Table>
               <TableHeader>
-                {/* todo: inserir a quantidade de processos cadastrados na tabela, mesmo após a aplicação do filtro. texto sem quebra de linha */}
-                <div className="text-sm font-medium inline-block mr-2">Quantidade de processos: {valores.filter((valor) => {
-                      const matchesTerm = filterTerm === '' || 
-                        valor.numero_processo.toLowerCase().includes(filterTerm.toLowerCase()) ||
-                        (valor.processos?.objeto || '').toLowerCase().includes(filterTerm.toLowerCase());
-                      const matchesTipo = filterTipo === 'todos' || valor.tipo_contratacao === filterTipo;
-                      const matchesNucleo = filterNucleo === 'todos' || valor.nucleo === filterNucleo;
-                      return matchesTerm && matchesTipo && matchesNucleo;
-                    }).length}</div>
                 <TableRow>
                   <TableHead>Processo</TableHead>
                   <TableHead>Objeto</TableHead>

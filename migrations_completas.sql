@@ -84,3 +84,4 @@ ORDER BY tabela, column_name;
 -- Verificar dados inseridos
 SELECT 'Total de núcleos cadastrados:' as info, COUNT(*)::text as valor FROM nucleos_cecomp;
 
+

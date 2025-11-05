@@ -81,3 +81,4 @@ ON CONFLICT (sigla) DO NOTHING;
 -- ============================================
 SELECT 'Núcleos cadastrados' as status, COUNT(*) as total FROM nucleos_cecomp;
 
+

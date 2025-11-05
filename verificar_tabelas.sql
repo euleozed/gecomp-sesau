@@ -55,3 +55,4 @@ SELECT
     COUNT(*) as total_registros
 FROM nucleos_cecomp;
 
+

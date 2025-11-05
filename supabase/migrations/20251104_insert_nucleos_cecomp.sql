@@ -14,3 +14,4 @@ INSERT INTO nucleos_cecomp (sigla, nome) VALUES
   ('GPACC', 'Gerência de Procedimentos Auxiliares às Compras e Contratações')
 ON CONFLICT (sigla) DO NOTHING;
 
+
