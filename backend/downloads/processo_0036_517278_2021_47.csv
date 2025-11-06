@@ -1,4 +1,5 @@
 Data/Hora,Unidade,Usuário,Descrição,Processo
+05/11/2025 08:59,SESAU-NAP,4881313240,Conclusão do processo na unidade,0036.517278/2021-47
 04/11/2025 10:22,SESAU-NAP,4881313240,Processo inserido no bloco 1479032,0036.517278/2021-47
 04/11/2025 10:07,SESAU-NAP,7241065700,Documento 0065678156 (Termo de Homologação) retirado do bloco 202326,0036.517278/2021-47
 04/11/2025 09:39,SESAU-NPCO,87407132291,Processo recebido na unidade,0036.517278/2021-47
@@ -26,8 +27,8 @@ Data/Hora,Unidade,Usuário,Descrição,Processo
 22/10/2025 17:08,SESAU-NAP,4881313240,Documento 0065679399 (Despacho) inserido no bloco 989625,0036.517278/2021-47
 22/10/2025 17:08,SESAU-NAP,4881313240,Documento 0065678156 (Termo de Homologação) inserido no bloco 989625,0036.517278/2021-47
 22/10/2025 17:08,SESAU-NAP,4881313240,Documento 0065678111 (Análise 424) inserido no bloco 989625,0036.517278/2021-47
-22/10/2025 16:27,SESAU-NAP,4881313240,Registro de documento externo público 0065703946 (Anexo formCertidaoNegativa),0036.517278/2021-47
-22/10/2025 16:23,SESAU-NAP,4881313240,Registro de documento externo público 0065703817 (Consulta rSituacaoFornecedor_49927970000126_2025-10-22),0036.517278/2021-47
+22/10/2025 16:27,SESAU-NAP,4881313240,Registro de documento externo público 0065703946 (Certidão Municipal),0036.517278/2021-47
+22/10/2025 16:23,SESAU-NAP,4881313240,Registro de documento externo público 0065703817 (Certidão SICAF),0036.517278/2021-47
 22/10/2025 11:32,SESAU-NAP,4881313240,Gerado documento público 0065679438 (Despacho),0036.517278/2021-47
 22/10/2025 11:31,SESAU-NAP,4881313240,Gerado documento público 0065679399 (Despacho),0036.517278/2021-47
 22/10/2025 11:22,SESAU-NAP,4881313240,Registro de documento externo público 0065678216 (Homologação COMPRASNET),0036.517278/2021-47

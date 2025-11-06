@@ -1,4 +1,7 @@
 Data/Hora,Unidade,Usuário,Descrição,Processo
+05/11/2025 14:28,SESAU-CAD,79511341200,Documento 0066081120 (Despacho) retirado do bloco 837527,0036.051069/2023-99
+05/11/2025 14:28,SESAU-CECOMP,79511341200,Processo remetido pela unidade SESAU-CAD,0036.051069/2023-99
+05/11/2025 10:14,SESAU-CAD,979107245,Assinado Documento 0066081120 (Despacho) por 00979107245,0036.051069/2023-99
 04/11/2025 13:54,SESAU-CAD,28383281234,Documento 0066081120 (Despacho) inserido no bloco 837527,0036.051069/2023-99
 04/11/2025 13:51,SESAU-CAD,28383281234,Gerado documento público 0066081120 (Despacho),0036.051069/2023-99
 04/11/2025 10:37,SESAU-CAD,28383281234,Processo recebido na unidade,0036.051069/2023-99
@@ -1698,7 +1701,7 @@ Data/Hora,Unidade,Usuário,Descrição,Processo
 27/03/2024 14:55,SESAU-GRS2,30882567187,Gerado documento público 0047243184,0036.051069/2023-99
 27/03/2024 14:50,SESAU-GRS2,30882567187,Exclusão do documento 0047241251,0036.051069/2023-99
 27/03/2024 14:37,SESAU-GECOMP,69940312253,Reabertura do processo na unidade,0036.051069/2023-99
-27/03/2024 14:32,SESAU-HRB,2164313283,"Gerado documento restrito 0047241974 (Documento de Oficialização de Demanda 8), Documento Preparatório (Art. 7º, § 3º, da Lei nº 12.527/2011)",0036.051069/2023-99
+27/03/2024 14:32,SESAU-HRB,02164313283,"Gerado documento restrito 0047241974 (Documento de Oficialização de Demanda 8), Documento Preparatório (Art. 7º, § 3º, da Lei nº 12.527/2011)",0036.051069/2023-99
 27/03/2024 14:22,SESAU-GRS2,30882567187,Gerado documento público 0047241251,0036.051069/2023-99
 27/03/2024 14:20,SESAU-CREG,95034986272,Processo recebido na unidade,0036.051069/2023-99
 27/03/2024 14:17,SESAU-HRB,02164313283,Processo recebido na unidade,0036.051069/2023-99

@@ -1,4 +1,16 @@
 Data/Hora,Unidade,Usuário,Descrição,Processo
+05/11/2025 14:23,SESAU-CES,27185842204,Assinado Documento 0066121392 (Checklist) por 27185842204,0036.009923/2025-86
+05/11/2025 12:30,SESAU-CES,27185842204,Documento 0066124674 (Despacho) inserido no bloco 22129,0036.009923/2025-86
+05/11/2025 12:30,SESAU-CES,27185842204,Documento 0066121323 (Relatório) inserido no bloco 22129,0036.009923/2025-86
+05/11/2025 12:30,SESAU-CES,27185842204,Documento 0066121133 (Termo de Recebimento Definitivo 24) inserido no bloco 22129,0036.009923/2025-86
+05/11/2025 12:27,SESAU-CES,27185842204,Gerado documento público 0066124674 (Despacho),0036.009923/2025-86
+05/11/2025 12:02,SESAU-CES,27185842204,Gerado documento público 0066121392 (Checklist),0036.009923/2025-86
+05/11/2025 12:02,SESAU-CES,27185842204,Gerado documento público 0066121323 (Relatório),0036.009923/2025-86
+05/11/2025 12:00,SESAU-CES,27185842204,Gerado documento público 0066121133 (Termo de Recebimento Definitivo 24),0036.009923/2025-86
+05/11/2025 11:59,SESAU-CES,27185842204,Registro de documento externo público 0066120953 (Adendo Certidões Negativas),0036.009923/2025-86
+05/11/2025 11:58,SESAU-CES,27185842204,Registro de documento externo público 0066120776 (E-mail de Envio da Nota Fiscal),0036.009923/2025-86
+05/11/2025 11:57,SESAU-CES,27185842204,Registro de documento externo público 0066120636 (Consulta Autenticidade Nota Fiscal nº 216),0036.009923/2025-86
+05/11/2025 11:56,SESAU-CES,27185842204,Registro de documento externo público 0066120491 (Nota Fiscal Nº 216 GUIMARÃES LIMA LTDA),0036.009923/2025-86
 03/11/2025 12:34,SESAU-CES,27185842204,Reabertura do processo na unidade,0036.009923/2025-86
 30/10/2025 13:09,SESAU-NEFI,58149457291,Processo recebido na unidade,0036.009923/2025-86
 30/10/2025 13:03,SESAU-NEFI,57844801204,Processo remetido pela unidade SESAU-GACP,0036.009923/2025-86
@@ -93,7 +105,7 @@ Data/Hora,Unidade,Usuário,Descrição,Processo
 08/10/2025 13:42,SESAU-NPPS,97113875220,Documento 0064375034 (Informação 4089) retirado do bloco 1058732,0036.009923/2025-86
 08/10/2025 13:27,SESAU-CES,27185842204,Registro de documento externo público 0065209640 (Adendo Autenticidade Nota Fiscal EAS IND. GRÁFICA),0036.009923/2025-86
 08/10/2025 13:25,SESAU-CES,27185842204,"Registro de documento externo público 0065209522 (Nota Fiscal Nº 174 - EAS IND. GRÁFICA), conferido com documento original",0036.009923/2025-86
-19/09/2025 13:02,SESAU-CPOP,02082700275,Bloco 1058732 retornado para a unidade SESAU-NPPS,0036.009923/2025-86
+19/09/2025 13:02,SESAU-CPOP,2082700275,Bloco 1058732 retornado para a unidade SESAU-NPPS,0036.009923/2025-86
 18/09/2025 21:29,SESAU-NPPS,83819126287,Bloco 1058732 disponibilizado para unidade SESAU-CPOP,0036.009923/2025-86
 18/09/2025 12:03,SESAU-CES,27185842204,Documento 0064477541 (Ordem de Fornecimento 62) retirado do bloco 22129,0036.009923/2025-86
 18/09/2025 12:03,SESAU-CES,27185842204,Documento 0064473267 (Ordem de Fornecimento 61) retirado do bloco 22129,0036.009923/2025-86
