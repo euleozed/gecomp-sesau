@@ -15,3 +15,4 @@ INSERT INTO nucleos_cecomp (sigla, nome) VALUES
 ON CONFLICT (sigla) DO NOTHING;
 
 
+

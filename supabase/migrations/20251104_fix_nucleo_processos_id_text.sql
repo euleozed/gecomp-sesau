@@ -23,3 +23,4 @@ CREATE TRIGGER update_nucleo_processos_updated_at
     EXECUTE FUNCTION update_updated_at_column();
 
 
+
