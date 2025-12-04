@@ -1,4 +1,5 @@
 Data/Hora,Unidade,Usuário,Descrição,Processo
+12/11/2025 12:41,SESAU-GECONT,282311203,Disponibilizado acesso externo para Vanessa Michele Esber Serrate (vanessa@esberadvocacia.com) até 19/11/2025 (7 dias). Com visualização integral do processo. Requerimento de acesso ao Processo Administrativo SEI nº 0036.000221/2025-37,0036.000221/2025-37
 03/11/2025 10:13,SESAU-GECONT,282311203,Envio de correspondência eletrônica 0065997925 (E-mail),0036.000221/2025-37
 03/11/2025 10:13,SESAU-GECONT,282311203,Gerado documento público 0065997925 (E-mail),0036.000221/2025-37
 27/08/2025 10:57,SESAU-SC,3154207236,Conclusão do processo na unidade,0036.000221/2025-37
@@ -698,7 +699,7 @@ Data/Hora,Unidade,Usuário,Descrição,Processo
 21/03/2025 18:22,SESAU-NAP,00979107245,Assinado Documento 0058502438 (Análise 98) por 00979107245,0036.000221/2025-37
 21/03/2025 18:17,SESAU-NAP,00979107245,Documento 0058512908 (Despacho) inserido no bloco 989625,0036.000221/2025-37
 21/03/2025 18:17,SESAU-NAP,00979107245,Documento 0058502487 (Termo de Homologação) inserido no bloco 989625,0036.000221/2025-37
-21/03/2025 16:42,SESAU-NAP,00979107245,Gerado documento público 0058512908 (Despacho),0036.000221/2025-37
+21/03/2025 16:42,SESAU-NAP,979107245,Gerado documento público 0058512908 (Despacho),0036.000221/2025-37
 21/03/2025 16:36,SESAU-NAP,79511341200,Documento 0058502438 (Análise 98) inserido no bloco 989625,0036.000221/2025-37
 21/03/2025 16:04,SESAU-NAP,979107245,Registro de documento externo público 0058512299 (Homologação),0036.000221/2025-37
 21/03/2025 14:56,SESAU-NAP,979107245,Processo atribuído para 79511341200,0036.000221/2025-37
@@ -1398,7 +1399,7 @@ Data/Hora,Unidade,Usuário,Descrição,Processo
 17/02/2025 12:21,SESAU-GECOMP,1042853207,Registro de documento externo público 0057457896 (Contrato),0036.000221/2025-37
 17/02/2025 12:20,SESAU-GECOMP,1042853207,Registro de documento externo público 0057457772 (Contrato),0036.000221/2025-37
 17/02/2025 12:18,SESAU-GECOMP,1042853207,Registro de documento externo público 0057457505 (Contrato),0036.000221/2025-37
-17/02/2025 12:18,SESAU-GECOMP,1042853207,Registro de documento externo público 0057457416 (Anexo),0036.000221/2025-37
+17/02/2025 12:18,SESAU-GECOMP,01042853207,Registro de documento externo público 0057457416 (Anexo),0036.000221/2025-37
 17/02/2025 12:17,SESAU-GECOMP,01042853207,Registro de documento externo público 0057457325 (Anexo),0036.000221/2025-37
 17/02/2025 12:14,SESAU-GECOMP,01042853207,Registro de documento externo público 0057457142 (Anexo),0036.000221/2025-37
 17/02/2025 12:14,SESAU-GECOMP,01042853207,Registro de documento externo público 0057457080 (Relatório),0036.000221/2025-37
@@ -1498,7 +1499,7 @@ Data/Hora,Unidade,Usuário,Descrição,Processo
 07/02/2025 15:16,SESAU-GECOMP,95637508291,Bloco 997022 disponibilizado para unidade SESAU-SE,0036.000221/2025-37
 07/02/2025 15:14,SESAU-GECOMP,57807957204,Cancelada disponibilização do bloco 997022 para a unidade SESAU-SE,0036.000221/2025-37
 07/02/2025 15:06,SESAU-GECOMP,03559126274,Bloco 997022 disponibilizado para unidade SESAU-SE,0036.000221/2025-37
-07/02/2025 14:55,SESAU-GECOMP,03559126274,Cancelada disponibilização do bloco 997022 para a unidade SESAU-SE,0036.000221/2025-37
+07/02/2025 14:55,SESAU-GECOMP,3559126274,Cancelada disponibilização do bloco 997022 para a unidade SESAU-SE,0036.000221/2025-37
 07/02/2025 14:54,SESAU-GECOMP,3559126274,Bloco 997022 disponibilizado para unidade SESAU-SE,0036.000221/2025-37
 07/02/2025 14:39,SESAU-GECOMP,2773788265,Cancelada disponibilização do bloco 997022 para a unidade SESAU-SE,0036.000221/2025-37
 07/02/2025 14:36,SESAU-GECOMP,1331762235,Bloco 997022 disponibilizado para unidade SESAU-SE,0036.000221/2025-37

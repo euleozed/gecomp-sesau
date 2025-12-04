@@ -1,4 +1,7 @@
 Data/Hora,Unidade,Usuário,Descrição,Processo
+07/11/2025 14:15,SESAU-GECONT,910420467,Envio de correspondência eletrônica 0066239712 (E-mail),0036.057267/2024-47
+07/11/2025 14:15,SESAU-GECONT,910420467,Gerado documento público 0066239712 (E-mail),0036.057267/2024-47
+07/11/2025 14:15,SESAU-GECONT,910420467,Registro de documento externo público 0066239686 (Ofício),0036.057267/2024-47
 03/11/2025 10:30,SESAU-GECONT,910420467,Registro de documento externo público 0066000307 (E-mail),0036.057267/2024-47
 31/10/2025 11:50,SESAU-GECONT,910420467,Envio de correspondência eletrônica 0065960652 (E-mail),0036.057267/2024-47
 31/10/2025 11:50,SESAU-GECONT,910420467,Gerado documento público 0065960652 (E-mail),0036.057267/2024-47
@@ -298,7 +301,7 @@ Data/Hora,Unidade,Usuário,Descrição,Processo
 29/04/2025 16:24,SESAU-SE,83997628220,Bloco 1138949 retornado para a unidade SESAU-SC,0036.057267/2024-47
 29/04/2025 16:19,SESAU-SE,83997628220,Assinado Documento 0059515581 (Despacho) por 79396364215,0036.057267/2024-47
 29/04/2025 15:56,SESAU-NPPS,97113875220,Bloco 1058732 disponibilizado para unidade SESAU-CPOP,0036.057267/2024-47
-29/04/2025 15:04,SESAU-SC,00298048256,Disponibilizado acesso externo para Valeria Moreira de Alencar Ramalho (vradvoga.31@gmail.com) até 29/04/2026 (365 dias). Com visualização integral do processo. Solicitado via sei 0036.019468/2025-27,0036.057267/2024-47
+29/04/2025 15:04,SESAU-SC,298048256,Disponibilizado acesso externo para Valeria Moreira de Alencar Ramalho (vradvoga.31@gmail.com) até 29/04/2026 (365 dias). Com visualização integral do processo. Solicitado via sei 0036.019468/2025-27,0036.057267/2024-47
 29/04/2025 15:00,SESAU-SC,298048256,Bloco 1138949 disponibilizado para unidade SESAU-SE,0036.057267/2024-47
 29/04/2025 15:00,SESAU-SC,298048256,Cancelada disponibilização do bloco 1138949 para a unidade SESAU-SE,0036.057267/2024-47
 29/04/2025 14:59,SESAU-SC,84255889287,Bloco 1138949 disponibilizado para unidade SESAU-SE,0036.057267/2024-47
@@ -596,8 +599,8 @@ Data/Hora,Unidade,Usuário,Descrição,Processo
 22/01/2025 14:09,SESAU-SDGP,03362953247,Documento 0056689293 (Despacho) inserido no bloco 1131328,0036.057267/2024-47
 22/01/2025 11:57,PGE-SESAU,01331907225,Documento 0056652015 (Despacho) retirado do bloco 618855,0036.057267/2024-47
 22/01/2025 11:01,SESAU-SDGP,03362953247,"Gerado documento restrito 0056689293 (Despacho), Informação Pessoal (Art. 31 da Lei nº 12.527/2011)",0036.057267/2024-47
-22/01/2025 11:01,SESAU-SDGP,03362953247,Alterado nível de acesso geral para restrito,0036.057267/2024-47
-22/01/2025 10:45,SESAU-SDGP,03362953247,Processo atribuído para 03362953247,0036.057267/2024-47
+22/01/2025 11:01,SESAU-SDGP,3362953247,Alterado nível de acesso geral para restrito,0036.057267/2024-47
+22/01/2025 10:45,SESAU-SDGP,3362953247,Processo atribuído para 03362953247,0036.057267/2024-47
 21/01/2025 15:58,SESAU-GECOMP,95637508291,Documento 0056663263 (Despacho) retirado do bloco 408603,0036.057267/2024-47
 21/01/2025 14:01,SESAU-SDGP,3362953247,Processo recebido na unidade,0036.057267/2024-47
 21/01/2025 14:00,SESAU-SDGP,93785810210,Processo remetido pela unidade SESAU-GECOMP,0036.057267/2024-47

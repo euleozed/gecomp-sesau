@@ -1,4 +1,5 @@
 Data/Hora,Unidade,Usuário,Descrição,Processo
+06/11/2025 17:26,HB-NRS,82281254291,Conclusão do processo na unidade,0036.029331/2025-81
 17/10/2025 10:36,HB-NRS,872165230,Documento 0061836444 (Documento de Oficialização de Demanda 8) retirado do bloco 556257,0036.029331/2025-81
 17/10/2025 10:36,HB-NRS,872165230,Cancelada disponibilização do bloco 556257 para a unidade HB-GAD,0036.029331/2025-81
 17/10/2025 10:36,HB-NRS,872165230,Cancelada disponibilização do bloco 556257 para a unidade HB-DIRTEC,0036.029331/2025-81
@@ -98,7 +99,7 @@ Data/Hora,Unidade,Usuário,Descrição,Processo
 25/07/2025 15:23,SESAU-GECOMP,95637508291,Documento 0062315966 (Autorização) retirado do bloco 997022,0036.029331/2025-81
 25/07/2025 15:23,SESAU-GECOMP,95637508291,Cancelada disponibilização do bloco 997022 para a unidade SESAU-SE,0036.029331/2025-81
 25/07/2025 15:21,SESAU-GECOMP,1042853207,Bloco 997022 disponibilizado para unidade SESAU-SE,0036.029331/2025-81
-25/07/2025 15:21,SESAU-GECOMP,1042853207,Cancelada disponibilização do bloco 997022 para a unidade SESAU-SE,0036.029331/2025-81
+25/07/2025 15:21,SESAU-GECOMP,01042853207,Cancelada disponibilização do bloco 997022 para a unidade SESAU-SE,0036.029331/2025-81
 25/07/2025 14:32,SESAU-GECOMP,55638864253,Processo atribuído para 01569836213,0036.029331/2025-81
 25/07/2025 14:27,SESAU-SE,74648055268,Assinado Documento 0062315966 (Autorização) por 74648055268,0036.029331/2025-81
 25/07/2025 14:25,SESAU-GECOMP,01379890241,Bloco 997022 disponibilizado para unidade SESAU-SE,0036.029331/2025-81

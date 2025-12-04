@@ -1,4 +1,6 @@
 Data/Hora,Unidade,Usuário,Descrição,Processo
+12/11/2025 09:57,SESAU-GECOMP,88904288215,Cancelada disponibilização do bloco 324137 para a unidade SESAU-NGAS,0049.003281/2023-09
+12/11/2025 09:57,SESAU-GECOMP,88904288215,Cancelada disponibilização do bloco 324137 para a unidade SESAU-CEAS,0049.003281/2023-09
 29/10/2025 15:08,SESAU-SDAOR,87378736287,Processo recebido na unidade,0049.003281/2023-09
 28/10/2025 12:25,SESAU-SDAOR,59209089200,Processo remetido pela unidade SESAU-DIREX,0049.003281/2023-09
 28/10/2025 12:25,SESAU-DIREX,59209089200,Assinado Documento 0065827634 (Despacho) por 59209089200,0049.003281/2023-09
@@ -2497,8 +2499,8 @@ Data/Hora,Unidade,Usuário,Descrição,Processo
 17/04/2024 10:34,SESAU-GECOMP,glpi-automacao,"Cancelado documento 0047308416 (Adendo). ERRO MATERIAL, de acordo com o Chamado de num: 2024044282 da plataforma GLPI",0049.003281/2023-09
 17/04/2024 10:33,SESAU-GECOMP,glpi-automacao,"Cancelado documento 0047308403 (Adendo). ERRO MATERIAL, de acordo com o Chamado de num: 2024044281 da plataforma GLPI",0049.003281/2023-09
 17/04/2024 10:33,SESAU-GECOMP,glpi-automacao,"Cancelado documento 0047308394 (Adendo). ERRO MATERIAL, de acordo com o Chamado de num: 2024044280 da plataforma GLPI",0049.003281/2023-09
-17/04/2024 10:28,SESAU-GECOMP,00910420467,Alterada ordem dos protocolos,0049.003281/2023-09
-17/04/2024 10:27,SESAU-GECOMP,00910420467,Registro de documento externo público 0047849138 (Proposta),0049.003281/2023-09
+17/04/2024 10:28,SESAU-GECOMP,910420467,Alterada ordem dos protocolos,0049.003281/2023-09
+17/04/2024 10:27,SESAU-GECOMP,910420467,Registro de documento externo público 0047849138 (Proposta),0049.003281/2023-09
 15/04/2024 12:16,SESAU-GECOMP,910420467,Alterada ordem dos protocolos,0049.003281/2023-09
 15/04/2024 12:16,SESAU-GECOMP,910420467,Registro de documento externo público 0047768600 (E-mail),0049.003281/2023-09
 15/04/2024 12:15,SESAU-GECOMP,910420467,Registro de documento externo público 0047768493 (E-mail),0049.003281/2023-09
