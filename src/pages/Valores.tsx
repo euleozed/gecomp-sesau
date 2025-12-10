@@ -87,7 +87,7 @@ export default function Valores() {
 
   const handleSearch = async (numeroProcesso: string) => {
     if (!numeroProcesso) return;
-    
+
     setLoading(true);
     try {
       const processoInfo = await processosService.getProcessoInfo(numeroProcesso);
@@ -134,8 +134,8 @@ export default function Valores() {
 
     try {
       const valorEstimadoNumber = valorEstimado ? unmaskCurrency(valorEstimado) : 0;
-      const valorContratadoNumber = valorContratado ? unmaskCurrency(valorContratado) : undefined;
-      
+      const valorContratadoNumber = valorContratado ? unmaskCurrency(valorContratado) : null;
+
       // Salva o núcleo
       await nucleoService.save(editingProcesso.numero_processo, nucleo);
 
@@ -206,7 +206,7 @@ export default function Valores() {
 
   const handleEdit = async (valor: ValorProcesso) => {
     setEditingProcesso(valor);
-    
+
     // Aplicar máscara de moeda aos valores ao carregar
     if (valor.valor_estimado) {
       const valorEstimadoCents = Math.round(valor.valor_estimado * 100).toString();
@@ -214,14 +214,14 @@ export default function Valores() {
     } else {
       setValorEstimado('');
     }
-    
+
     if (valor.valor_contratado) {
       const valorContratadoCents = Math.round(valor.valor_contratado * 100).toString();
       setValorContratado(maskCurrency(valorContratadoCents));
     } else {
       setValorContratado('');
     }
-    
+
     setTipoContratacao(valor.tipo_contratacao);
 
     // Verificar se existe registro salvo no banco
@@ -266,15 +266,15 @@ export default function Valores() {
                   value={filterTerm}
                   onChange={(e) => setFilterTerm(e.target.value)}
                 />
-                <Select 
-                  value={filterTipo} 
+                <Select
+                  value={filterTipo}
                   onValueChange={setFilterTipo}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Filtrar por tipo" />
                   </SelectTrigger>
                   <SelectContent>
-                    
+
                     <SelectItem value="todos">Todos</SelectItem>
                     {tiposContratacao.map((tipo) => (
                       <SelectItem key={tipo} value={tipo}>
@@ -283,8 +283,8 @@ export default function Valores() {
                     ))}
                   </SelectContent>
                 </Select>
-                <Select 
-                  value={filterNucleo} 
+                <Select
+                  value={filterNucleo}
                   onValueChange={setFilterNucleo}
                 >
                   <SelectTrigger>
@@ -303,7 +303,7 @@ export default function Valores() {
             </div>
             <div className="mb-3 text-sm font-medium">
               Quantidade de processos filtrados: {valores.filter((valor) => {
-                const matchesTerm = filterTerm === '' || 
+                const matchesTerm = filterTerm === '' ||
                   valor.numero_processo.toLowerCase().includes(filterTerm.toLowerCase()) ||
                   (valor.processos?.objeto || '').toLowerCase().includes(filterTerm.toLowerCase());
                 const matchesTipo = filterTipo === 'todos' || valor.tipo_contratacao === filterTipo;
@@ -333,7 +333,7 @@ export default function Valores() {
                 ) : (
                   valores
                     .filter((valor) => {
-                      const matchesTerm = filterTerm === '' || 
+                      const matchesTerm = filterTerm === '' ||
                         valor.numero_processo.toLowerCase().includes(filterTerm.toLowerCase()) ||
                         (valor.processos?.objeto || '').toLowerCase().includes(filterTerm.toLowerCase());
                       const matchesTipo = filterTipo === 'todos' || valor.tipo_contratacao === filterTipo;

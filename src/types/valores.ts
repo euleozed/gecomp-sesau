@@ -3,7 +3,7 @@ export interface ValorProcesso {
   numero_processo: string;
   objeto: string;
   valor_estimado: number;
-  valor_contratado?: number;
+  valor_contratado?: number | null;
   tipo_contratacao: string;
   nucleo?: string;
   created_at: string;
@@ -22,6 +22,6 @@ export interface ProcessoInfo {
 export interface ValorProcessoForm {
   numero_processo: string;
   valor_estimado: number;
-  valor_contratado?: number;
+  valor_contratado?: number | null;
   tipo_contratacao: string;
 }
