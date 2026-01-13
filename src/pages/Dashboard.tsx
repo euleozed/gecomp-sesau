@@ -82,7 +82,7 @@ const Dashboard = () => {
   const [overdueDocumentsCount, setOverdueDocumentsCount] = useState<number>(0);
   const [searchTerm, setSearchTerm] = useState('');
   const [documentMetrics, setDocumentMetrics] = useState<{ documento: string; maxDias: number }[]>([]);
-  
+
   // Estados para contagem por tipo_tr
   const [dispensaCount, setDispensaCount] = useState<number>(0);
   const [emergencialCount, setEmergencialCount] = useState<number>(0);
@@ -122,7 +122,7 @@ const Dashboard = () => {
 
       // Preparar resumo dos dados para o modelo
       const totalDias = Math.max(...processedData.map(item => item.diasAcumulados || 0));
-      const documentosAtrasadosData = processedData.filter(item => 
+      const documentosAtrasadosData = processedData.filter(item =>
         item.diasEntreDocumentos && Math.abs(item.diasEntreDocumentos) > 15
       );
       const unidadesEnvolvidas = [...new Set(processedData.map(item => item.Unidade).filter(u => u))];
@@ -162,38 +162,38 @@ ESTRUTURA DO RELATÓRIO:
 Seja objetivo, profissional e use linguagem técnica adequada para gestores públicos.
 `;
 
-             // Fazer chamada para Hugging Face
-       const response = await fetch('https://api-inference.huggingface.co/models/microsoft/DialoGPT-large', {
-         method: 'POST',
-         headers: {
-           'Content-Type': 'application/json',
-           'Authorization': `Bearer ${import.meta.env.VITE_HUGGINGFACE_API_KEY}`,
-         },
-         body: JSON.stringify({
-           inputs: prompt,
-           parameters: {
-             max_new_tokens: 1000,
-             temperature: 0.3,
-             return_full_text: false
-           }
-         }),
-       });
+      // Fazer chamada para Hugging Face
+      const response = await fetch('https://api-inference.huggingface.co/models/microsoft/DialoGPT-large', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${import.meta.env.VITE_HUGGINGFACE_API_KEY}`,
+        },
+        body: JSON.stringify({
+          inputs: prompt,
+          parameters: {
+            max_new_tokens: 1000,
+            temperature: 0.3,
+            return_full_text: false
+          }
+        }),
+      });
 
-       if (!response.ok) {
-         // Fallback para usar modelo gratuito sem autenticação - tenta modelo diferente
-         const fallbackResponse = await fetch('https://api-inference.huggingface.co/models/bigscience/bloom-560m', {
-           method: 'POST',
-           headers: {
-             'Content-Type': 'application/json',
-           },
-           body: JSON.stringify({
-             inputs: prompt,
-             parameters: {
-               max_new_tokens: 800,
-               temperature: 0.3
-             }
-           }),
-         });
+      if (!response.ok) {
+        // Fallback para usar modelo gratuito sem autenticação - tenta modelo diferente
+        const fallbackResponse = await fetch('https://api-inference.huggingface.co/models/bigscience/bloom-560m', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            inputs: prompt,
+            parameters: {
+              max_new_tokens: 800,
+              temperature: 0.3
+            }
+          }),
+        });
 
         if (!fallbackResponse.ok) {
           throw new Error(`Erro na API Hugging Face: ${fallbackResponse.status} ${fallbackResponse.statusText}`);
@@ -229,19 +229,19 @@ Seja objetivo, profissional e use linguagem técnica adequada para gestores púb
 
     } catch (error) {
       console.error('Erro ao gerar relatório:', error);
-      
+
       // Gerar relatório básico em caso de erro
       const processNumber = selectedProcess.split(' - ')[0];
       const totalDias = Math.max(...processedData.map(item => item.diasAcumulados || 0));
-      const documentosAtrasadosDataError = processedData.filter(item => 
+      const documentosAtrasadosDataError = processedData.filter(item =>
         item.diasEntreDocumentos && Math.abs(item.diasEntreDocumentos) > 15
       );
       const unidadesEnvolvidas = [...new Set(processedData.map(item => item.Unidade).filter(u => u))];
       // Ajustar para pegar a segunda linha (primeira movimentação real, não o documento fake)
       const ultimaMovimentacao = processedData[1]?.['Data/Hora'] || processedData[0]?.['Data/Hora'];
-      
+
       const relatorioBasico = gerarRelatorioBasico(processNumber, totalDias, documentosAtrasadosDataError, unidadesEnvolvidas, ultimaMovimentacao);
-      
+
       setRelatorioGerado(relatorioBasico);
       setShowReportDialog(true);
       // setReportError('Relatório gerado com base em análise local. Para relatórios mais detalhados, configure a API do Hugging Face.');
@@ -272,16 +272,16 @@ Seja objetivo, profissional e use linguagem técnica adequada para gestores púb
 ${unidadesEnvolvidas.map(unidade => `- ${unidade}`).join('\n')}
 
 **Tempo Máximo de Resposta por Unidade:**
-${maxResponseTimes.slice(0, 7).map(unit => 
-  `- ${unit.unidade}: ${unit.maxDias} dias`
-).join('\n')}
+${maxResponseTimes.slice(0, 7).map(unit =>
+      `- ${unit.unidade}: ${unit.maxDias} dias`
+    ).join('\n')}
 
 ## 3.1 ANÁLISE TEMPORAL POR USUÁRIO
 
 **Resumo por Servidor (CPF):**
-${userMetrics.slice(0, 10).map(user => 
-  `- **CPF:** ${user.cpf} | **Dias Máximo:** ${user.Dias_Maximo} | **Dias Acumulados:** ${user.Dias_Acumulados} | **Aparições:** ${user.Aparicao}`
-).join('\n')}
+${userMetrics.slice(0, 10).map(user =>
+      `- **CPF:** ${user.cpf} | **Dias Máximo:** ${user.Dias_Maximo} | **Dias Acumulados:** ${user.Dias_Acumulados} | **Aparições:** ${user.Aparicao}`
+    ).join('\n')}
 
 ## 4. DOCUMENTOS ANALISADOS
 
@@ -289,9 +289,9 @@ Total de ${processedData.length} documentos processados em ordem cronológica.
 ${documentosAtrasados > 0 ? `
 ⚠️ **ATENÇÃO:** ${documentosAtrasados} documento(s) apresentaram atraso superior a 15 dias:
 
-${documentosAtrasadosData.map(doc => 
-  `- **Protocolo:** ${doc.Protocolo || 'N/A'} | **Documento:** ${doc.Documento || 'N/A'} | **Atraso:** ${Math.abs(doc.diasEntreDocumentos || 0)} dias`
-).join('\n')}` : ''}
+${documentosAtrasadosData.map(doc =>
+      `- **Protocolo:** ${doc.Protocolo || 'N/A'} | **Documento:** ${doc.Documento || 'N/A'} | **Atraso:** ${Math.abs(doc.diasEntreDocumentos || 0)} dias`
+    ).join('\n')}` : ''}
 
 ## 5. INDICADORES DE PERFORMANCE
 
@@ -334,22 +334,22 @@ ${documentosAtrasados > 0 ? `
       return new Promise((resolve, reject) => {
         const img = new Image();
         img.crossOrigin = 'anonymous';
-        
+
         img.onload = () => {
           const canvas = document.createElement('canvas');
           const ctx = canvas.getContext('2d');
           canvas.width = img.width;
           canvas.height = img.height;
-          
+
           ctx?.drawImage(img, 0, 0);
           const imgData = canvas.toDataURL('image/png');
           resolve(imgData);
         };
-        
+
         img.onerror = () => {
           reject(new Error('Falha ao carregar a imagem do brasão'));
         };
-        
+
         img.src = '/ro2025.png';
       });
     };
@@ -365,17 +365,17 @@ ${documentosAtrasados > 0 ? `
     // Função para adicionar o cabeçalho com brasão (reutilizável para novas páginas)
     const addHeader = (currentY: number) => {
       let textY = currentY;
-      
+
       // Adicionar brasão se disponível
       if (brasaoImage) {
         // Calcular posição central para o brasão
         const brasaoWidth = 30;
         const brasaoHeight = 36;
         const brasaoX = (pageWidth - brasaoWidth) / 2;
-        
+
         // Adicionar brasão centralizado no topo
         doc.addImage(brasaoImage, 'PNG', brasaoX, currentY, brasaoWidth, brasaoHeight);
-        
+
         // Atualizar posição Y para abaixo do brasão
         textY = currentY + brasaoHeight + 4;
       }
@@ -384,16 +384,16 @@ ${documentosAtrasados > 0 ? `
       doc.setFont('helvetica', 'bold');
       doc.setFontSize(12);
       doc.text('GOVERNO DO ESTADO DE RONDÔNIA', pageWidth / 2, textY, { align: 'center' });
-      
+
       doc.setFontSize(12);
       textY += 8;
       doc.text('Secretaria de Estado da Saúde - SESAU', pageWidth / 2, textY, { align: 'center' });
-      
+
       // Linha separadora
       textY += 12;
       doc.setLineWidth(0.5);
       doc.line(20, textY, pageWidth - 20, textY);
-      
+
       return textY + 10; // Retorna a nova posição Y
     };
 
@@ -434,15 +434,15 @@ ${documentosAtrasados > 0 ? `
     // Capturar gráficos se existirem - usar fallback para seletores genéricos
     let radarChartImage = null;
     let userChartImage = null;
-    
+
     if (maxResponseTimes.length > 0) {
-      radarChartImage = await captureChart('[data-testid="radar-chart"]') || 
-                       await captureChart('.recharts-wrapper');
+      radarChartImage = await captureChart('[data-testid="radar-chart"]') ||
+        await captureChart('.recharts-wrapper');
     }
-    
+
     if (userMetrics.length > 0) {
-      userChartImage = await captureChart('[data-testid="user-chart"]') || 
-                      await captureChart('.recharts-wrapper:last-of-type');
+      userChartImage = await captureChart('[data-testid="user-chart"]') ||
+        await captureChart('.recharts-wrapper:last-of-type');
     }
 
     // Quebrar texto em linhas
@@ -454,12 +454,12 @@ ${documentosAtrasados > 0 ? `
         doc.setFont('helvetica', 'bold');
         doc.setFontSize(line.startsWith('##') ? 12 : 14);
         const titleText = line.replace(/#+\s*/, '');
-        
+
         if (cursorY > pageHeight - 30) {
           doc.addPage();
           cursorY = addHeader(20);
         }
-        
+
         doc.text(titleText, 20, cursorY);
         cursorY += 10;
 
@@ -469,10 +469,10 @@ ${documentosAtrasados > 0 ? `
             doc.addPage();
             cursorY = addHeader(20);
           }
-          
+
           doc.addImage(radarChartImage, 'PNG', 20, cursorY, 170, 100);
           cursorY += 110;
-          
+
           doc.setFont('helvetica', 'italic');
           doc.setFontSize(8);
           doc.text('Gráfico: Tempo Máximo de Resposta por Unidade', 20, cursorY);
@@ -485,10 +485,10 @@ ${documentosAtrasados > 0 ? `
             doc.addPage();
             cursorY = addHeader(20);
           }
-          
+
           doc.addImage(userChartImage, 'PNG', 20, cursorY, 170, 120);
           cursorY += 130;
-          
+
           doc.setFont('helvetica', 'italic');
           doc.setFontSize(8);
           doc.text('Gráfico: Análise Temporal por Usuário (CPF)', 20, cursorY);
@@ -498,9 +498,9 @@ ${documentosAtrasados > 0 ? `
       } else if (line.trim() !== '') {
         doc.setFont('helvetica', 'normal');
         doc.setFontSize(10);
-        
+
         const wrappedLines = doc.splitTextToSize(line, 170);
-        
+
         for (const wrappedLine of wrappedLines) {
           if (cursorY > pageHeight - 20) {
             doc.addPage();
@@ -523,20 +523,20 @@ ${documentosAtrasados > 0 ? `
         // Primeiro, tenta carregar metadados (para produção/Vercel)
         console.log('Tentando carregar metadados...');
         let metadataResponse = await fetch('/backend/metadata.json');
-        
+
         // Se não conseguir, tenta com caminho absoluto
         if (!metadataResponse.ok) {
           console.log('Tentando caminho alternativo para metadados...');
           metadataResponse = await fetch('/public/backend/metadata.json');
         }
-        
+
         if (metadataResponse.ok) {
           console.log('Carregando dados via metadados (modo produção)');
           const metadata = await metadataResponse.json();
-          
+
           console.log('Metadados recebidos:', metadata);
           console.log('Tipos de processo disponíveis:', metadata.tipos_processo);
-          
+
           // Define as contagens dos tipos diretamente dos metadatos
           const dispensaCount = metadata.tipos_processo?.Dispensa || 0;
           const emergencialCount = metadata.tipos_processo?.Emergencial || 0;
@@ -545,7 +545,7 @@ ${documentosAtrasados > 0 ? `
           const licitatorioSrpCount = metadata.tipos_processo?.['Registro de Preços'] || 0;
           const organizacaoSocialCount = metadata.tipos_processo?.['Organização Social'] || 0;
           const chamamentoPublicoCount = metadata.tipos_processo?.['Chamamento Público'] || 0;
-          
+
           setDispensaCount(dispensaCount);
           setEmergencialCount(emergencialCount);
           setInexigibilidadeCount(inexigibilidadeCount);
@@ -553,10 +553,10 @@ ${documentosAtrasados > 0 ? `
           setLicitatorioSrpCount(licitatorioSrpCount);
           setOrganizacaoSocialCount(organizacaoSocialCount);
           setChamamentoPublicoCount(chamamentoPublicoCount);
-          
+
           // Define outras métricas dos metadados
           setTotalProcesses(metadata.total_processos || 0);
-          
+
           console.log('Contagens definidas:', {
             Dispensa: dispensaCount,
             Emergencial: emergencialCount,
@@ -566,19 +566,19 @@ ${documentosAtrasados > 0 ? `
             'Organização Social': organizacaoSocialCount,
             Total: metadata.total_processos
           });
-          
+
           // Define valores padrão para outras métricas que não estão nos metadados
           setConcludedCount(48); // Valor da imagem
           setOverdueProcessesCount(238); // Valor da imagem
-          
+
           console.log('Dados carregados via metadados com sucesso');
           // Continua para carregar o CSV para obter a lista de processos únicos
         }
-        
+
         // Fallback: carrega dados do CSV (para desenvolvimento local)
         console.log('Metadados não disponíveis, carregando dados do CSV:', csvPath);
         const response = await fetch(csvPath);
-        
+
         if (!response.ok) {
           if (response.status === 404) {
             console.error('Arquivo CSV não encontrado. Certifique-se de que o arquivo existe em public/backend/df.csv');
@@ -589,30 +589,30 @@ ${documentosAtrasados > 0 ? `
           }
           return;
         }
-        
 
-        
+
+
         const csvText = await response.text();
-        
+
         // Parse CSV (melhorado para lidar com campos entre aspas)
         try {
           const lines = csvText.split('\n');
           const headers = lines[0].replace(/"/g, '').split(',');
-          
+
           const parsedData: CsvHistoricoItem[] = [];
-          
+
           for (let i = 1; i < lines.length; i++) {
             if (lines[i].trim() === '') continue;
-            
+
             // Lidar com valores entre aspas que possam conter vírgulas
             const values: string[] = [];
             let line = lines[i];
             let inQuotes = false;
             let currentValue = '';
-            
+
             for (let j = 0; j < line.length; j++) {
               const char = line[j];
-              
+
               if (char === '"') {
                 inQuotes = !inQuotes;
               } else if (char === ',' && !inQuotes) {
@@ -622,20 +622,20 @@ ${documentosAtrasados > 0 ? `
                 currentValue += char;
               }
             }
-            
+
             if (currentValue) {
               values.push(currentValue.replace(/"/g, ''));
             }
-            
+
             // Criar objeto com os valores
             const item: Record<string, string> = {};
             headers.forEach((header, index) => {
               item[header] = values[index] || '';
             });
-            
+
             parsedData.push(item as CsvHistoricoItem);
           }
-          
+
           console.log('Dados CSV processados:', parsedData);
           console.log('Headers encontrados:', headers);
           console.log('Primeiro item dos dados:', parsedData[0]);
@@ -647,7 +647,7 @@ ${documentosAtrasados > 0 ? `
 
           // Contagem por tipo_tr usando os dados do CSV
           const processosPorTipo = new Map<string, Set<string>>();
-          
+
           parsedData.forEach(item => {
             if (item.tipo_tr && item.Processo) {
               if (!processosPorTipo.has(item.tipo_tr)) {
@@ -656,10 +656,10 @@ ${documentosAtrasados > 0 ? `
               processosPorTipo.get(item.tipo_tr)?.add(item.Processo);
             }
           });
-          
+
           console.log('Processos por tipo_tr encontrados no CSV:', processosPorTipo);
           console.log('Tipos encontrados:', Array.from(processosPorTipo.keys()));
-          
+
           // Define as contagens para cada tipo
           setDispensaCount(processosPorTipo.get('Dispensa')?.size || 0);
           setEmergencialCount(processosPorTipo.get('Emergencial')?.size || 0);
@@ -682,7 +682,7 @@ ${documentosAtrasados > 0 ? `
 
 
 
-      
+
 
 
           // Calcula Processos Concluídos
@@ -718,7 +718,7 @@ ${documentosAtrasados > 0 ? `
           processosPorId.forEach((registros, processo) => {
             if (registros.length > 0) {
               // Verifica se o processo está encerrado
-              const processoEncerrado = registros.some(item => 
+              const processoEncerrado = registros.some(item =>
                 item.Documento?.includes('Termo de Encerramento')
               );
 
@@ -728,7 +728,7 @@ ${documentosAtrasados > 0 ? `
               }
 
               // Ordena os registros por data, mais recente primeiro
-              registros.sort((a, b) => 
+              registros.sort((a, b) =>
                 new Date(b['Data/Hora']).getTime() - new Date(a['Data/Hora']).getTime()
               );
 
@@ -748,7 +748,7 @@ ${documentosAtrasados > 0 ? `
 
           // Processos únicos com objetos
           const uniqueProcessData = parsedData.filter(item => item.Processo && item.Processo.trim() !== '');
-          
+
           // Criar o conjunto de processos únicos com seus objetos
           const uniqueProcessesSet = new Set<string>();
           uniqueProcessData.forEach(item => {
@@ -756,7 +756,7 @@ ${documentosAtrasados > 0 ? `
             const objeto = item.Objeto || '(Sem objeto)';
             uniqueProcessesSet.add(`${processo} - ${objeto}`);
           });
-          
+
           setUniqueProcesses(Array.from(uniqueProcessesSet));
           console.log('Processos únicos encontrados:', Array.from(uniqueProcessesSet));
         } catch (error) {
@@ -783,7 +783,7 @@ ${documentosAtrasados > 0 ? `
 
   const calculateMaxResponseTimes = (data: HistoricoItem[]) => {
     const unitTimes: { [key: string]: number } = {};
-    
+
     data.forEach(item => {
       if (item.Unidade && typeof item.diasEntreDocumentos === 'number') {
         const dias = Math.abs(item.diasEntreDocumentos);
@@ -861,7 +861,7 @@ ${documentosAtrasados > 0 ? `
         const dataWithCurrent = [lastRecord, ...sortedData];
         const processedData = dataWithCurrent.map((item, index, array) => {
           const currentDate = new Date(item['Data/Hora'] as string).getTime();
-          
+
           let diasEntreDocumentos: number | null = null;
           if (index < array.length - 1) {
             const nextDate = new Date(array[index + 1]['Data/Hora'] as string).getTime();
@@ -870,11 +870,11 @@ ${documentosAtrasados > 0 ? `
               diasEntreDocumentos = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
             }
           }
-          
+
           const firstDate = new Date(array[array.length - 1]['Data/Hora'] as string).getTime();
           const timeDiffTotal = currentDate - firstDate;
           const diasAcumulados = Math.floor(timeDiffTotal / (1000 * 60 * 60 * 24));
-          
+
           return {
             ...item,
             diasEntreDocumentos,
@@ -883,7 +883,7 @@ ${documentosAtrasados > 0 ? `
         });
 
         setProcessedData(processedData);
-        
+
         // Atualiza os tempos máximos de resposta
         const maxTimes = calculateMaxResponseTimes(processedData);
         setMaxResponseTimes(maxTimes);
@@ -893,7 +893,7 @@ ${documentosAtrasados > 0 ? `
           if (!item.CPF) return acc;
 
           const existingMetric = acc.find(metric => metric.cpf === item.CPF);
-          
+
           if (existingMetric) {
             existingMetric.Aparicao += 1;
             if (item.diasEntreDocumentos) {
@@ -954,26 +954,26 @@ ${documentosAtrasados > 0 ? `
       }).then(canvas => {
         const imgData = canvas.toDataURL('image/png');
         const pdf = new jsPDF('l', 'mm', 'a4'); // Orientação paisagem para tabelas
-        
+
         // Configurações de página
         const pageWidth = pdf.internal.pageSize.getWidth();
         const pageHeight = pdf.internal.pageSize.getHeight();
-        
+
         // Calcular a altura proporcional da imagem
         const imgWidth = pageWidth - 20; // Margem de 10mm em cada lado
         const imgHeight = (canvas.height * imgWidth) / canvas.width;
-        
+
         // Adicionar a imagem à primeira página
         pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
-        
+
         // Se a imagem for maior que a altura da página, adicionar páginas adicionais
         let heightLeft = imgHeight;
         let position = 10;
-        
+
         // Subtrai a altura da primeira página
         heightLeft -= (pageHeight - 20);
         position = 0 - (pageHeight - 20);
-        
+
         // Adicionar páginas adicionais se necessário
         while (heightLeft > 0) {
           pdf.addPage();
@@ -981,7 +981,7 @@ ${documentosAtrasados > 0 ? `
           pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
           heightLeft -= (pageHeight - 20);
         }
-        
+
         pdf.save(`histórico_${selectedProcess.split(' - ')[0]}.pdf`);
       });
     }
@@ -994,7 +994,7 @@ ${documentosAtrasados > 0 ? `
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-8">
-        <Card 
+        <Card
           className="border-sei-100 cursor-pointer hover:shadow-lg transition-shadow"
           onClick={() => handleCardSuperiorClick('todos')}
         >
@@ -1011,7 +1011,7 @@ ${documentosAtrasados > 0 ? `
           </CardContent>
         </Card>
 
-        <Card 
+        <Card
           className="border-sei-100 cursor-pointer hover:shadow-lg transition-shadow"
           onClick={() => handleCardSuperiorClick('homologados')}
         >
@@ -1045,7 +1045,7 @@ ${documentosAtrasados > 0 ? `
           </CardContent>
         </Card> */}
 
-        <Card 
+        <Card
           className="border-sei-100 cursor-pointer hover:shadow-lg transition-shadow"
           onClick={() => handleCardSuperiorClick('em-andamento')}
         >
@@ -1083,8 +1083,8 @@ ${documentosAtrasados > 0 ? `
       <div className="mb-8">
         <h2 className="text-2xl font-bold text-sei-800 mb-4">Processos em Andamento por Tipo</h2>
         <div className="grid gap-4 grid-cols-3">
-          <Card 
-            className="border-sei-100 cursor-pointer hover:shadow-lg transition-shadow" 
+          <Card
+            className="border-sei-100 cursor-pointer hover:shadow-lg transition-shadow"
             onClick={() => handleTipoClick('Dispensa')}
           >
             <CardContent className="p-6 flex items-center gap-4">
@@ -1100,8 +1100,8 @@ ${documentosAtrasados > 0 ? `
             </CardContent>
           </Card>
 
-          <Card 
-            className="border-sei-100 cursor-pointer hover:shadow-lg transition-shadow" 
+          <Card
+            className="border-sei-100 cursor-pointer hover:shadow-lg transition-shadow"
             onClick={() => handleTipoClick('Emergencial')}
           >
             <CardContent className="p-6 flex items-center gap-4">
@@ -1117,8 +1117,8 @@ ${documentosAtrasados > 0 ? `
             </CardContent>
           </Card>
 
-          <Card 
-            className="border-sei-100 cursor-pointer hover:shadow-lg transition-shadow" 
+          <Card
+            className="border-sei-100 cursor-pointer hover:shadow-lg transition-shadow"
             onClick={() => handleTipoClick('Inexigibilidade')}
           >
             <CardContent className="p-6 flex items-center gap-4">
@@ -1135,8 +1135,8 @@ ${documentosAtrasados > 0 ? `
           </Card>
 
 
-          <Card 
-            className="border-sei-100 cursor-pointer hover:shadow-lg transition-shadow" 
+          <Card
+            className="border-sei-100 cursor-pointer hover:shadow-lg transition-shadow"
             onClick={() => handleTipoClick('Pregão eletrônico')}
           >
             <CardContent className="p-6 flex items-center gap-4">
@@ -1152,8 +1152,8 @@ ${documentosAtrasados > 0 ? `
             </CardContent>
           </Card>
 
-          <Card 
-            className="border-sei-100 cursor-pointer hover:shadow-lg transition-shadow" 
+          <Card
+            className="border-sei-100 cursor-pointer hover:shadow-lg transition-shadow"
             onClick={() => handleTipoClick('Registro de Preços')}
           >
             <CardContent className="p-6 flex items-center gap-4">
@@ -1169,8 +1169,8 @@ ${documentosAtrasados > 0 ? `
             </CardContent>
           </Card>
 
-          <Card 
-            className="border-sei-100 cursor-pointer hover:shadow-lg transition-shadow" 
+          <Card
+            className="border-sei-100 cursor-pointer hover:shadow-lg transition-shadow"
             onClick={() => handleTipoClick('Organização Social')}
           >
             <CardContent className="p-6 flex items-center gap-4">
@@ -1186,8 +1186,8 @@ ${documentosAtrasados > 0 ? `
             </CardContent>
           </Card>
 
-          <Card 
-            className="border-sei-100 cursor-pointer hover:shadow-lg transition-shadow" 
+          <Card
+            className="border-sei-100 cursor-pointer hover:shadow-lg transition-shadow"
             onClick={() => handleTipoClick('Credenciamento')}
           >
             <CardContent className="p-6 flex items-center gap-4">
@@ -1260,12 +1260,12 @@ ${documentosAtrasados > 0 ? `
                       const chegadaItem = [...processedData]
                         .sort((a, b) => new Date(a['Data/Hora']).getTime() - new Date(b['Data/Hora']).getTime())
                         .find(item => item.Unidade === 'SESAU-GECOMP' || item.Unidade === 'SESAU-CECOMP');
-                      
+
                       if (chegadaItem) {
                         const dataChegada = new Date(chegadaItem['Data/Hora']);
                         const hoje = new Date();
                         const diasDecorridos = Math.floor((hoje.getTime() - dataChegada.getTime()) / (1000 * 60 * 60 * 24));
-                        
+
                         return (
                           <div>
                             <p className="text-lg font-semibold">
@@ -1277,7 +1277,7 @@ ${documentosAtrasados > 0 ? `
                           </div>
                         );
                       }
-                      
+
                       return <p className="text-lg text-muted-foreground">Não encontrado</p>;
                     })()}
                   </div>
@@ -1293,7 +1293,7 @@ ${documentosAtrasados > 0 ? `
                   {/* <CardDescription>Todos os registros do histórico do processo {selectedProcess}</CardDescription> */}
                 </div>
                 <div className="flex gap-2">
-                  <Button 
+                  <Button
                     onClick={gerarRelatorio}
                     disabled={isGeneratingReport}
                     className="bg-sei-600 hover:bg-sei-700"
@@ -1342,10 +1342,10 @@ ${documentosAtrasados > 0 ? `
                         <TableRow
                           key={item.id}
                           style={{
-                            backgroundColor: 
-                              typeof item.diasEntreDocumentos === 'number' && 
-                              Math.abs(item.diasEntreDocumentos) > 15 
-                                ? '#dce9ef' 
+                            backgroundColor:
+                              typeof item.diasEntreDocumentos === 'number' &&
+                                Math.abs(item.diasEntreDocumentos) > 15
+                                ? '#dce9ef'
                                 : 'transparent',
                           }}
                         >
@@ -1375,7 +1375,7 @@ ${documentosAtrasados > 0 ? `
               <CardContent>
                 <div className="h-[400px]" data-testid="radar-chart">
                   <ResponsiveContainer width="100%" height="100%">
-                    <RadarChart data={maxResponseTimes.slice(0,7)} cx="50%" cy="50%" outerRadius="80%">
+                    <RadarChart data={maxResponseTimes.slice(0, 7)} cx="50%" cy="50%" outerRadius="80%">
                       <PolarGrid />
                       <PolarAngleAxis dataKey="unidade" />
                       <PolarRadiusAxis />
@@ -1416,15 +1416,15 @@ ${documentosAtrasados > 0 ? `
                   data={userMetrics}
                   margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
                 >
-                <XAxis type="number" />
-                <YAxis dataKey="cpf" type="category" width={150} />
-                <Tooltip formatter={(value) => [value, '']} />
-                <Legend />
-                <Bar dataKey="Dias_Maximo" stackId="a" fill="orange" name="Dias Máximo" />
-                <Bar dataKey="Dias_Acumulados" stackId="a" fill="green" name="Dias Acumulados" />
-                <Bar dataKey="Aparicao" stackId="a" fill="blue" name="Aparições" />
-              </BarChart>
-            </ResponsiveContainer>
+                  <XAxis type="number" />
+                  <YAxis dataKey="cpf" type="category" width={150} />
+                  <Tooltip formatter={(value) => [value, '']} />
+                  <Legend />
+                  <Bar dataKey="Dias_Maximo" stackId="a" fill="orange" name="Dias Máximo" />
+                  <Bar dataKey="Dias_Acumulados" stackId="a" fill="green" name="Dias Acumulados" />
+                  <Bar dataKey="Aparicao" stackId="a" fill="blue" name="Aparições" />
+                </BarChart>
+              </ResponsiveContainer>
             </div>
           </CardContent>
         </Card>
@@ -1442,12 +1442,12 @@ ${documentosAtrasados > 0 ? `
               Relatório gerado por Inteligência Artificial baseado nos dados de tramitação do processo
             </DialogDescription>
           </DialogHeader>
-          
+
           <div className="mt-4">
             {relatorioGerado && (
               <div className="space-y-4">
                 <div className="flex justify-end">
-                  <Button 
+                  <Button
                     onClick={downloadRelatorioPDF}
                     variant="outline"
                     className="mb-4"
@@ -1456,9 +1456,9 @@ ${documentosAtrasados > 0 ? `
                     Download PDF
                   </Button>
                 </div>
-                
+
                 <div className="prose prose-sm max-w-none bg-gray-50 p-6 rounded-lg">
-                  <div 
+                  <div
                     className="whitespace-pre-wrap text-sm"
                     style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
                   >

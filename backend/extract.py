@@ -1,12 +1,17 @@
 import pandas as pd
 from selenium import webdriver
-from selenium.webdriver.edge.service import Service
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.edge.service import Service
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
+from webdriver_manager.chrome import ChromeDriverManager
+import subprocess
+import re
+import requests
+import zipfile
 import os
 import time
 from io import StringIO
@@ -16,25 +21,34 @@ from dotenv import load_dotenv
 
 
 load_dotenv()  # Carrega variáveis do arquivo .env
-
-# Caminho fixo do driver
-caminho_driver = "backend/edgedriver_win64/msedgedriver.exe"  # <== Ajuste conforme seu caso
-service = Service(executable_path=caminho_driver)
+# Verifica se o motor `openpyxl` está disponível para ler arquivos .xlsx
+try:
+    import openpyxl  # noqa: F401
+except ImportError:
+    print("Módulo 'openpyxl' não está instalado. Instale com: pip install openpyxl")
+    raise SystemExit(1)
+# Configuração do WebDriver para o Edge
+service = Service(ChromeDriverManager().install())
+chrome_options = webdriver.ChromeOptions()
 
 # Diretório de downloads
-download_dir = r"./backend/downloads"
-edge_options = webdriver.EdgeOptions()
-edge_options.add_experimental_option('prefs', {
+download_dir = r"./downloads"
+chrome_options.add_experimental_option('prefs', {
     'download.default_directory': download_dir,
     'download.prompt_for_download': False,
     'download.directory_upgrade': True,
     'safebrowsing.enabled': True
 })
 
+
+# driver = webdriver.Chrome(service=service, options=chrome_options)
+# driver.maximize_window()
+
 # Inicializando o WebDriver do Edge
-driver = webdriver.Edge(service=service, options=edge_options)
+driver = webdriver.Chrome(service=service, options=chrome_options)
 # Acessar o site e realizar login
 driver.get('https://sei.sistemas.ro.gov.br/sip/login.php?sigla_orgao_sistema=RO&sigla_sistema=SEI')
+
 
 
 # Obter valores das variáveis de ambiente
@@ -56,7 +70,7 @@ senha.send_keys(Keys.RETURN)
 # Carregar os números de processo a partir do arquivo excel
 base_dir = os.path.dirname(os.path.abspath(__file__))
 csv_path = os.path.join(base_dir, 'objetos.xlsx')
-df_documentos = pd.read_excel(csv_path, dtype={'Processo': str})
+df_documentos = pd.read_excel(csv_path, dtype={'Processo': str}, engine='openpyxl')
 
 
 # Função para substituir caracteres especiais por _
@@ -190,12 +204,12 @@ for index, row in df_documentos.iterrows():
         driver.switch_to.default_content()  # Voltar para o conteúdo principal
 
         # Alternar para o iframe onde está a tabela
-        alternar_para_iframe('ifrVisualizacao')
+        alternar_para_iframe('ifrConteudoVisualizacao')
 
         # Tentar clicar no link "Ver histórico resumido"
         try:
             botao_historico_resumido = WebDriverWait(driver, 5).until(
-                EC.presence_of_element_located((By.XPATH, '//*[@id="ancTipoHistorico" and contains(text(), "Ver histórico resumido")]'))
+                EC.element_to_be_clickable((By.XPATH, '//*[@id="ancTipoHistorico" and contains(text(), "Ver histórico resumido")]'))
             )
             if botao_historico_resumido.is_displayed():
                 print(f"Link 'Ver histórico resumido' encontrado para o processo {Processo}.")
@@ -206,8 +220,9 @@ for index, row in df_documentos.iterrows():
             print(f"Link 'Ver histórico resumido' não encontrado. Tentando 'Ver histórico completo'.")
             try:
                 # Clicar no botão "Ver histórico completo"
+                (By.XPATH, '//a[@id="ancTipoHistorico" and text()="Ver histórico completo"]')
                 botao_historico_completo = WebDriverWait(driver, 30).until(
-                    EC.presence_of_element_located((By.XPATH, '//*[@id="ancTipoHistorico"]'))
+                    EC.element_to_be_clickable((By.XPATH, '//a[@id="ancTipoHistorico" and text()="Ver histórico completo"]'))
                 )
                 driver.execute_script("arguments[0].click();", botao_historico_completo)
                 print(f"Botão 'Ver histórico completo' clicado para o processo {Processo}.")
@@ -224,3 +239,167 @@ for index, row in df_documentos.iterrows():
 # Fechar o navegador
 driver.quit()
 
+# import os
+# import time
+# import re
+# import logging
+# import pandas as pd
+# from io import StringIO
+# from dotenv import load_dotenv
+# from selenium import webdriver
+# from selenium.webdriver.chrome.service import Service
+# from selenium.webdriver.common.by import By
+# from selenium.webdriver.common.keys import Keys
+# from selenium.webdriver.support.ui import WebDriverWait
+# from selenium.webdriver.support import expected_conditions as EC
+# from selenium.common.exceptions import TimeoutException, NoSuchElementException
+# from webdriver_manager.chrome import ChromeDriverManager
+
+# # Configuração de logging
+# logging.basicConfig(
+#     level=logging.INFO,
+#     format="%(asctime)s [%(levelname)s] %(message)s",
+#     handlers=[logging.StreamHandler()]
+# )
+
+# # Carregar variáveis de ambiente
+# load_dotenv()
+# usuario_env = os.getenv('USUARIO')
+# senha_env = os.getenv('SENHA')
+# orgao_env = os.getenv('ORGAO')
+
+# # Configuração do WebDriver
+# service = Service(ChromeDriverManager().install())
+# chrome_options = webdriver.ChromeOptions()
+# download_dir = r"./downloads"
+# chrome_options.add_experimental_option('prefs', {
+#     'download.default_directory': download_dir,
+#     'download.prompt_for_download': False,
+#     'download.directory_upgrade': True,
+#     'safebrowsing.enabled': True
+# })
+# driver = webdriver.Chrome(service=service, options=chrome_options)
+# driver.maximize_window()
+
+# logging.info("Iniciando login no SEI...")
+# driver.get('https://sei.sistemas.ro.gov.br/sip/login.php?sigla_orgao_sistema=RO&sigla_sistema=SEI')
+# driver.find_element(By.ID, 'txtUsuario').send_keys(usuario_env)
+# driver.find_element(By.ID, 'pwdSenha').send_keys(senha_env)
+# driver.find_element(By.ID, 'selOrgao').send_keys(orgao_env)
+# driver.find_element(By.ID, 'pwdSenha').send_keys(Keys.RETURN)
+# logging.info("Login realizado com sucesso.")
+
+# # Carregar processos do Excel
+# df_documentos = pd.read_excel("backend/objetos.xlsx", dtype={'Processo': str}, engine="openpyxl")
+# df_documentos = df_documentos.drop_duplicates(subset=['Processo']).dropna(subset=['Processo'])
+# df_documentos = df_documentos[df_documentos['Processo'].astype(str).str.strip() != ""]
+# logging.info(f"{len(df_documentos)} processos carregados do Excel.")
+
+# def substituir_caracteres_especiais(nome):
+#     return re.sub(r'[^\w\s]', '_', nome)
+
+# def alternar_para_iframe(id_iframe):
+#     logging.debug(f"Tentando alternar para iframe '{id_iframe}'...")
+#     WebDriverWait(driver, 30).until(EC.frame_to_be_available_and_switch_to_it((By.ID, id_iframe)))
+#     logging.info(f"Alternado para iframe '{id_iframe}'.")
+
+# def pesquisar_processo(processo):
+#     try:
+#         pesquisa = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.ID, 'txtPesquisaRapida')))
+#         pesquisa.clear()
+#         pesquisa.send_keys(processo)
+#         pesquisa.send_keys(Keys.RETURN)
+#         logging.info(f"Processo {processo} pesquisado.")
+#         time.sleep(2)
+#     except Exception as e:
+#         logging.error(f"Erro ao pesquisar processo {processo}: {e}")
+
+# def extrair_dados_tabela(processo, nome_arquivo):
+#     df_todos_dados = pd.DataFrame()
+#     pagina = 1
+#     while True:
+#         try:
+#             tabela = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.CLASS_NAME, 'infraTable')))
+#             tabela_html = tabela.get_attribute('outerHTML')
+#             df_tabela = pd.read_html(StringIO(tabela_html))[0]
+#             df_tabela['Processo'] = processo
+#             df_todos_dados = pd.concat([df_todos_dados, df_tabela], ignore_index=True)
+#             logging.info(f"Página {pagina} extraída para processo {processo}.")
+#             pagina += 1
+
+#             try:
+#                 botao_proxima = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.ID, 'lnkInfraProximaPaginaSuperior')))
+#                 if botao_proxima.is_displayed():
+#                     driver.execute_script("arguments[0].click();", botao_proxima)
+#                     WebDriverWait(driver, 30).until(EC.staleness_of(tabela))
+#                     logging.debug("Navegando para próxima página...")
+#                 else:
+#                     break
+#             except (TimeoutException, NoSuchElementException):
+#                 break
+#         except Exception as e:
+#             logging.error(f"Erro ao extrair tabela do processo {processo}: {e}")
+#             break
+
+#     if not df_todos_dados.empty:
+#         output_csv = os.path.join(download_dir, f"processo_{nome_arquivo}.csv")
+#         df_todos_dados.to_csv(output_csv, index=False, encoding="utf-8")
+#         logging.info(f"Tabela do processo {processo} salva em {output_csv}.")
+#     else:
+#         logging.warning(f"Nenhum dado extraído para {processo}.")
+
+# # Loop pelos processos
+# for _, row in df_documentos.iterrows():
+#     processo = str(row['Processo']).strip()
+#     nome_arquivo = substituir_caracteres_especiais(processo)
+
+#     try:
+#         logging.info(f"Iniciando busca do processo {processo}.")
+#         pesquisar_processo(processo)
+
+#         # Alternar para iframe da árvore e clicar em "Consultar Andamento"
+#         alternar_para_iframe('ifrArvore')
+#         botao_consultar = WebDriverWait(driver, 30).until(
+#             EC.element_to_be_clickable((By.CSS_SELECTOR, '#divConsultarAndamento > a'))
+#         )
+#         driver.execute_script("arguments[0].click();", botao_consultar)
+#         logging.info("Botão 'Consultar Andamento' clicado.")
+
+#         # Voltar ao conteúdo principal e alternar para iframe da visualização
+#         driver.switch_to.default_content()
+#         alternar_para_iframe('ifrConteudoVisualizacao')
+
+#         try:
+#             # Primeiro tenta o histórico resumido
+#             botao_resumido = WebDriverWait(driver, 5).until(
+#                 EC.element_to_be_clickable((By.XPATH, '//a[@id="ancTipoHistorico" and contains(text(), "resumido")]'))
+#             )
+#             driver.execute_script("arguments[0].scrollIntoView(true);", botao_resumido)
+#             botao_resumido.click()
+#             logging.info(f"Link 'Ver histórico resumido' clicado para o processo {processo}.")
+#             extrair_dados_tabela(processo, nome_arquivo)
+
+#         except TimeoutException:
+#             logging.warning(f"Link 'Ver histórico resumido' não encontrado para o processo {processo}. Tentando 'Ver histórico completo'.")
+
+#             try:
+#                 # Agora tenta o histórico completo
+#                 botao_completo = WebDriverWait(driver, 30).until(
+#                     EC.element_to_be_clickable((By.XPATH, '//a[@id="ancTipoHistorico" and contains(text(), "completo")]'))
+#                 )
+#                 driver.execute_script("arguments[0].scrollIntoView(true);", botao_completo)
+#                 botao_completo.click()
+#                 logging.info(f"Link 'Ver histórico completo' clicado para o processo {processo}.")
+#                 extrair_dados_tabela(processo, nome_arquivo)
+
+#             except TimeoutException:
+#                 logging.error(f"Link 'Ver histórico completo' também não encontrado para o processo {processo}.")
+#             except Exception as e:
+#                 logging.error(f"Erro ao processar {processo}: {e}")
+
+#     finally:
+#         # Sempre volta para a página inicial para o próximo processo
+#         driver.get('https://sei.sistemas.ro.gov.br')
+
+# driver.quit()
+# logging.info("Execução finalizada.")

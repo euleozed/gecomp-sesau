@@ -86,3 +86,4 @@ SELECT 'Total de núcleos cadastrados:' as info, COUNT(*)::text as valor FROM nu
 
 
 
+

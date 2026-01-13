@@ -63,7 +63,7 @@ const Sidebar = () => {
           </nav>
         </div>
       </div>
-      
+
       {/* Spacer to push content to the right */}
       <div className={`transition-all duration-300 ${isOpen ? "ml-64" : "ml-16"}`}></div>
     </div>

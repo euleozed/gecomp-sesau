@@ -16,3 +16,4 @@ CREATE TRIGGER update_nucleos_cecomp_updated_at
 
 
 
+

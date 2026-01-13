@@ -16,3 +16,4 @@ ON CONFLICT (sigla) DO NOTHING;
 
 
 
+
