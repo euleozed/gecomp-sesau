@@ -22,13 +22,13 @@ if not exist "public\backend" (
     mkdir "public\backend"
 )
 
-@REM :: Executa os scripts Python
-@REM echo Executando extract.py...
-@REM python backend\extract.py
-@REM if %errorlevel% neq 0 (
-@REM     echo Erro ao executar extract.py
-@REM     goto error
-@REM )
+:: Executa os scripts Python
+echo Executando extract.py...
+python backend\extract.py
+if %errorlevel% neq 0 (
+    echo Erro ao executar extract.py
+    goto error
+)
 
 echo Executando load.py...
 python backend\load.py
