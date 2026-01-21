@@ -4,7 +4,7 @@ import pandas as pd
 # Definir o diretório onde os arquivos CSV estão armazenados
 base_dir = os.path.dirname(os.path.abspath(__file__))
 combined_csv_path = os.path.join(base_dir, 'tabela_historico.csv')
-download_dir = os.path.join(base_dir, 'downloads')
+download_dir = os.path.join(base_dir, r'C:\Users\00840207255\OneDrive - Leonardo\Aplicativos\App GAD SESAU\backend\downloads')
 
 # Inicializar uma lista vazia para armazenar todos os DataFrames
 lista_dfs = []
