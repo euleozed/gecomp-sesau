@@ -41,11 +41,9 @@ chrome_options.add_experimental_option('prefs', {
 })
 
 
-# driver = webdriver.Chrome(service=service, options=chrome_options)
-# driver.maximize_window()
-
 # Inicializando o WebDriver do Edge
 driver = webdriver.Chrome(service=service, options=chrome_options)
+driver.maximize_window()
 # Acessar o site e realizar login
 driver.get('https://sei.sistemas.ro.gov.br/sip/login.php?sigla_orgao_sistema=RO&sigla_sistema=SEI')
 
@@ -206,10 +204,14 @@ for index, row in df_documentos.iterrows():
         # Alternar para o iframe onde está a tabela
         alternar_para_iframe('ifrConteudoVisualizacao')
 
+        # Alternar para o iframe onde está a tabela
+        alternar_para_iframe('ifrVisualizacao')
+
         # Tentar clicar no link "Ver histórico resumido"
         try:
             botao_historico_resumido = WebDriverWait(driver, 5).until(
-                EC.element_to_be_clickable((By.XPATH, '//*[@id="ancTipoHistorico" and contains(text(), "Ver histórico resumido")]'))
+                EC.element_to_be_clickable((By.ID, 'ancTipoHistorico'))
+                or EC.element_to_be_clickable((By.XPATH, '//*[@id="ancTipoHistorico" and contains(text(), "Ver histórico resumido")]'))
             )
             if botao_historico_resumido.is_displayed():
                 print(f"Link 'Ver histórico resumido' encontrado para o processo {Processo}.")
