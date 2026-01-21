@@ -1,0 +1,97 @@
+Data/Hora,Unidade,Usuário,Descrição,Processo
+23/12/2025 10:00,SESAU-NEFI,75728613268,Processo recebido na unidade,0036.058507/2024-21
+23/12/2025 09:55,SESAU-NEFI,57844801204,Processo remetido pela unidade SESAU-GACP,0036.058507/2024-21
+08/12/2025 15:44,SESAU-GACP,57844801204,Processo recebido na unidade,0036.058507/2024-21
+08/12/2025 12:17,SESAU-GACP,76122603287,Processo remetido pela unidade SESAU-GEOF,0036.058507/2024-21
+24/11/2025 09:53,SESAU-GEOF,3714100962,Processo recebido na unidade,0036.058507/2024-21
+19/11/2025 15:41,SESAU-GEOF,95780211,Processo remetido pela unidade SESAU-NCOF,0036.058507/2024-21
+17/11/2025 11:40,SESAU-NCOF,95780211,Processo recebido na unidade,0036.058507/2024-21
+14/11/2025 18:17,SESAU-NCOF,3373446201,Processo remetido pela unidade SESAU-NARCE,0036.058507/2024-21
+29/10/2025 18:14,SESAU-NARCE,3373446201,Envio de correspondência eletrônica 0065890125 (E-mail),0036.058507/2024-21
+23/10/2025 14:26,SESAU-NARCE,3373446201,Envio de correspondência eletrônica 0065746132 (E-mail),0036.058507/2024-21
+18/08/2025 16:33,SESAU-NARCE,3373446201,Processo recebido na unidade,0036.058507/2024-21
+18/08/2025 16:33,SESAU-NARCE,3373446201,Processo remetido pela unidade SESAU-CGPMNACE,0036.058507/2024-21
+22/06/2025 16:25,SESAU-CGPMNPL,60209577215,Conclusão do processo na unidade,0036.058507/2024-21
+22/06/2025 14:03,SESAU-CGPMNPL,60209577215,Processo recebido na unidade,0036.058507/2024-21
+18/06/2025 17:45,SESAU-CGPMNPL,97368121204,Processo remetido pela unidade SESAU-SC,0036.058507/2024-21
+18/06/2025 17:43,SESAU-SC,97368121204,Processo recebido na unidade,0036.058507/2024-21
+18/06/2025 12:14,SESAU-SC,5522253207,Processo remetido pela unidade PGE-PA,0036.058507/2024-21
+18/06/2025 09:12,PGE-SESAU,2847216200,Conclusão do processo na unidade,0036.058507/2024-21
+18/06/2025 09:11,PGE-SESAU,2847216200,Processo recebido na unidade,0036.058507/2024-21
+18/06/2025 08:10,PGE-PA,1432219227,Processo recebido na unidade,0036.058507/2024-21
+17/06/2025 19:30,PGE-SESAU,442940262,Processo remetido pela unidade SESAU-CGPMNPL,0036.058507/2024-21
+17/06/2025 19:30,PGE-PA,442940262,Processo remetido pela unidade SESAU-CGPMNPL,0036.058507/2024-21
+06/06/2025 11:43,SESAU-CGPMNACE,42046890272,Envio de correspondência eletrônica 0060984952 (E-mail),0036.058507/2024-21
+23/05/2025 10:46,SESAU-CGPMNPL,42046890272,Processo recebido na unidade,0036.058507/2024-21
+23/05/2025 10:38,SESAU-CGPMNPL,3468262256,Processo remetido pela unidade PGE-SESAU,0036.058507/2024-21
+23/05/2025 10:33,PGE-SESAU,3468262256,Processo recebido na unidade,0036.058507/2024-21
+23/05/2025 10:13,PGE-SESAU,92260012272,Processo remetido pela unidade PGE-PA,0036.058507/2024-21
+23/05/2025 09:23,PGE-PA,1432219227,Processo recebido na unidade,0036.058507/2024-21
+22/05/2025 14:26,PGE-PA,3468262256,Processo remetido pela unidade PGE-SESAU,0036.058507/2024-21
+19/05/2025 16:46,SESAU-CGPMNACE,42046890272,Envio de correspondência eletrônica 0060315948 (E-mail),0036.058507/2024-21
+12/05/2025 09:53,PGE-SESAU,3468262256,Liberada assinatura externa para o usuário Lucas Persona de Almeida (lucas.p.almeida@medtronic.com) no documento 0059668019 (Termo de Contrato 338) até 22/05/2025 (10 dias). Sem acesso ao processo.,0036.058507/2024-21
+12/05/2025 09:53,PGE-SESAU,3468262256,Liberada assinatura externa para o usuário Zuleide Costa da Silva Santos (zuleide.c.santos@medtronic.com) no documento 0059668019 (Termo de Contrato 338) até 22/05/2025 (10 dias). Sem acesso ao processo.,0036.058507/2024-21
+12/05/2025 09:01,PGE-SESAU,2847216200,Processo recebido na unidade,0036.058507/2024-21
+09/05/2025 16:57,PGE-SESAU,442940262,Processo remetido pela unidade SESAU-CGPMNPL,0036.058507/2024-21
+09/05/2025 11:34,SESAU-CGPMNPL,442940262,Processo recebido na unidade,0036.058507/2024-21
+09/05/2025 11:32,SESAU-CGPMNPL,3468262256,Processo remetido pela unidade PGE-SESAU,0036.058507/2024-21
+08/05/2025 09:34,PGE-SESAU,3468262256,Cancelada liberação de assinatura externa para o usuário Lucas Persona de Almeida (lucas.p.almeida@medtronic.com) no documento 0059668019 (Termo de Contrato 338). Necessidade de ateração do TR,0036.058507/2024-21
+08/05/2025 09:33,PGE-SESAU,3468262256,Cancelada liberação de assinatura externa para o usuário Zuleide Costa da Silva Santos (zuleide.c.santos@medtronic.com) no documento 0059668019 (Termo de Contrato 338). Nessecidade de alteração do TR,0036.058507/2024-21
+08/05/2025 09:30,PGE-SESAU,3468262256,Liberada assinatura externa para o usuário Lucas Persona de Almeida (lucas.p.almeida@medtronic.com) no documento 0059668019 (Termo de Contrato 338) até 16/05/2025 (8 dias). Sem acesso ao processo. (cancelada por 03468262256 em 08/05/2025 09:34),0036.058507/2024-21
+08/05/2025 09:29,PGE-SESAU,3468262256,Cancelada liberação de assinatura externa para o usuário Lucas Persona de Almeida (lucas.p.almeida@medtronic.com) no documento 0059668019 (Termo de Contrato 338). Nova disponibilização,0036.058507/2024-21
+08/05/2025 09:29,PGE-SESAU,3468262256,Liberada assinatura externa para o usuário Zuleide Costa da Silva Santos (zuleide.c.santos@medtronic.com) no documento 0059668019 (Termo de Contrato 338) até 16/05/2025 (8 dias). Sem acesso ao processo. (cancelada por 03468262256 em 08/05/2025 09:33),0036.058507/2024-21
+08/05/2025 09:05,PGE-SESAU,2847216200,Processo recebido na unidade,0036.058507/2024-21
+07/05/2025 14:24,PGE-SESAU,442940262,Processo remetido pela unidade SESAU-CGPMNPL,0036.058507/2024-21
+06/05/2025 16:13,SESAU-CGPMNPL,442940262,Reabertura do processo na unidade,0036.058507/2024-21
+06/05/2025 09:18,PGE-SESAU,3468262256,Liberada assinatura externa para o usuário Lucas Persona de Almeida (lucas.p.almeida@medtronic.com) no documento 0059668019 (Termo de Contrato 338) até 16/05/2025 (10 dias). Sem acesso ao processo. (cancelada por 03468262256 em 08/05/2025 09:29),0036.058507/2024-21
+30/04/2025 13:26,SESAU-CGPM,60209577215,Conclusão do processo na unidade,0036.058507/2024-21
+29/04/2025 08:59,PGE-SESAU,94702349287,Processo recebido na unidade,0036.058507/2024-21
+28/04/2025 18:07,PGE-SESAU,442940262,Processo remetido pela unidade SESAU-CGPMNPL,0036.058507/2024-21
+28/04/2025 14:09,SESAU-CGPMNPL,442940262,Processo recebido na unidade,0036.058507/2024-21
+25/04/2025 13:10,SESAU-CGPMNPL,87656531220,Processo remetido pela unidade PGE-SESAU,0036.058507/2024-21
+24/04/2025 11:39,SESAU-CGPMNPL,442940262,Reabertura do processo na unidade,0036.058507/2024-21
+24/04/2025 09:08,PGE-SESAU,94702349287,Processo recebido na unidade,0036.058507/2024-21
+23/04/2025 17:45,PGE-SESAU,442940262,Processo remetido pela unidade SESAU-CGPMNPL,0036.058507/2024-21
+23/04/2025 15:07,SESAU-CGPMNPL,442940262,Processo recebido na unidade,0036.058507/2024-21
+23/04/2025 15:07,SESAU-CGPMNPL,442940262,Processo remetido pela unidade SESAU-CGPM,0036.058507/2024-21
+23/04/2025 14:29,SESAU-CGPMNADM,60209577215,Conclusão do processo na unidade,0036.058507/2024-21
+23/04/2025 13:05,SESAU-CGPM,60209577215,Processo recebido na unidade,0036.058507/2024-21
+23/04/2025 12:50,SESAU-CGPM,1031113282,Processo remetido pela unidade SESAU-NEOR,0036.058507/2024-21
+23/04/2025 09:53,SESAU-NAP,4881313240,Conclusão do processo na unidade,0036.058507/2024-21
+22/04/2025 10:39,SESAU-NEOR,79181732287,Processo recebido na unidade,0036.058507/2024-21
+22/04/2025 09:43,SESAU-NEOR,97113875220,Processo remetido pela unidade SESAU-NPPS,0036.058507/2024-21
+22/04/2025 09:36,SESAU-NPPS,97113875220,Processo recebido na unidade,0036.058507/2024-21
+22/04/2025 09:08,SESAU-NPPS,1031113282,Processo remetido pela unidade SESAU-NEOR,0036.058507/2024-21
+22/04/2025 09:08,SESAU-NEOR,1031113282,Processo recebido na unidade,0036.058507/2024-21
+22/04/2025 08:33,SESAU-NAP,4881313240,Publicação do documento 0059237825 (Termo de Homologação) no veículo Diário Oficial do Estado de Rondônia de 22/04/2025 (Data de Disponibilização),0036.058507/2024-21
+22/04/2025 08:33,SESAU-NEOR,2851392239,Processo remetido pela unidade SESAU-NAP,0036.058507/2024-21
+22/04/2025 08:33,SESAU-NPPS,2851392239,Processo remetido pela unidade SESAU-NAP,0036.058507/2024-21
+16/04/2025 10:26,SESAU-NAP,2851392239,Processo recebido na unidade,0036.058507/2024-21
+16/04/2025 10:26,SESAU-CGPMNPL,442940262,Conclusão do processo na unidade,0036.058507/2024-21
+16/04/2025 10:26,SESAU-CGPMNPL,442940262,Reabertura do processo na unidade,0036.058507/2024-21
+16/04/2025 10:12,SESAU-NAP,442940262,Processo remetido pela unidade SESAU-CGPMNPL,0036.058507/2024-21
+15/04/2025 18:00,SESAU-CGPMNPL,442940262,Processo recebido na unidade,0036.058507/2024-21
+15/04/2025 17:58,SESAU-CGPMNPL,60209577215,Processo remetido pela unidade SESAU-CGPM,0036.058507/2024-21
+15/04/2025 17:57,SESAU-CGPM,60209577215,Processo recebido na unidade,0036.058507/2024-21
+15/04/2025 17:06,SESAU-CGPM,979107245,Processo remetido pela unidade SESAU-NAP,0036.058507/2024-21
+15/04/2025 12:20,SESAU-CGPMNPL,442940262,Processo recebido na unidade,0036.058507/2024-21
+14/04/2025 14:56,SESAU-CGPMNPL,97113875220,Processo remetido pela unidade SESAU-NPPS,0036.058507/2024-21
+09/04/2025 12:35,SESAU-NPPS,97113875220,Processo recebido na unidade,0036.058507/2024-21
+09/04/2025 08:56,SESAU-NAP,979107245,Processo recebido na unidade,0036.058507/2024-21
+08/04/2025 19:43,SESAU-NPPS,442940262,Processo remetido pela unidade SESAU-CGPMNPL,0036.058507/2024-21
+08/04/2025 19:43,SESAU-NAP,442940262,Processo remetido pela unidade SESAU-CGPMNPL,0036.058507/2024-21
+20/03/2025 11:33,SESAU-CGPMNPL,93666942253,Processo recebido na unidade,0036.058507/2024-21
+19/03/2025 11:21,SESAU-CGPMNPL,4133238206,Processo remetido pela unidade PGE-SESAU,0036.058507/2024-21
+26/02/2025 10:07,PGE-SESAU,94702349287,Processo recebido na unidade,0036.058507/2024-21
+26/02/2025 10:06,PGE-SESAU,77359453291,Processo remetido pela unidade SESAU-CGPMNPL,0036.058507/2024-21
+19/02/2025 10:08,SESAU-CGPMNPL,77359453291,Processo recebido na unidade,0036.058507/2024-21
+19/02/2025 09:38,SESAU-CGPMNPL,97113875220,Processo remetido pela unidade SESAU-NPPS,0036.058507/2024-21
+19/02/2025 09:18,SESAU-NPPS,97113875220,Processo recebido na unidade,0036.058507/2024-21
+17/02/2025 15:17,SESAU-NPPS,77359453291,Processo remetido pela unidade SESAU-CGPMNPL,0036.058507/2024-21
+14/02/2025 12:41,SESAU-CGPMNADM,60209577215,Processo recebido na unidade,0036.058507/2024-21
+14/02/2025 12:32,SESAU-CGPMNPL,442940262,Reabertura do processo na unidade,0036.058507/2024-21
+14/02/2025 12:30,SESAU-CGPMNADM,442940262,Processo remetido pela unidade SESAU-CGPMNPL,0036.058507/2024-21
+13/01/2025 13:04,SESAU-CGPMNACE,42046890272,Reabertura do processo na unidade,0036.058507/2024-21
+13/01/2025 12:58,SESAU-CGPMNPL,42046890272,Processo recebido na unidade,0036.058507/2024-21
+13/01/2025 12:58,SESAU-CGPMNPL,42046890272,Processo remetido pela unidade SESAU-CGPMNACE,0036.058507/2024-21
+09/12/2024 13:46,SESAU-CGPMNACE,42046890272,Processo público gerado,0036.058507/2024-21
