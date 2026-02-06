@@ -1,0 +1,124 @@
+Data/Hora,Unidade,Usuário,Descrição,Processo
+05/02/2026 13:46,SESAU-CECOMP,1379890241,Processo recebido na unidade,0046.000064/2023-89
+05/02/2026 12:04,SESAU-GECONT,298048256,Conclusão do processo na unidade,0046.000064/2023-89
+04/02/2026 09:13,SESAU-GECONT,298048256,Processo recebido na unidade,0046.000064/2023-89
+03/02/2026 14:07,SESAU-CECOMP,75269384272,Processo remetido pela unidade LACEN-ASTEC,0046.000064/2023-89
+03/02/2026 14:07,SESAU-GECONT,75269384272,Processo remetido pela unidade LACEN-ASTEC,0046.000064/2023-89
+03/02/2026 13:51,LACEN-ASTEC,75269384272,Reabertura do processo na unidade,0046.000064/2023-89
+03/02/2026 11:46,SESAU-SC,3154207236,Conclusão do processo na unidade,0046.000064/2023-89
+03/02/2026 11:46,SESAU-SC,3154207236,Processo recebido na unidade,0046.000064/2023-89
+03/02/2026 09:45,SESAU-SC,1379890241,Processo remetido pela unidade SESAU-CECOMP,0046.000064/2023-89
+02/02/2026 12:21,SESAU-CECOMP,1379890241,Processo recebido na unidade,0046.000064/2023-89
+30/01/2026 11:01,SESAU-GECOMP,55638864253,Processo recebido na unidade,0046.000064/2023-89
+30/01/2026 11:01,SESAU-CECOMP,55638864253,Processo remetido pela unidade SESAU-GECOMP,0046.000064/2023-89
+27/01/2026 10:20,SESAU-GECONT,298048256,Reabertura do processo na unidade,0046.000064/2023-89
+27/01/2026 10:20,SESAU-GECOMP,298048256,Processo remetido pela unidade SESAU-GECONT,0046.000064/2023-89
+26/01/2026 12:22,SESAU-GECONT,298048256,Processo recebido na unidade,0046.000064/2023-89
+26/01/2026 11:32,SESAU-GECONT,1031113282,Processo remetido pela unidade SESAU-NEOR,0046.000064/2023-89
+19/01/2026 09:04,SESAU-GECONT,298048256,Reabertura do processo na unidade,0046.000064/2023-89
+14/01/2026 11:20,SESAU-NEOR,79181732287,Processo recebido na unidade,0046.000064/2023-89
+14/01/2026 10:52,SESAU-NEOR,97113875220,Processo remetido pela unidade SESAU-NPCO,0046.000064/2023-89
+14/01/2026 10:47,SESAU-NPCO,97113875220,Processo recebido na unidade,0046.000064/2023-89
+14/01/2026 10:39,SESAU-NEOR,79181732287,Processo recebido na unidade,0046.000064/2023-89
+13/01/2026 13:21,SESAU-GECONT,90399269215,Conclusão do processo na unidade,0046.000064/2023-89
+13/01/2026 13:21,SESAU-GECONT,90399269215,Reabertura do processo na unidade,0046.000064/2023-89
+13/01/2026 13:06,SESAU-NEOR,298048256,Processo remetido pela unidade SESAU-GECONT,0046.000064/2023-89
+13/01/2026 12:57,SESAU-GECONT,298048256,Processo recebido na unidade,0046.000064/2023-89
+13/01/2026 12:13,SESAU-NPCO,79181732287,Processo remetido pela unidade SESAU-NEOR,0046.000064/2023-89
+13/01/2026 12:10,SESAU-GECONT,79181732287,Processo remetido pela unidade SESAU-NEOR,0046.000064/2023-89
+13/01/2026 08:31,SESAU-GECONT,298048256,Processo recebido na unidade,0046.000064/2023-89
+12/01/2026 15:04,SESAU-GECONT,75269384272,Processo remetido pela unidade LACEN-ASTEC,0046.000064/2023-89
+12/01/2026 14:47,LACEN-ASTEC,75269384272,Processo recebido na unidade,0046.000064/2023-89
+12/01/2026 12:42,LACEN-ASTEC,298048256,Processo remetido pela unidade SESAU-GECONT,0046.000064/2023-89
+07/01/2026 14:18,SESAU-GECONT,298048256,Processo recebido na unidade,0046.000064/2023-89
+07/01/2026 09:33,SESAU-GECONT,4255604738,Processo remetido pela unidade SESAU-NPA,0046.000064/2023-89
+08/12/2025 08:40,SESAU-NPA,91895162220,Processo recebido na unidade,0046.000064/2023-89
+05/12/2025 17:30,SESAU-NEOR,1031113282,Processo recebido na unidade,0046.000064/2023-89
+05/12/2025 16:04,SESAU-NPA,55638864253,Processo remetido pela unidade SESAU-CECOMP,0046.000064/2023-89
+05/12/2025 16:03,SESAU-CECOMP,55638864253,Processo recebido na unidade,0046.000064/2023-89
+05/12/2025 13:51,SESAU-GECONT,298048256,Reabertura do processo na unidade,0046.000064/2023-89
+05/12/2025 13:51,SESAU-NEOR,298048256,Processo remetido pela unidade SESAU-GECONT,0046.000064/2023-89
+05/12/2025 13:51,SESAU-CECOMP,298048256,Processo remetido pela unidade SESAU-GECONT,0046.000064/2023-89
+09/09/2025 12:10,SESAU-GECONT,298048256,Processo recebido na unidade,0046.000064/2023-89
+08/09/2025 16:47,SESAU-GECONT,55638864253,Processo remetido pela unidade SESAU-CECOMP,0046.000064/2023-89
+05/09/2025 21:34,SESAU-CECOMP,55638864253,Processo recebido na unidade,0046.000064/2023-89
+04/09/2025 10:26,SESAU-GECONT,97368121204,Processo recebido na unidade,0046.000064/2023-89
+04/09/2025 09:22,SESAU-GECONT,75269384272,Processo remetido pela unidade LACEN-ASTEC,0046.000064/2023-89
+03/09/2025 13:31,LACEN-ASTEC,75269384272,Processo recebido na unidade,0046.000064/2023-89
+03/09/2025 12:37,LACEN-ASTEC,31592937268,Processo remetido pela unidade LACEN-DG,0046.000064/2023-89
+03/09/2025 12:36,LACEN-DG,31592937268,Processo recebido na unidade,0046.000064/2023-89
+03/09/2025 12:09,SESAU-CECOMP,298048256,Processo remetido pela unidade SESAU-GECONT,0046.000064/2023-89
+03/09/2025 12:09,LACEN-DG,298048256,Processo remetido pela unidade SESAU-GECONT,0046.000064/2023-89
+03/09/2025 12:09,LACEN-ASTEC,298048256,Processo remetido pela unidade SESAU-GECONT,0046.000064/2023-89
+03/09/2025 11:49,SESAU-GECONT,298048256,Reabertura do processo na unidade,0046.000064/2023-89
+25/07/2025 11:13,SESAU-GECONT,298048256,Conclusão do processo na unidade,0046.000064/2023-89
+25/07/2025 11:12,SESAU-GECONT,298048256,Processo recebido na unidade,0046.000064/2023-89
+25/07/2025 09:05,SESAU-GECONT,298048256,Processo remetido pela unidade SESAU-SC,0046.000064/2023-89
+13/06/2025 14:19,SESAU-SC,910420467,Processo recebido na unidade,0046.000064/2023-89
+13/06/2025 13:03,SESAU-SC,40871754215,Processo remetido pela unidade SESAU-GECOMP,0046.000064/2023-89
+11/06/2025 12:23,SESAU-SC,910420467,Reabertura do processo na unidade,0046.000064/2023-89
+05/06/2025 12:17,SESAU-GECOMP,40871754215,Processo recebido na unidade,0046.000064/2023-89
+05/06/2025 10:27,SESAU-GECOMP,298048256,Processo remetido pela unidade SESAU-SC,0046.000064/2023-89
+02/06/2025 16:14,SESAU-SC,11882316428,Reabertura do processo na unidade,0046.000064/2023-89
+11/03/2025 10:20,LACEN-ASTEC,1903562279,Conclusão do processo na unidade,0046.000064/2023-89
+11/03/2025 10:17,LACEN-ASTEC,1903562279,Reabertura do processo na unidade,0046.000064/2023-89
+21/02/2025 09:02,SESAU-SC,298048256,Conclusão do processo na unidade,0046.000064/2023-89
+20/02/2025 12:04,SESAU-SC,298048256,Processo recebido na unidade,0046.000064/2023-89
+20/02/2025 10:36,SESAU-SC,4862041205,Processo remetido pela unidade PGE-PA,0046.000064/2023-89
+19/02/2025 12:33,PGE-PA,4862041205,Publicação do documento 0057556146 (Extrato 582) no veículo Diário Oficial do Estado de Rondônia de 19/02/2025 (Data de Disponibilização),0046.000064/2023-89
+19/02/2025 12:28,PGE-PA,4862041205,Processo recebido na unidade,0046.000064/2023-89
+18/02/2025 14:44,PGE-PA,298048256,Processo remetido pela unidade SESAU-SC,0046.000064/2023-89
+18/02/2025 09:36,SESAU-SC,298048256,Liberada assinatura externa para o usuário Adriana da Silva Almeida Xavier (licitacao.pmh@pmh.com.br) no documento 0057011812 (Termo Aditivo) até 23/02/2025 (05 dias). Sem acesso ao processo.,0046.000064/2023-89
+18/02/2025 09:36,SESAU-SC,298048256,Cancelada liberação de assinatura externa para o usuário Adriana da Silva Almeida Xavier (licitacao.pmh@pmh.com.br) no documento 0057011812 (Termo Aditivo). CANCELAR,0046.000064/2023-89
+10/02/2025 13:33,SESAU-SC,298048256,Liberada assinatura externa para o usuário Adriana da Silva Almeida Xavier (licitacao.pmh@pmh.com.br) no documento 0057011812 (Termo Aditivo) até 20/02/2025 (10 dias). Com visualização integral do processo. (cancelada por 00298048256 em 18/02/2025 09:36),0046.000064/2023-89
+10/02/2025 13:34,SESAU-SC,298048256,Cancelada liberação de assinatura externa para o usuário Adriana da Silva Almeida Xavier (licitacao.pmh@pmh.com.br) no documento 0057011812 (Termo Aditivo). Será solicitado novamente,0046.000064/2023-89
+04/02/2025 09:01,SESAU-SC,298048256,Liberada assinatura externa para o usuário Adriana da Silva Almeida Xavier (licitacao.pmh@pmh.com.br) no documento 0057011812 (Termo Aditivo) até 09/02/2025 (05 dias). Sem acesso ao processo. (cancelada por 00298048256 em 10/02/2025 13:34),0046.000064/2023-89
+29/01/2025 09:05,SESAU-SC,298048256,Liberada assinatura externa para o usuário Adriana da Silva Almeida Xavier (licitacao.pmh@pmh.com.br) no documento 0056174600 (Termo Aditivo) até 03/02/2025 (05 dias). Sem acesso ao processo.,0046.000064/2023-89
+29/01/2025 09:05,SESAU-SC,298048256,Cancelada liberação de assinatura externa para o usuário Adriana da Silva Almeida Xavier (licitacao.pmh@pmh.com.br) no documento 0056174600 (Termo Aditivo). Não é o email correspondente.,0046.000064/2023-89
+15/01/2025 11:38,SESAU-SC,298048256,Liberada assinatura externa para o usuário Adriana da Silva Almeida Xavier (licitacao.pmh@pmh.com.br) no documento 0056174600 (Termo Aditivo) até 20/01/2025 (05 dias). Sem acesso ao processo. (cancelada por 00298048256 em 29/01/2025 09:05),0046.000064/2023-89
+08/01/2025 13:33,SESAU-SC,298048256,Liberada assinatura externa para o usuário Hudson Eduardo da Costa (hudsonncosta@gmail.com) no documento 0056174600 (Termo Aditivo) até 13/01/2025 (05 dias). Sem acesso ao processo.,0046.000064/2023-89
+06/01/2025 08:56,SESAU-SC,298048256,Processo recebido na unidade,0046.000064/2023-89
+03/01/2025 19:10,SESAU-SC,1031113282,Processo remetido pela unidade SESAU-NEOR,0046.000064/2023-89
+17/12/2024 11:33,SESAU-NEOR,1031113282,Reabertura do processo na unidade,0046.000064/2023-89
+16/12/2024 20:14,SESAU-NEOR,1031113282,Conclusão do processo na unidade,0046.000064/2023-89
+10/12/2024 12:04,SESAU-SC,298048256,Processo recebido na unidade,0046.000064/2023-89
+09/12/2024 12:14,SESAU-SC,75269384272,Processo remetido pela unidade LACEN-ASTEC,0046.000064/2023-89
+05/12/2024 12:22,SESAU-NEOR,733774229,Processo recebido na unidade,0046.000064/2023-89
+05/12/2024 11:22,SESAU-SC,298048256,Reabertura do processo na unidade,0046.000064/2023-89
+05/12/2024 11:22,SESAU-NEOR,298048256,Processo remetido pela unidade SESAU-SC,0046.000064/2023-89
+05/12/2024 08:55,SESAU-SC,298048256,Processo recebido na unidade,0046.000064/2023-89
+05/12/2024 08:11,SESAU-SC,733774229,Processo remetido pela unidade SESAU-NEOR,0046.000064/2023-89
+05/12/2024 08:06,SESAU-NEOR,733774229,Processo recebido na unidade,0046.000064/2023-89
+02/12/2024 16:28,SESAU-NEOR,97113875220,Processo remetido pela unidade SESAU-NPPS,0046.000064/2023-89
+02/12/2024 11:36,LACEN-ASTEC,69100578215,Processo recebido na unidade,0046.000064/2023-89
+02/12/2024 11:04,LACEN-ASTEC,298048256,Processo remetido pela unidade SESAU-SC,0046.000064/2023-89
+29/11/2024 12:50,SESAU-NPPS,97113875220,Processo recebido na unidade,0046.000064/2023-89
+28/11/2024 15:08,SESAU-NPPS,1031113282,Processo remetido pela unidade SESAU-NEOR,0046.000064/2023-89
+27/11/2024 15:20,SESAU-NEOR,79181732287,Processo recebido na unidade,0046.000064/2023-89
+27/11/2024 13:02,SESAU-SC,298048256,Envio de correspondência eletrônica 0055152607 (E-mail),0046.000064/2023-89
+27/11/2024 11:05,SESAU-SC,298048256,Reabertura do processo na unidade,0046.000064/2023-89
+27/11/2024 11:04,SESAU-NEOR,298048256,Processo remetido pela unidade SESAU-SC,0046.000064/2023-89
+26/11/2024 10:42,SESAU-SC,298048256,Processo recebido na unidade,0046.000064/2023-89
+26/11/2024 10:40,SESAU-SC,75269384272,Processo remetido pela unidade LACEN-ASTEC,0046.000064/2023-89
+26/11/2024 10:18,LACEN-ASTEC,75269384272,Reabertura do processo na unidade,0046.000064/2023-89
+17/06/2024 09:16,LACEN-ASTEC,298048256,Conclusão do processo na unidade,0046.000064/2023-89
+23/02/2024 14:57,PGE-PA,40964167204,Conclusão do processo na unidade,0046.000064/2023-89
+22/02/2024 14:31,LACEN-ASTEC,83669566287,Processo recebido na unidade,0046.000064/2023-89
+22/02/2024 14:03,LACEN-ASTEC,40964167204,Processo remetido pela unidade PGE-PA,0046.000064/2023-89
+22/02/2024 14:02,PGE-PA,40964167204,Publicação do documento 0046174868 (Extrato 4º TACNT Nº 055/PGE-2020) no veículo Diário Oficial do Estado de Rondônia de 23/02/2024 (Data de Disponibilização),0046.000064/2023-89
+20/02/2024 19:56,PGE-PA,95225064272,Processo recebido na unidade,0046.000064/2023-89
+20/02/2024 12:33,PGE-PA,4554464237,Processo remetido pela unidade PGE-SESAU,0046.000064/2023-89
+16/02/2024 13:34,PGE-SESAU,4554464237,Liberada assinatura externa para o usuário Hudson Eduardo da Costa (hudsonncosta@gmail.com) no documento 0045874409 (Termo Aditivo) até 26/02/2024 (10 dias). Sem acesso ao processo.,0046.000064/2023-89
+06/02/2024 12:52,PGE-SESAU,94702349287,Processo recebido na unidade,0046.000064/2023-89
+06/02/2024 12:50,PGE-SESAU,75269384272,Processo remetido pela unidade LACEN-ASTEC,0046.000064/2023-89
+22/12/2023 12:47,LACEN-ASTEC,75269384272,Envio de correspondência eletrônica 0044692423 (E-mail),0046.000064/2023-89
+21/12/2023 17:19,LACEN-ASTEC,75269384272,Reabertura do processo na unidade,0046.000064/2023-89
+11/08/2023 14:55,LACEN-ASTEC,67797377200,Conclusão do processo na unidade,0046.000064/2023-89
+23/02/2023 13:16,LACEN-ASTEC,83669566287,Processo recebido na unidade,0046.000064/2023-89
+23/02/2023 12:19,LACEN-ASTEC,92260012272,Processo remetido pela unidade PGE-PA,0046.000064/2023-89
+17/02/2023 13:19,PGE-PA,92260012272,Publicação do documento 0035962838 (Extrato 3º TACNT Nº 055/PGE-2020) no veículo Diário Oficial do Estado de Rondônia de 17/02/2023 (Data de Disponibilização),0046.000064/2023-89
+16/02/2023 08:36,PGE-PA,1432219227,Processo recebido na unidade,0046.000064/2023-89
+15/02/2023 16:08,PGE-PA,75269384272,Processo remetido pela unidade LACEN-ASTEC,0046.000064/2023-89
+14/02/2023 18:21,LACEN-ASTEC,75269384272,Liberada assinatura externa para o usuário Hudson Eduardo da Costa (hudsonncosta@gmail.com) no documento 0035867435 (Termo Aditivo) até 19/02/2023 (5 dias). Sem acesso ao processo.,0046.000064/2023-89
+02/02/2023 16:19,LACEN-ASTEC,75269384272,Envio de correspondência eletrônica 0035555354 (E-mail),0046.000064/2023-89
+02/02/2023 15:50,LACEN-ASTEC,75269384272,Processo público gerado,0046.000064/2023-89

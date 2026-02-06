@@ -32,7 +32,7 @@ service = Service(ChromeDriverManager().install())
 chrome_options = webdriver.ChromeOptions()
 
 # Diretório de downloads
-download_dir = r"./backend/downloads"
+download_dir = r"./downloads"
 chrome_options.add_experimental_option('prefs', {
     'download.default_directory': download_dir,
     'download.prompt_for_download': False,

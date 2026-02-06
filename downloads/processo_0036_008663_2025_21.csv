@@ -1,0 +1,64 @@
+Data/Hora,Unidade,Usuário,Descrição,Processo
+15/08/2025 12:11,SESAU-CES,27185842204,Conclusão do processo na unidade,0036.008663/2025-21
+15/08/2025 10:51,SESAU-CES,27185842204,Processo recebido na unidade,0036.008663/2025-21
+15/08/2025 10:30,SESAU-CES,75728613268,Processo remetido pela unidade SESAU-NEFI,0036.008663/2025-21
+30/07/2025 11:50,SESAU-NPA,1511970243,Conclusão do processo na unidade,0036.008663/2025-21
+30/07/2025 11:50,SESAU-NPA,1511970243,Processo recebido na unidade,0036.008663/2025-21
+30/07/2025 11:50,SESAU-NPA,1511970243,Processo remetido pela unidade SESAU-GECOMP,0036.008663/2025-21
+30/07/2025 11:50,SESAU-GECOMP,1511970243,Reabertura do processo na unidade,0036.008663/2025-21
+18/07/2025 14:48,SESAU-NEFI,75728613268,Processo recebido na unidade,0036.008663/2025-21
+18/07/2025 10:26,SESAU-NEFI,3347972414,Processo remetido pela unidade SESAU-GACP,0036.008663/2025-21
+16/07/2025 08:50,SESAU-GACP,3347972414,Processo recebido na unidade,0036.008663/2025-21
+15/07/2025 15:02,SESAU-GACP,1031113282,Processo remetido pela unidade SESAU-GNAP,0036.008663/2025-21
+18/06/2025 11:15,SESAU-GNAP,32642113272,Processo recebido na unidade,0036.008663/2025-21
+18/06/2025 10:40,SESAU-GNAP,95780211,Processo remetido pela unidade SESAU-NCOF,0036.008663/2025-21
+17/06/2025 10:06,SESAU-NCOF,95780211,Processo recebido na unidade,0036.008663/2025-21
+17/06/2025 09:58,SESAU-NCOF,35108916272,Processo remetido pela unidade SESAU-CES,0036.008663/2025-21
+16/06/2025 08:42,SESAU-CES,27185842204,Liberada assinatura externa para o usuário RAIMUNDO NONATO SOARES (soares.pvh@hotmail.com) no documento 0060919161 (Termo de Recebimento Definitivo 6) até 21/06/2025 (5 dias). Com visualização integral do processo.,0036.008663/2025-21
+16/06/2025 08:42,SESAU-CES,27185842204,Cancelada liberação de assinatura externa para o usuário RAIMUNDO NONATO SOARES (soares.pvh@hotmail.com) no documento 0060919161 (Termo de Recebimento Definitivo 6). Expirou o prazo,0036.008663/2025-21
+11/06/2025 14:58,SESAU-CES,27185842204,Liberada assinatura externa para o usuário RAIMUNDO NONATO SOARES (soares.pvh@hotmail.com) no documento 0060919219 (Relatório) até 16/06/2025 (5 dias). Com visualização integral do processo.,0036.008663/2025-21
+11/06/2025 14:57,SESAU-CES,27185842204,Cancelada liberação de assinatura externa para o usuário RAIMUNDO NONATO SOARES (soares.pvh@hotmail.com) no documento 0060919219 (Relatório). EXPIROU O PRAZO,0036.008663/2025-21
+11/06/2025 14:56,SESAU-CES,27185842204,Disponibilizado acesso externo para RAIMUNDO NONATO SOARES (soares.pvh@hotmail.com) até 16/06/2025 (5 dias). Com visualização integral do processo. Prestação de contas,0036.008663/2025-21
+05/06/2025 12:09,SESAU-CES,27185842204,Liberada assinatura externa para o usuário RAIMUNDO NONATO SOARES (soares.pvh@hotmail.com) no documento 0060919219 (Relatório) até 07/06/2025 (2 dias). Com visualização integral do processo. (cancelada por 27185842204 em 11/06/2025 14:57),0036.008663/2025-21
+05/06/2025 12:04,SESAU-CES,27185842204,Liberada assinatura externa para o usuário RAIMUNDO NONATO SOARES (soares.pvh@hotmail.com) no documento 0060919161 (Termo de Recebimento Definitivo 6) até 07/06/2025 (2 dias). Com visualização integral do processo. (cancelada por 27185842204 em 16/06/2025 08:42),0036.008663/2025-21
+26/05/2025 08:55,SESAU-CES,27185842204,Processo recebido na unidade,0036.008663/2025-21
+26/05/2025 08:54,SESAU-CES,91895162220,Processo remetido pela unidade SESAU-GECOMP,0036.008663/2025-21
+26/05/2025 08:54,SESAU-GECOMP,91895162220,Processo recebido na unidade,0036.008663/2025-21
+23/05/2025 15:17,SESAU-GECOMP,3632491259,Processo remetido pela unidade SESAU-NEOR,0036.008663/2025-21
+23/05/2025 12:34,SESAU-NEOR,3632491259,Processo recebido na unidade,0036.008663/2025-21
+23/05/2025 12:07,SESAU-NEOR,97113875220,Processo remetido pela unidade SESAU-NPPS,0036.008663/2025-21
+22/05/2025 08:51,SESAU-NAP,2851392239,Conclusão do processo na unidade,0036.008663/2025-21
+21/05/2025 12:30,SESAU-NPPS,83819126287,Processo recebido na unidade,0036.008663/2025-21
+21/05/2025 09:52,SESAU-NEOR,3632491259,Conclusão do processo na unidade,0036.008663/2025-21
+21/05/2025 09:52,SESAU-NEOR,3632491259,Processo recebido na unidade,0036.008663/2025-21
+20/05/2025 17:35,SESAU-NEOR,979107245,Processo remetido pela unidade SESAU-NAP,0036.008663/2025-21
+20/05/2025 17:35,SESAU-NPPS,979107245,Processo remetido pela unidade SESAU-NAP,0036.008663/2025-21
+20/05/2025 17:34,SESAU-NAP,979107245,Publicação do documento 0060321323 (Termo de Homologação) no veículo Diário Oficial do Estado de Rondônia de 21/05/2025 (Data de Disponibilização),0036.008663/2025-21
+19/05/2025 17:26,SESAU-NAP,979107245,Processo recebido na unidade,0036.008663/2025-21
+19/05/2025 15:38,SESAU-NAP,91895162220,Processo remetido pela unidade SESAU-GECOMP,0036.008663/2025-21
+14/05/2025 10:38,SESAU-GCONT,2363595254,Conclusão do processo na unidade,0036.008663/2025-21
+12/05/2025 09:47,SESAU-GECOMP,91895162220,Processo recebido na unidade,0036.008663/2025-21
+12/05/2025 09:20,SESAU-GECOMP,3679916248,Processo remetido pela unidade SUPEL-CRP,0036.008663/2025-21
+12/05/2025 09:11,SESAU-GECOMP,91895162220,Processo recebido na unidade,0036.008663/2025-21
+12/05/2025 08:48,SESAU-GCONT,2363595254,Processo recebido na unidade,0036.008663/2025-21
+12/05/2025 08:17,SESAU-GECOMP,35108916272,Processo remetido pela unidade SESAU-CES,0036.008663/2025-21
+12/05/2025 08:17,SESAU-GCONT,35108916272,Processo remetido pela unidade SESAU-CES,0036.008663/2025-21
+09/05/2025 11:54,SESAU-CES,35108916272,Processo recebido na unidade,0036.008663/2025-21
+09/05/2025 11:38,SESAU-CES,91895162220,Processo remetido pela unidade SESAU-GECOMP,0036.008663/2025-21
+09/05/2025 11:08,SUPEL-CRP,3679916248,Processo recebido na unidade,0036.008663/2025-21
+09/05/2025 11:04,SUPEL-CRP,91895162220,Processo remetido pela unidade SESAU-GECOMP,0036.008663/2025-21
+29/04/2025 10:22,SESAU-GECOMP,91895162220,Processo recebido na unidade,0036.008663/2025-21
+29/04/2025 09:56,SESAU-GECOMP,93329016272,Processo remetido pela unidade SUPEL-CRP,0036.008663/2025-21
+24/04/2025 13:11,SUPEL-CRP,78273250253,Processo recebido na unidade,0036.008663/2025-21
+24/04/2025 13:10,SUPEL-CRP,1379890241,Processo remetido pela unidade SESAU-GECOMP,0036.008663/2025-21
+26/03/2025 13:09,SESAU-GECOMP,91895162220,Processo recebido na unidade,0036.008663/2025-21
+26/03/2025 12:51,SESAU-GECOMP,3679916248,Processo remetido pela unidade SUPEL-CRP,0036.008663/2025-21
+21/03/2025 12:59,SUPEL-CRP,78273250253,Processo recebido na unidade,0036.008663/2025-21
+21/03/2025 12:43,SUPEL-CRP,91895162220,Processo remetido pela unidade SESAU-GECOMP,0036.008663/2025-21
+19/03/2025 11:24,SESAU-GECOMP,91895162220,Processo recebido na unidade,0036.008663/2025-21
+18/03/2025 11:23,SESAU-GECOMP,27185842204,Processo remetido pela unidade SESAU-CES,0036.008663/2025-21
+18/03/2025 08:32,SESAU-CES,27185842204,Processo recebido na unidade,0036.008663/2025-21
+17/03/2025 15:51,SESAU-CES,1379890241,Processo remetido pela unidade SESAU-GECOMP,0036.008663/2025-21
+13/03/2025 10:54,SESAU-CES,27185842204,Processo recebido na unidade,0036.008663/2025-21
+13/03/2025 09:34,SESAU-CES,2722403200,Processo remetido pela unidade SESAU-GECOMP,0036.008663/2025-21
+19/02/2025 09:55,SESAU-GECOMP,91895162220,Processo público gerado,0036.008663/2025-21
